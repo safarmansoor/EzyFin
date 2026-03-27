@@ -108,7 +108,7 @@
     <div class="container mt-4">
         <!-- Summary Cards -->
         <div class="row mb-4">
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Liquidity</h6>
@@ -116,7 +116,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Inventory</h6>
@@ -124,15 +124,31 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
-                        <h6 class="card-title text-muted">Pending Sales</h6>
-                        <h3 class="card-text" id="pendingSalesCard">$0.00</h3>
+                        <h6 class="card-title text-muted">Investment</h6>
+                        <h3 class="card-text" id="investmentCard">$0.00</h3>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h6 class="card-title text-muted">Receivable</h6>
+                        <h3 class="card-text" id="receivableCard">$0.00</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <h6 class="card-title text-muted">Giveable</h6>
+                        <h3 class="card-text" id="giveableCard">$0.00</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Net Worth</h6>
@@ -163,7 +179,7 @@
                 <div class="card mt-3">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Ledger</h5>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addEntryModal">
+                        <button class="btn btn-primary" onclick="openAddModal()">
                             + Add New Entry
                         </button>
                     </div>
@@ -175,6 +191,7 @@
                                         <th class="d-none d-md-table-cell">Date</th>
                                         <th>Description</th>
                                         <th class="d-none d-lg-table-cell">Category</th>
+                                        <th class="d-none d-md-table-cell">Status</th>
                                         <th class="d-none d-md-table-cell">Qty</th>
                                         <th class="d-none d-md-table-cell">Unit Amount</th>
                                         <th>Total</th>
@@ -291,8 +308,16 @@
                             <select class="form-select" id="entryCategory" required>
                                 <option value="Liquidity">Liquidity</option>
                                 <option value="Inventory">Inventory</option>
-                                <option value="Pending">Pending</option>
-                                <option value="Dead Stock">Dead Stock</option>
+                                <option value="Investment">Investment</option>
+                                <option value="Receivable">Receivable</option>
+                                <option value="Giveable">Giveable</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="entryStatus" class="form-label">Status</label>
+                            <select class="form-select" id="entryStatus" required>
+                                <option value="active">Active</option>
+                                <option value="pending">Pending</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -408,17 +433,28 @@
             renderAuditLog();
         }
 
+        function migrateData() {
+            // Add status field to existing entries that don't have it
+            state.ledger.forEach(entry => {
+                if (!entry.status) {
+                    entry.status = 'active';
+                }
+            });
+        }
+
         function loadState() {
             const saved = localStorage.getItem('wealth_snapshot_state');
             if (saved) {
                 state = JSON.parse(saved);
+                migrateData();
             } else {
                 // Initialize with sample data
                 state.ledger = [
-                    { id: generateId(), date: '2024-01-15', description: 'Cash on hand', category: 'Liquidity', qty: 1, amount: 5000, total: 5000 },
-                    { id: generateId(), date: '2024-01-20', description: 'Laptop inventory', category: 'Inventory', qty: 2, amount: 1200, total: 2400 },
-                    { id: generateId(), date: '2024-01-25', description: 'Pending invoice', category: 'Pending', qty: 1, amount: 1500, total: 1500 },
-                    { id: generateId(), date: '2024-01-30', description: 'Obsolete equipment', category: 'Dead Stock', qty: 5, amount: 200, total: 1000 }
+                    { id: generateId(), date: '2024-01-15', description: 'Cash on hand', category: 'Liquidity', status: 'active', qty: 1, amount: 5000, total: 5000 },
+                    { id: generateId(), date: '2024-01-20', description: 'Laptop inventory', category: 'Inventory', status: 'active', qty: 2, amount: 1200, total: 2400 },
+                    { id: generateId(), date: '2024-01-25', description: 'Stock investments', category: 'Investment', status: 'active', qty: 1, amount: 3000, total: 3000 },
+                    { id: generateId(), date: '2024-01-28', description: 'Client receivables', category: 'Receivable', status: 'pending', qty: 1, amount: 2500, total: 2500 },
+                    { id: generateId(), date: '2024-01-30', description: 'Charitable donations', category: 'Giveable', status: 'active', qty: 1, amount: 1000, total: 1000 }
                 ];
                 state.audit_log = [
                     { timestamp: new Date().toISOString(), action: 'INITIALIZE', item: 'STATE', details: 'Initial state created' }
@@ -444,13 +480,16 @@
         function updateSummaryCards() {
             const liquidity = calculateCategoryTotal('Liquidity');
             const inventory = calculateCategoryTotal('Inventory');
-            const pending = calculateCategoryTotal('Pending');
-            const deadStock = calculateCategoryTotal('Dead Stock');
-            const netWorth = liquidity + inventory + pending + deadStock;
+            const investment = calculateCategoryTotal('Investment');
+            const receivable = calculateCategoryTotal('Receivable');
+            const giveable = calculateCategoryTotal('Giveable');
+            const netWorth = liquidity + inventory + investment + receivable + giveable;
 
             document.getElementById('liquidityCard').textContent = formatCurrency(liquidity);
             document.getElementById('inventoryCard').textContent = formatCurrency(inventory);
-            document.getElementById('pendingSalesCard').textContent = formatCurrency(pending);
+            document.getElementById('investmentCard').textContent = formatCurrency(investment);
+            document.getElementById('receivableCard').textContent = formatCurrency(receivable);
+            document.getElementById('giveableCard').textContent = formatCurrency(giveable);
             document.getElementById('netWorthCard').textContent = formatCurrency(netWorth);
         }
 
@@ -473,22 +512,54 @@
             tbody.innerHTML = '';
 
             if (state.ledger.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No entries yet. Add your first entry!</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No entries yet. Add your first entry!</td></tr>';
                 return;
             }
 
             state.ledger.forEach(item => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td data-label="Date">${item.date}</td>
-                    <td data-label="Description">${item.description}</td>
-                    <td data-label="Category"><span class="badge bg-primary">${item.category}</span></td>
-                    <td data-label="Qty">${item.qty}</td>
-                    <td data-label="Unit Amount">${formatCurrency(item.amount)}</td>
-                    <td data-label="Total">${formatCurrency(item.total)}</td>
+                    <td data-label="Date">
+                        <span class="view-mode">${item.date}</span>
+                        <input type="date" class="edit-mode form-control form-control-sm" value="${item.date}" style="display:none;">
+                    </td>
+                    <td data-label="Description">
+                        <span class="view-mode">${item.description}</span>
+                        <input type="text" class="edit-mode form-control form-control-sm" value="${item.description}" style="display:none;">
+                    </td>
+                    <td data-label="Category">
+                        <span class="view-mode"><span class="badge bg-primary">${item.category}</span></span>
+                        <select class="edit-mode form-select form-select-sm" style="display:none;">
+                            <option value="Liquidity" ${item.category === 'Liquidity' ? 'selected' : ''}>Liquidity</option>
+                            <option value="Inventory" ${item.category === 'Inventory' ? 'selected' : ''}>Inventory</option>
+                            <option value="Investment" ${item.category === 'Investment' ? 'selected' : ''}>Investment</option>
+                            <option value="Receivable" ${item.category === 'Receivable' ? 'selected' : ''}>Receivable</option>
+                            <option value="Giveable" ${item.category === 'Giveable' ? 'selected' : ''}>Giveable</option>
+                        </select>
+                    </td>
+                    <td data-label="Status">
+                        <span class="view-mode"><span class="badge ${item.status === 'active' ? 'bg-success' : 'bg-warning'}">${item.status}</span></span>
+                        <select class="edit-mode form-select form-select-sm" style="display:none;">
+                            <option value="active" ${item.status === 'active' ? 'selected' : ''}>Active</option>
+                            <option value="pending" ${item.status === 'pending' ? 'selected' : ''}>Pending</option>
+                        </select>
+                    </td>
+                    <td data-label="Qty">
+                        <span class="view-mode">${item.qty}</span>
+                        <input type="number" class="edit-mode form-control form-control-sm" value="${item.qty}" min="1" style="display:none;">
+                    </td>
+                    <td data-label="Unit Amount">
+                        <span class="view-mode">${formatCurrency(item.amount)}</span>
+                        <input type="number" class="edit-mode form-control form-control-sm" value="${item.amount}" step="0.01" min="0" style="display:none;">
+                    </td>
+                    <td data-label="Total">
+                        <span class="view-mode">${formatCurrency(item.total)}</span>
+                        <span class="edit-mode" style="display:none;">${formatCurrency(item.total)}</span>
+                    </td>
                     <td data-label="Actions">
                         <div class="btn-group btn-group-sm" role="group">
                             <button class="btn btn-outline-primary edit-btn" data-id="${item.id}">Edit</button>
+                            <button class="btn btn-outline-success save-btn" data-id="${item.id}" style="display:none;">Save</button>
                             <button class="btn btn-outline-danger delete-btn" data-id="${item.id}">Delete</button>
                         </div>
                     </td>
@@ -496,9 +567,13 @@
                 tbody.appendChild(row);
             });
 
-            // Add event listeners for edit and delete buttons
+            // Add event listeners for edit, save, and delete buttons
             document.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => openEditModal(e.target.dataset.id));
+                btn.addEventListener('click', (e) => startEdit(e.target.dataset.id));
+            });
+
+            document.querySelectorAll('.save-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => saveEntry(e.target.dataset.id));
             });
 
             document.querySelectorAll('.delete-btn').forEach(btn => {
@@ -559,20 +634,60 @@
             }
         }
 
-        // Modal Functions
-        function openEditModal(id) {
-            const entry = state.ledger.find(item => item.id === id);
-            if (!entry) return;
+        // Inline Editing Functions
+        function startEdit(id) {
+            const row = event.target.closest('tr');
+            const cells = row.querySelectorAll('td');
+            
+            // Show edit mode elements and hide view mode elements
+            cells.forEach(cell => {
+                const viewMode = cell.querySelector('.view-mode');
+                const editMode = cell.querySelector('.edit-mode');
+                if (viewMode && editMode) {
+                    viewMode.style.display = 'none';
+                    editMode.style.display = 'block';
+                }
+            });
+            
+            // Show save button and hide edit button
+            const editBtn = row.querySelector('.edit-btn');
+            const saveBtn = row.querySelector('.save-btn');
+            if (editBtn && saveBtn) {
+                editBtn.style.display = 'none';
+                saveBtn.style.display = 'inline-block';
+            }
+        }
 
-            document.getElementById('entryModalTitle').textContent = 'Edit Entry';
-            document.getElementById('entryId').value = entry.id;
-            document.getElementById('entryDate').value = entry.date;
-            document.getElementById('entryDescription').value = entry.description;
-            document.getElementById('entryCategory').value = entry.category;
-            document.getElementById('entryQty').value = entry.qty;
-            document.getElementById('entryAmount').value = entry.amount;
-            document.getElementById('entryTotal').textContent = entry.total.toFixed(2);
+        function saveEntry(id) {
+            const row = event.target.closest('tr');
+            const cells = row.querySelectorAll('td');
+            
+            // Get updated values from edit mode elements
+            const date = cells[0].querySelector('.edit-mode').value;
+            const description = cells[1].querySelector('.edit-mode').value;
+            const category = cells[2].querySelector('.edit-mode').value;
+            const status = cells[3].querySelector('.edit-mode').value;
+            const qty = parseInt(cells[4].querySelector('.edit-mode').value);
+            const amount = parseFloat(cells[5].querySelector('.edit-mode').value);
+            const total = qty * amount;
 
+            const updatedEntry = { id, date, description, category, status, qty, amount, total };
+            
+            // Update the entry
+            updateEntry(id, updatedEntry);
+            
+            // Refresh the view
+            renderLedger();
+        }
+
+        // Modal Functions (for adding new entries only)
+        function openAddModal() {
+            document.getElementById('entryModalTitle').textContent = 'Add Entry';
+            document.getElementById('entryForm').reset();
+            document.getElementById('entryId').value = '';
+            document.getElementById('entryTotal').textContent = '0.00';
+            document.getElementById('entryDate').value = new Date().toISOString().split('T')[0];
+            
             const modal = new bootstrap.Modal(document.getElementById('addEntryModal'));
             modal.show();
         }
@@ -635,11 +750,12 @@
                 const date = document.getElementById('entryDate').value;
                 const description = document.getElementById('entryDescription').value;
                 const category = document.getElementById('entryCategory').value;
+                const status = document.getElementById('entryStatus').value;
                 const qty = parseInt(document.getElementById('entryQty').value);
                 const amount = parseFloat(document.getElementById('entryAmount').value);
                 const total = qty * amount;
 
-                const entry = { id: id || generateId(), date, description, category, qty, amount, total };
+                const entry = { id: id || generateId(), date, description, category, status, qty, amount, total };
 
                 if (id) {
                     updateEntry(id, entry);

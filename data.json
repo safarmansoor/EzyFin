@@ -5,6 +5,7 @@
       "date": "2024-01-15",
       "description": "Cash on hand",
       "category": "Liquidity",
+      "status": "active",
       "qty": 1,
       "amount": 5000,
       "total": 5000
@@ -14,6 +15,7 @@
       "date": "2024-01-20",
       "description": "Laptop inventory",
       "category": "Inventory",
+      "status": "active",
       "qty": 2,
       "amount": 1200,
       "total": 2400
@@ -21,19 +23,31 @@
     {
       "id": "mn98d4sxlcj6yr00bbj",
       "date": "2024-01-25",
-      "description": "Pending invoice",
-      "category": "Pending",
+      "description": "Stock investments",
+      "category": "Investment",
+      "status": "active",
       "qty": 1,
-      "amount": 1500,
-      "total": 1500
+      "amount": 3000,
+      "total": 3000
     },
     {
       "id": "mn98d4sx8htk4gnwmj9",
+      "date": "2024-01-28",
+      "description": "Client receivables",
+      "category": "Receivable",
+      "status": "pending",
+      "qty": 1,
+      "amount": 2500,
+      "total": 2500
+    },
+    {
+      "id": "mn98d4sx9kml5hqw8rt",
       "date": "2024-01-30",
-      "description": "Obsolete equipment",
-      "category": "Dead Stock",
-      "qty": 5,
-      "amount": 200,
+      "description": "Charitable donations",
+      "category": "Giveable",
+      "status": "active",
+      "qty": 1,
+      "amount": 1000,
       "total": 1000
     }
   ],
