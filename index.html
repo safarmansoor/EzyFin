@@ -6,17 +6,55 @@
     <title>Wealth Snapshot</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #f8f9fa;
+            background-color: #fdfbf7;
         }
+        
+        /* Vintage Ledger Theme */
+        .navbar {
+            background-color: #556B2F !important;
+            color: white !important;
+        }
+        
+        .navbar-brand, .navbar-nav .nav-link {
+            color: white !important;
+        }
+        
+        .btn-outline-secondary, .btn-outline-primary {
+            background-color: #556B2F !important;
+            border-color: #556B2F !important;
+            color: white !important;
+        }
+        
+        .btn-outline-secondary:hover, .btn-outline-primary:hover {
+            background-color: #4a5a27 !important;
+            border-color: #4a5a27 !important;
+        }
+        
+        /* Summary Cards with Gold Border */
         .card {
             box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+            background-color: white;
+            border-top: 4px solid #D4AF37;
+            border-left: none;
+            border-right: none;
+            border-bottom: none;
         }
+        
+        .card-body h3 {
+            color: #556B2F;
+            font-weight: bold;
+        }
+        
+        /* Ledger Feed Styles */
         .table-responsive {
             max-height: 400px;
             overflow-y: auto;
         }
+        
         .audit-log-entry {
             font-size: 0.875rem;
             color: #6c757d;
@@ -25,6 +63,76 @@
             font-size: 0.75rem;
             padding: 0.25rem 0.5rem;
         }
+        
+        /* Floating Action Button */
+        .fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #556B2F;
+            color: white;
+            border: 2px solid #D4AF37;
+            font-size: 28px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .fab:hover {
+            transform: scale(1.1);
+            background-color: #4a5a27;
+        }
+        
+        /* Card Feed Styles */
+        .ledger-card {
+            border-left: 5px solid #556B2F;
+            transition: all 0.3s ease;
+        }
+        
+        .ledger-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+        }
+        
+        .card-header {
+            background-color: transparent;
+            border-bottom: none;
+            padding: 1rem 0 0.5rem 0;
+        }
+        
+        .card-body {
+            padding: 1rem;
+        }
+        
+        .total-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #556B2F;
+        }
+        
+        .category-badge {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 1rem;
+            background-color: #e9ecef;
+            color: #495057;
+        }
+        
+        .dead-stock-card {
+            border-left-color: #dc3545 !important;
+        }
+        
+        .dead-stock-total {
+            color: #dc3545 !important;
+        }
+        
         
         /* Mobile-friendly table styles */
         @media (max-width: 768px) {
@@ -90,7 +198,7 @@
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light">
         <div class="container-fluid">
             <a class="navbar-brand fw-bold" href="#">Wealth Snapshot</a>
             <div class="navbar-nav ms-auto">
@@ -108,7 +216,7 @@
     <div class="container mt-4">
         <!-- Summary Cards -->
         <div class="row mb-4">
-            <div class="col-md-2">
+            <div class="col-6 col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Liquidity</h6>
@@ -116,7 +224,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-6 col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Inventory</h6>
@@ -124,7 +232,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-6 col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Investment</h6>
@@ -132,7 +240,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-6 col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Receivable</h6>
@@ -140,7 +248,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-6 col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Giveable</h6>
@@ -148,7 +256,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2">
+            <div class="col-6 col-md-2">
                 <div class="card">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Net Worth</h6>
@@ -177,32 +285,8 @@
             <!-- Ledger Tab -->
             <div class="tab-pane fade show active" id="ledger" role="tabpanel">
                 <div class="card mt-3">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0">Ledger</h5>
-                        <button class="btn btn-primary" onclick="openAddModal()">
-                            + Add New Entry
-                        </button>
-                    </div>
                     <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover">
-                                <thead class="table-dark">
-                                    <tr>
-                                        <th class="d-none d-md-table-cell">Date</th>
-                                        <th>Description</th>
-                                        <th class="d-none d-lg-table-cell">Category</th>
-                                        <th class="d-none d-md-table-cell">Status</th>
-                                        <th class="d-none d-md-table-cell">Qty</th>
-                                        <th class="d-none d-md-table-cell">Unit Amount</th>
-                                        <th>Total</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="ledgerTableBody">
-                                    <!-- Ledger entries will be inserted here -->
-                                </tbody>
-                            </table>
-                        </div>
+                        <div id="ledgerFeed" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
                     </div>
                 </div>
             </div>
@@ -234,6 +318,11 @@
             </div>
         </div>
     </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" data-bs-toggle="modal" data-bs-target="#addEntryModal" title="Add New Entry">
+        +
+    </button>
 
     <!-- Settings Modal -->
     <div class="modal fade" id="settingsModal" tabindex="-1">
@@ -351,6 +440,9 @@
             audit_log: []
         };
 
+        // Inline Editing State Tracking
+        let inlineEditingIndex = -1;
+
         // GitHub API Integration
         const githubAPI = {
             getCredentials() {
@@ -429,8 +521,23 @@
         function saveState() {
             localStorage.setItem('wealth_snapshot_state', JSON.stringify(state));
             updateSummaryCards();
+            inlineEditingIndex = -1;
             renderLedger();
             renderAuditLog();
+            syncToGitHubIfNeeded();
+        }
+        
+        async function syncToGitHubIfNeeded() {
+            const creds = githubAPI.getCredentials();
+            if (creds.token && creds.username && creds.repo) {
+                try {
+                    await githubAPI.syncToGitHub();
+                    showToast('Auto-synced to GitHub!', 'success');
+                } catch (error) {
+                    console.warn('Auto-sync failed:', error.message);
+                    // Don't show toast for auto-sync failures to avoid spam
+                }
+            }
         }
 
         function migrateData() {
@@ -508,77 +615,182 @@
         }
 
         function renderLedger() {
-            const tbody = document.getElementById('ledgerTableBody');
-            tbody.innerHTML = '';
+            const feed = document.getElementById('ledgerFeed');
+            feed.innerHTML = '';
 
             if (state.ledger.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" class="text-center text-muted">No entries yet. Add your first entry!</td></tr>';
+                feed.innerHTML = '<div class="text-center text-muted p-5">No entries yet. Add your first entry!</div>';
                 return;
             }
 
-            state.ledger.forEach(item => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td data-label="Date">
-                        <span class="view-mode">${item.date}</span>
-                        <input type="date" class="edit-mode form-control form-control-sm" value="${item.date}" style="display:none;">
-                    </td>
-                    <td data-label="Description">
-                        <span class="view-mode">${item.description}</span>
-                        <input type="text" class="edit-mode form-control form-control-sm" value="${item.description}" style="display:none;">
-                    </td>
-                    <td data-label="Category">
-                        <span class="view-mode"><span class="badge bg-primary">${item.category}</span></span>
-                        <select class="edit-mode form-select form-select-sm" style="display:none;">
-                            <option value="Liquidity" ${item.category === 'Liquidity' ? 'selected' : ''}>Liquidity</option>
-                            <option value="Inventory" ${item.category === 'Inventory' ? 'selected' : ''}>Inventory</option>
-                            <option value="Investment" ${item.category === 'Investment' ? 'selected' : ''}>Investment</option>
-                            <option value="Receivable" ${item.category === 'Receivable' ? 'selected' : ''}>Receivable</option>
-                            <option value="Giveable" ${item.category === 'Giveable' ? 'selected' : ''}>Giveable</option>
-                        </select>
-                    </td>
-                    <td data-label="Status">
-                        <span class="view-mode"><span class="badge ${item.status === 'active' ? 'bg-success' : 'bg-warning'}">${item.status}</span></span>
-                        <select class="edit-mode form-select form-select-sm" style="display:none;">
-                            <option value="active" ${item.status === 'active' ? 'selected' : ''}>Active</option>
-                            <option value="pending" ${item.status === 'pending' ? 'selected' : ''}>Pending</option>
-                        </select>
-                    </td>
-                    <td data-label="Qty">
-                        <span class="view-mode">${item.qty}</span>
-                        <input type="number" class="edit-mode form-control form-control-sm" value="${item.qty}" min="1" style="display:none;">
-                    </td>
-                    <td data-label="Unit Amount">
-                        <span class="view-mode">${formatCurrency(item.amount)}</span>
-                        <input type="number" class="edit-mode form-control form-control-sm" value="${item.amount}" step="0.01" min="0" style="display:none;">
-                    </td>
-                    <td data-label="Total">
-                        <span class="view-mode">${formatCurrency(item.total)}</span>
-                        <span class="edit-mode" style="display:none;">${formatCurrency(item.total)}</span>
-                    </td>
-                    <td data-label="Actions">
-                        <div class="btn-group btn-group-sm" role="group">
-                            <button class="btn btn-outline-primary edit-btn" data-id="${item.id}">Edit</button>
-                            <button class="btn btn-outline-success save-btn" data-id="${item.id}" style="display:none;">Save</button>
-                            <button class="btn btn-outline-danger delete-btn" data-id="${item.id}">Delete</button>
+            state.ledger.forEach((item, index) => {
+                const card = document.createElement('div');
+                const isDeadStock = item.category === 'Dead Stock';
+                const cardClass = isDeadStock ? 'card shadow-sm border-0 dead-stock-card' : 'card shadow-sm border-0 ledger-card';
+                
+                card.className = cardClass;
+                
+                // Conditional rendering based on inline editing state
+                if (index === inlineEditingIndex) {
+                    // Edit Mode - Render form inputs with specific IDs (matching view mode layout)
+                    card.innerHTML = `
+                        <div class="card-body">
+                            <!-- Line 1: Date on left, Status and Action buttons on right -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <input id="edit-date-${index}" type="date" class="form-control form-control-sm" value="${item.date}" style="width: auto;">
+                                <div class="d-flex align-items-center gap-2">
+                                    <select id="edit-status-${index}" class="form-select form-select-sm" style="width: auto;">
+                                        <option value="active" ${item.status === 'active' ? 'selected' : ''}>Active</option>
+                                        <option value="pending" ${item.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                    </select>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button class="btn btn-sm btn-success p-1" onclick="saveInlineEdit(${index})" title="Save">
+                                            <i class="fas fa-save"></i>
+                                        </button>
+                                        <button class="btn btn-sm btn-secondary p-1" onclick="cancelInlineEdit()" title="Cancel">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Line 2: Description on left, Total amount on right -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <input id="edit-description-${index}" type="text" class="form-control form-control-sm" value="${item.description}">
+                                <div class="total-amount ${isDeadStock ? 'dead-stock-total' : ''}">${formatCurrency(item.total)}</div>
+                            </div>
+                            <!-- Line 3: Category on left, Quantity and Amount on right -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <select id="edit-category-${index}" class="form-select form-select-sm" style="width: auto;">
+                                    <option value="Liquidity" ${item.category === 'Liquidity' ? 'selected' : ''}>Liquidity</option>
+                                    <option value="Inventory" ${item.category === 'Inventory' ? 'selected' : ''}>Inventory</option>
+                                    <option value="Investment" ${item.category === 'Investment' ? 'selected' : ''}>Investment</option>
+                                    <option value="Receivable" ${item.category === 'Receivable' ? 'selected' : ''}>Receivable</option>
+                                    <option value="Giveable" ${item.category === 'Giveable' ? 'selected' : ''}>Giveable</option>
+                                </select>
+                                <div class="d-flex gap-2">
+                                    <input id="edit-qty-${index}" type="number" class="form-control form-control-sm" value="${item.qty}" min="1" style="width: 60px;">
+                                    <input id="edit-amount-${index}" type="number" class="form-control form-control-sm" value="${item.amount}" step="0.01" min="0" style="width: 120px;">
+                                </div>
+                            </div>
                         </div>
-                    </td>
-                `;
-                tbody.appendChild(row);
+                    `;
+                } else {
+                    // View Mode - Render static text with specified button format
+                    card.innerHTML = `
+                        <div class="card-body">
+                            <!-- Line 1: Date on left, Status and Action buttons on right -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <small class="text-muted">${item.date}</small>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="badge ${item.status === 'active' ? 'bg-success' : 'bg-warning'}">${item.status}</span>
+                                    <div class="btn-group btn-group-sm" role="group">
+                                        <button class="btn btn-sm text-secondary p-1" onclick="startInlineEdit(${index})" title="Edit">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn btn-sm text-danger border-0 p-1" onclick="deleteEntryById('${item.id}')" title="Delete">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Line 2: Description on left, Total amount on right -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <h5 class="card-title mb-0">${item.description}</h5>
+                                <div class="total-amount ${isDeadStock ? 'dead-stock-total' : ''}">${formatCurrency(item.total)}</div>
+                            </div>
+                            <!-- Line 3: Category on left, Quantity and Amount on right -->
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="category-badge">${item.category}</span>
+                                <small class="text-muted">Qty: ${item.qty} @ ${formatCurrency(item.amount)}</small>
+                            </div>
+                        </div>
+                    `;
+                }
+                feed.appendChild(card);
             });
+        }
 
-            // Add event listeners for edit, save, and delete buttons
-            document.querySelectorAll('.edit-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => startEdit(e.target.dataset.id));
-            });
+        // Inline Editing Functions
+        function startInlineEdit(index) {
+            inlineEditingIndex = index;
+            renderLedger();
+        }
 
-            document.querySelectorAll('.save-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => saveEntry(e.target.dataset.id));
-            });
+        function cancelInlineEdit() {
+            inlineEditingIndex = -1;
+            renderLedger();
+        }
 
-            document.querySelectorAll('.delete-btn').forEach(btn => {
-                btn.addEventListener('click', (e) => deleteEntry(e.target.dataset.id));
+        function saveInlineEdit(index) {
+            // Get values from specific input IDs
+            const date = document.getElementById(`edit-date-${index}`).value;
+            const description = document.getElementById(`edit-description-${index}`).value;
+            const category = document.getElementById(`edit-category-${index}`).value;
+            const status = document.getElementById(`edit-status-${index}`).value;
+            const qty = parseInt(document.getElementById(`edit-qty-${index}`).value);
+            const amount = parseFloat(document.getElementById(`edit-amount-${index}`).value);
+            const total = qty * amount;
+
+            // Update the entry
+            state.ledger[index] = { 
+                ...state.ledger[index], 
+                date, 
+                description, 
+                category, 
+                status,
+                qty, 
+                amount, 
+                total 
+            };
+
+            // Log the action
+            logAction('Edited', description, `Amount: ${formatCurrency(amount)}, Category: ${category}, Status: ${status}`);
+
+            // Save state to localStorage and update UI
+            saveState();
+        }
+
+        function startEdit(id) {
+            // Find the card containing this entry
+            const card = document.querySelector(`.edit-btn[data-id="${id}"]`).closest('.card');
+            
+            // Show edit mode elements and hide view mode elements
+            card.querySelectorAll('.view-mode').forEach(element => {
+                element.style.display = 'none';
             });
+            
+            card.querySelectorAll('.edit-mode').forEach(element => {
+                element.style.display = 'block';
+            });
+            
+            // Show save button and hide edit button
+            const editBtn = card.querySelector('.edit-btn');
+            const saveBtn = card.querySelector('.save-btn');
+            if (editBtn && saveBtn) {
+                editBtn.style.display = 'none';
+                saveBtn.style.display = 'inline-block';
+            }
+        }
+
+        function saveEntry(id) {
+            // Find the card containing this entry
+            const card = document.querySelector(`.save-btn[data-id="${id}"]`).closest('.card');
+            
+            // Get updated values from edit mode elements
+            const date = card.querySelector('.edit-mode[type="date"]').value;
+            const description = card.querySelector('.edit-mode[type="text"]').value;
+            const category = card.querySelector('.edit-mode.form-select').value;
+            const qty = parseInt(card.querySelector('.qty-input').value);
+            const amount = parseFloat(card.querySelector('.amount-input').value);
+            const total = qty * amount;
+
+            const updatedEntry = { id, date, description, category, qty, amount, total };
+            
+            // Update the entry
+            updateEntry(id, updatedEntry);
+            
+            // Refresh the view
+            renderLedger();
         }
 
         function renderAuditLog() {
@@ -634,51 +846,18 @@
             }
         }
 
-        // Inline Editing Functions
-        function startEdit(id) {
-            const row = event.target.closest('tr');
-            const cells = row.querySelectorAll('td');
-            
-            // Show edit mode elements and hide view mode elements
-            cells.forEach(cell => {
-                const viewMode = cell.querySelector('.view-mode');
-                const editMode = cell.querySelector('.edit-mode');
-                if (viewMode && editMode) {
-                    viewMode.style.display = 'none';
-                    editMode.style.display = 'block';
+        function deleteEntryById(id) {
+            const index = state.ledger.findIndex(item => item.id === id);
+            if (index !== -1) {
+                const deletedEntry = state.ledger[index];
+                if (window.confirm(`Are you sure you want to delete "${deletedEntry.description}"?`)) {
+                    state.ledger.splice(index, 1);
+                    logAction('Deleted', deletedEntry.description, `Amount: ${formatCurrency(deletedEntry.amount)}, Category: ${deletedEntry.category}`);
+                    saveState();
                 }
-            });
-            
-            // Show save button and hide edit button
-            const editBtn = row.querySelector('.edit-btn');
-            const saveBtn = row.querySelector('.save-btn');
-            if (editBtn && saveBtn) {
-                editBtn.style.display = 'none';
-                saveBtn.style.display = 'inline-block';
             }
         }
 
-        function saveEntry(id) {
-            const row = event.target.closest('tr');
-            const cells = row.querySelectorAll('td');
-            
-            // Get updated values from edit mode elements
-            const date = cells[0].querySelector('.edit-mode').value;
-            const description = cells[1].querySelector('.edit-mode').value;
-            const category = cells[2].querySelector('.edit-mode').value;
-            const status = cells[3].querySelector('.edit-mode').value;
-            const qty = parseInt(cells[4].querySelector('.edit-mode').value);
-            const amount = parseFloat(cells[5].querySelector('.edit-mode').value);
-            const total = qty * amount;
-
-            const updatedEntry = { id, date, description, category, status, qty, amount, total };
-            
-            // Update the entry
-            updateEntry(id, updatedEntry);
-            
-            // Refresh the view
-            renderLedger();
-        }
 
         // Modal Functions (for adding new entries only)
         function openAddModal() {
@@ -744,9 +923,8 @@
                 alert('Settings saved successfully!');
             });
 
-            // Entry form
+            // Entry form - Modal ONLY creates new entries
             document.getElementById('saveEntryBtn').addEventListener('click', function() {
-                const id = document.getElementById('entryId').value;
                 const date = document.getElementById('entryDate').value;
                 const description = document.getElementById('entryDescription').value;
                 const category = document.getElementById('entryCategory').value;
@@ -755,13 +933,9 @@
                 const amount = parseFloat(document.getElementById('entryAmount').value);
                 const total = qty * amount;
 
-                const entry = { id: id || generateId(), date, description, category, status, qty, amount, total };
-
-                if (id) {
-                    updateEntry(id, entry);
-                } else {
-                    addEntry(entry);
-                }
+                // Modal ONLY creates new entries - no editing logic
+                const entry = { id: generateId(), date, description, category, status, qty, amount, total };
+                addEntry(entry);
 
                 bootstrap.Modal.getInstance(document.getElementById('addEntryModal')).hide();
                 resetAddModal();
