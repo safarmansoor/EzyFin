@@ -56,19 +56,19 @@
       "timestamp": "2026-03-27T21:30:00.795Z",
       "action": "Edited",
       "item": "Cash on hand",
-      "details": "Amount: AED�3,000.00, Category: Liquidity, Status: active"
+      "details": "Amount: AED 3,000.00, Category: Liquidity, Status: active"
     },
     {
       "timestamp": "2026-03-27T21:29:51.094Z",
       "action": "Edited",
       "item": "Cash on hand",
-      "details": "Amount: AED�3,000.00, Category: Liquidity, Status: pending"
+      "details": "Amount: AED 3,000.00, Category: Liquidity, Status: pending"
     },
     {
       "timestamp": "2026-03-27T19:34:13.168Z",
       "action": "Updated",
       "item": "Cash on hand",
-      "details": "Amount: AED 3,000.00, Category: Liquidity"
+      "details": "Amount: AEDÂ 3,000.00, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-27T18:24:09.105Z",
