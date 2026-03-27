@@ -798,7 +798,7 @@
             tbody.innerHTML = '';
 
             // Show last 50 entries, most recent first
-            const recentLogs = state.audit_log.slice(-50).reverse();
+            const recentLogs = state.audit_log.slice(0,50);
 
             if (recentLogs.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No audit entries yet.</td></tr>';
