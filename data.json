@@ -5,7 +5,7 @@
       "date": "2024-01-15",
       "description": "Cash on hand",
       "category": "Liquidity",
-      "status": "pending",
+      "status": "active",
       "qty": 1,
       "amount": 3000,
       "total": 3000
@@ -52,6 +52,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-27T21:30:00.795Z",
+      "action": "Edited",
+      "item": "Cash on hand",
+      "details": "Amount: AED 3,000.00, Category: Liquidity, Status: active"
+    },
     {
       "timestamp": "2026-03-27T21:29:51.094Z",
       "action": "Edited",
