@@ -1,0 +1,48 @@
+{
+  "ledger": [
+    {
+      "id": "mn98d4sx7sfub9pro2p",
+      "date": "2024-01-15",
+      "description": "Cash on hand",
+      "category": "Liquidity",
+      "qty": 1,
+      "amount": 5000,
+      "total": 5000
+    },
+    {
+      "id": "mn98d4sxy4wakwmv9p",
+      "date": "2024-01-20",
+      "description": "Laptop inventory",
+      "category": "Inventory",
+      "qty": 2,
+      "amount": 1200,
+      "total": 2400
+    },
+    {
+      "id": "mn98d4sxlcj6yr00bbj",
+      "date": "2024-01-25",
+      "description": "Pending invoice",
+      "category": "Pending",
+      "qty": 1,
+      "amount": 1500,
+      "total": 1500
+    },
+    {
+      "id": "mn98d4sx8htk4gnwmj9",
+      "date": "2024-01-30",
+      "description": "Obsolete equipment",
+      "category": "Dead Stock",
+      "qty": 5,
+      "amount": 200,
+      "total": 1000
+    }
+  ],
+  "audit_log": [
+    {
+      "timestamp": "2026-03-27T18:24:09.105Z",
+      "action": "INITIALIZE",
+      "item": "STATE",
+      "details": "Initial state created"
+    }
+  ]
+}
