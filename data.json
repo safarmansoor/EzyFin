@@ -236,12 +236,18 @@
       "description": "Voplls Mini - Dead",
       "category": "Inventory",
       "status": "active",
-      "qty": 1,
+      "qty": 2,
       "amount": 190,
-      "total": 190
+      "total": 380
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:08:43.227Z",
+      "action": "Edited",
+      "item": "Voplls Mini - Dead",
+      "details": "Amount: AED 190.00, Category: Inventory, Status: active"
+    },
     {
       "timestamp": "2026-03-28T09:08:34.271Z",
       "action": "Added",
