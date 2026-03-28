@@ -199,9 +199,25 @@
       "qty": 1,
       "amount": 950,
       "total": 950
+    },
+    {
+      "id": "mna3w4it53qx5ukpv1",
+      "date": "2026-03-28",
+      "description": "PSP Go Screen - FBA",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 4,
+      "amount": 23,
+      "total": 92
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:06:43.301Z",
+      "action": "Added",
+      "item": "PSP Go Screen - FBA",
+      "details": "Amount: AED 23.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T09:06:20.701Z",
       "action": "Added",
