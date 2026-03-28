@@ -1,6 +1,23 @@
 {
-  "ledger": [],
+  "ledger": [
+    {
+      "id": "mna3hjlt9fzcaycv2r",
+      "date": "2026-03-28",
+      "description": "Cash on Hand",
+      "category": "Liquidity",
+      "status": "active",
+      "qty": 1,
+      "amount": 41429.72,
+      "total": 41429.72
+    }
+  ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T08:55:23.009Z",
+      "action": "Added",
+      "item": "Cash on Hand",
+      "details": "Amount: AED 41,429.72, Category: Liquidity"
+    },
     {
       "timestamp": "2026-03-28T07:24:17.973Z",
       "action": "Deleted",
