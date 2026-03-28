@@ -249,9 +249,25 @@
       "qty": 1,
       "amount": 31043.94,
       "total": 31043.94
+    },
+    {
+      "id": "mna462enohw2xewujcp",
+      "date": "2026-03-28",
+      "description": "Silver",
+      "category": "Investment",
+      "status": "active",
+      "qty": 1,
+      "amount": 3202.76,
+      "total": 3202.76
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:14:27.119Z",
+      "action": "Added",
+      "item": "Silver",
+      "details": "Amount: AED 3,202.76, Category: Investment"
+    },
     {
       "timestamp": "2026-03-28T09:13:56.816Z",
       "action": "Added",
