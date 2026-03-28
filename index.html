@@ -622,10 +622,11 @@
                 // Fix GitHub 1-minute cache with cache-busting timestamp parameter
                 const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}?ref=database&t=${new Date().getTime()}`;
                 const response = await fetch(url, {
+                    method: 'GET',
+                    cache: 'no-store',
                     headers: {
                         'Authorization': `token ${creds.token}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Cache-Control': 'no-cache'
+                        'Accept': 'application/vnd.github.v3+json'
                     }
                 });
 
