@@ -218,8 +218,11 @@
                 <button class="btn btn-outline-secondary me-2" data-bs-toggle="modal" data-bs-target="#settingsModal" title="Settings">
                     <i class="fas fa-cog"></i>
                 </button>
-                <button class="btn btn-outline-primary" id="syncBtn" title="Sync to GitHub">
+                <button class="btn btn-outline-primary me-2" id="syncBtn" title="Sync to GitHub">
                     <i class="fas fa-sync"></i>
+                </button>
+                <button class="btn btn-outline-primary" id="downloadBtn" title="Download data.json">
+                    <i class="fas fa-download"></i>
                 </button>
             </div>
         </div>
@@ -1144,7 +1147,44 @@
                     searchInput.focus();
                 }
             });
+
+            // Download functionality
+            document.getElementById('downloadBtn').addEventListener('click', function() {
+                downloadData();
+            });
         });
+
+        // Download function
+        function downloadData() {
+            // Get current state data
+            const dataToDownload = {
+                ledger: state.ledger,
+                audit_log: state.audit_log
+            };
+            
+            // Convert to JSON string with proper formatting
+            const jsonString = JSON.stringify(dataToDownload, null, 2);
+            
+            // Create blob for download
+            const blob = new Blob([jsonString], { type: 'application/json' });
+            
+            // Create download link
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'data.json';
+            
+            // Append to body, trigger download, and clean up
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Revoke object URL to free memory
+            URL.revokeObjectURL(url);
+            
+            // Show success toast
+            showToast('data.json downloaded successfully!', 'success');
+        }
     </script>
 </body>
 </html>
