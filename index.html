@@ -457,10 +457,33 @@
         </div>
     </div>
 
-    <!-- Loading Bar -->
-    <div id="syncLoadingBar" class="position-fixed bottom-0 start-0 w-100" style="height: 4px; z-index: 9999; display: none;">
-        <div id="syncProgressBar" class="w-100 h-100 bg-primary" style="width: 0%; transition: width 0.3s ease;"></div>
-        <div id="syncStatusText" class="position-absolute top-0 start-0 w-100 text-center text-white py-1" style="background-color: rgba(0,0,0,0.7); font-size: 0.8rem; display: none;"></div>
+    <!-- Enhanced Sync Status Bar -->
+    <div id="syncStatusBar" class="position-fixed bottom-0 start-0 w-100" style="height: 6px; z-index: 9999; display: none;">
+        <div id="syncProgressFill" class="w-100 h-100 bg-primary" style="width: 0%; transition: width 0.3s ease;"></div>
+        <div id="syncStatusOverlay" class="position-absolute top-0 start-0 w-100 text-center text-white py-1" style="background-color: rgba(0,0,0,0.8); font-size: 0.8rem; display: none; pointer-events: none;">
+            <span id="syncStatusMessage">Syncing...</span>
+            <span id="syncProgressCount" class="ms-2 text-warning"></span>
+        </div>
+    </div>
+
+    <!-- Sync Status Indicator -->
+    <div id="syncStatusIndicator" class="position-fixed bottom-0 end-0 m-3" style="z-index: 9998;">
+        <div class="card shadow-sm" style="width: 200px; display: none;">
+            <div class="card-header py-2 px-3">
+                <small class="text-muted">Sync Status</small>
+                <button type="button" class="btn-close float-end p-1" style="font-size: 0.7rem;" id="closeSyncStatus"></button>
+            </div>
+            <div class="card-body py-2 px-3">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <span class="badge bg-secondary" id="syncStateBadge">Idle</span>
+                    <small class="text-muted" id="lastSyncTime">Never</small>
+                </div>
+                <div class="progress" style="height: 4px;">
+                    <div class="progress-bar bg-primary" id="syncProgressMini" style="width: 0%"></div>
+                </div>
+                <small class="text-muted" id="syncDetails">Ready to sync</small>
+            </div>
+        </div>
     </div>
 
     <!-- Toast Container -->
@@ -558,7 +581,7 @@
         // Inline Editing State Tracking
         let inlineEditingIndex = -1;
 
-        // GitHub API Integration
+        // Enhanced GitHub API Integration with Sync Queue and Retry Logic
         const githubAPI = {
             getCredentials() {
                 return {
@@ -569,10 +592,27 @@
                 };
             },
 
-            async fetchFromGitHub() {
+            // Sync state management
+            syncState: {
+                status: 'idle', // idle, pending, syncing, failed
+                queue: [],
+                retryCount: 0,
+                lastSyncTime: null,
+                shaCache: null,
+                cacheExpiry: null
+            },
+
+            // Enhanced fetch with caching
+            async fetchFromGitHub(useCache = true) {
                 const creds = this.getCredentials();
                 if (!creds.token || !creds.username || !creds.repo) {
                     throw new Error('GitHub credentials not configured');
+                }
+
+                // Check cache first
+                const now = Date.now();
+                if (useCache && this.syncState.shaCache && this.syncState.cacheExpiry && now < this.syncState.cacheExpiry) {
+                    return { content: state, sha: this.syncState.shaCache };
                 }
 
                 const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}?ref=database`;
@@ -589,47 +629,136 @@
 
                 const data = await response.json();
                 const content = JSON.parse(atob(data.content));
+                
+                // Update cache
+                this.syncState.shaCache = data.sha;
+                this.syncState.cacheExpiry = now + (5 * 60 * 1000); // Cache for 5 minutes
+                
                 return { content, sha: data.sha };
             },
 
-            async syncToGitHub() {
+            // Enhanced sync with retry logic and conflict detection
+            async syncToGitHub(retryAttempt = 0) {
                 const creds = this.getCredentials();
                 if (!creds.token || !creds.username || !creds.repo) {
                     throw new Error('GitHub credentials not configured');
                 }
 
-                // Get current file SHA
+                // Check if we're already syncing
+                if (this.syncState.status === 'syncing') {
+                    return { status: 'queued', message: 'Sync already in progress' };
+                }
+
+                this.syncState.status = 'syncing';
+                updateSyncStatus('syncing', 'Uploading changes...');
+
                 let sha = null;
                 try {
-                    const currentData = await this.fetchFromGitHub();
-                    sha = currentData.sha;
+                    // Try to get current SHA with caching
+                    try {
+                        const currentData = await this.fetchFromGitHub(true);
+                        sha = currentData.sha;
+                    } catch (error) {
+                        // File doesn't exist, that's okay
+                        if (error.message.includes('404')) {
+                            sha = null;
+                        } else {
+                            throw error;
+                        }
+                    }
+
+                    const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}`;
+                    const content = btoa(JSON.stringify(state, null, 2));
+                    
+                    const response = await fetch(url, {
+                        method: 'PUT',
+                        headers: {
+                            'Authorization': `token ${creds.token}`,
+                            'Accept': 'application/vnd.github.v3+json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            message: `Update data.json via Wealth Snapshot (${new Date().toLocaleTimeString()})`,
+                            content: content,
+                            sha: sha,
+                            branch: "database"
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        
+                        // Handle conflict (409 error)
+                        if (response.status === 409) {
+                            throw new Error('Conflict detected: File was modified by another source. Please refresh and try again.');
+                        }
+                        
+                        // Handle concurrent modification (422 error)
+                        if (response.status === 422 && errorData.message.includes('SHA')) {
+                            // Retry once with fresh SHA
+                            if (retryAttempt < 1) {
+                                this.syncState.shaCache = null; // Clear cache
+                                return this.syncToGitHub(retryAttempt + 1);
+                            }
+                            throw new Error('Concurrent modification detected. Please try again.');
+                        }
+                        
+                        throw new Error(`GitHub API error: ${response.status} - ${errorData.message || 'Unknown error'}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    // Update sync state
+                    this.syncState.status = 'idle';
+                    this.syncState.lastSyncTime = new Date();
+                    this.syncState.retryCount = 0;
+                    this.syncState.shaCache = result.content.sha;
+                    this.syncState.cacheExpiry = Date.now() + (5 * 60 * 1000);
+                    
+                    updateSyncStatus('success', 'Sync completed successfully', 100);
+                    return { status: 'success', result };
+
                 } catch (error) {
-                    // File doesn't exist, that's okay
+                    this.syncState.status = 'failed';
+                    this.syncState.retryCount++;
+                    
+                    // Retry logic with exponential backoff
+                    if (retryAttempt < 3) {
+                        const delay = Math.pow(2, retryAttempt) * 1000; // 1s, 2s, 4s
+                        updateSyncStatus('failed', `Sync failed. Retrying in ${delay/1000}s...`);
+                        
+                        setTimeout(() => {
+                            this.syncToGitHub(retryAttempt + 1);
+                        }, delay);
+                        
+                        return { status: 'retrying', message: `Retrying in ${delay/1000} seconds...` };
+                    }
+                    
+                    updateSyncStatus('failed', `Sync failed: ${error.message}`);
+                    throw error;
+                }
+            },
+
+            // Debounced sync function to handle multiple rapid changes
+            debouncedSync: null,
+            syncDebounceDelay: 500, // 500ms debounce
+
+            async debouncedSyncToGitHub() {
+                // Clear existing timeout
+                if (this.debouncedSync) {
+                    clearTimeout(this.debouncedSync);
                 }
 
-                const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}`;
-                const content = btoa(JSON.stringify(state, null, 2));
-                
-                const response = await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${creds.token}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: 'Update data.json via Wealth Snapshot',
-                        content: content,
-                        sha: sha,
-                        branch: "database"
-                    })
+                return new Promise((resolve, reject) => {
+                    this.debouncedSync = setTimeout(async () => {
+                        try {
+                            const result = await this.syncToGitHub();
+                            resolve(result);
+                        } catch (error) {
+                            reject(error);
+                        }
+                    }, this.syncDebounceDelay);
                 });
-
-                if (!response.ok) {
-                    throw new Error(`GitHub API error: ${response.status}`);
-                }
-
-                return await response.json();
             }
         };
 
@@ -1108,6 +1237,141 @@
             }, 300);
         }
 
+        // Enhanced Sync Status Management Functions
+        function updateSyncStatus(status, message, progress = 0) {
+            const statusBar = document.getElementById('syncStatusBar');
+            const progressFill = document.getElementById('syncProgressFill');
+            const statusOverlay = document.getElementById('syncStatusOverlay');
+            const statusMessage = document.getElementById('syncStatusMessage');
+            const progressCount = document.getElementById('syncProgressCount');
+            
+            const indicator = document.getElementById('syncStatusIndicator');
+            const stateBadge = document.getElementById('syncStateBadge');
+            const lastSyncTime = document.getElementById('lastSyncTime');
+            const syncDetails = document.getElementById('syncDetails');
+            const miniProgress = document.getElementById('syncProgressMini');
+
+            // Update main status bar
+            if (status === 'idle') {
+                statusBar.style.display = 'none';
+                statusOverlay.style.display = 'none';
+            } else {
+                statusBar.style.display = 'block';
+                statusOverlay.style.display = 'block';
+                statusMessage.textContent = message;
+                progressFill.style.width = progress + '%';
+                
+                // Update progress count if there are queued changes
+                const queueCount = githubAPI.syncState.queue.length;
+                if (queueCount > 0) {
+                    progressCount.textContent = `(${queueCount} changes queued)`;
+                } else {
+                    progressCount.textContent = '';
+                }
+            }
+
+            // Update status indicator
+            indicator.style.display = 'block';
+            stateBadge.textContent = status.charAt(0).toUpperCase() + status.slice(1);
+            
+            // Set badge color based on status
+            stateBadge.className = 'badge';
+            switch (status) {
+                case 'idle':
+                    stateBadge.classList.add('bg-success');
+                    break;
+                case 'pending':
+                    stateBadge.classList.add('bg-warning');
+                    break;
+                case 'syncing':
+                    stateBadge.classList.add('bg-primary');
+                    break;
+                case 'failed':
+                    stateBadge.classList.add('bg-danger');
+                    break;
+                default:
+                    stateBadge.classList.add('bg-secondary');
+            }
+
+            // Update last sync time
+            if (githubAPI.syncState.lastSyncTime) {
+                lastSyncTime.textContent = `Last: ${githubAPI.syncState.lastSyncTime.toLocaleTimeString()}`;
+            } else {
+                lastSyncTime.textContent = 'Never';
+            }
+
+            // Update details
+            syncDetails.textContent = message;
+            
+            // Update mini progress bar
+            miniProgress.style.width = progress + '%';
+            miniProgress.className = 'progress-bar';
+            switch (status) {
+                case 'syncing':
+                    miniProgress.classList.add('bg-primary', 'progress-bar-striped', 'progress-bar-animated');
+                    break;
+                case 'success':
+                    miniProgress.classList.add('bg-success');
+                    break;
+                case 'failed':
+                    miniProgress.classList.add('bg-danger');
+                    break;
+                default:
+                    miniProgress.classList.add('bg-secondary');
+            }
+        }
+
+        // Enhanced loading bar functions with detailed progress
+        function showLoadingBar(message) {
+            const loadingBar = document.getElementById('syncLoadingBar');
+            const progressBar = document.getElementById('syncProgressBar');
+            const statusText = document.getElementById('syncStatusText');
+            
+            loadingBar.style.display = 'block';
+            statusText.style.display = 'block';
+            statusText.textContent = message;
+            progressBar.style.width = '0%';
+            
+            // Animate progress bar with stages
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressBar.style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                }
+            }, 50);
+        }
+
+        function hideLoadingBar() {
+            const loadingBar = document.getElementById('syncLoadingBar');
+            const statusText = document.getElementById('syncStatusText');
+            
+            statusText.style.display = 'none';
+            setTimeout(() => {
+                loadingBar.style.display = 'none';
+                document.getElementById('syncProgressBar').style.width = '0%';
+            }, 300);
+        }
+
+        // Enhanced auto-sync function with debouncing
+        async function syncToGitHubIfNeeded() {
+            const creds = githubAPI.getCredentials();
+            if (creds.token && creds.username && creds.repo) {
+                try {
+                    updateSyncStatus('pending', 'Auto-syncing changes...');
+                    const result = await githubAPI.debouncedSyncToGitHub();
+                    updateSyncStatus('success', 'Auto-sync completed successfully', 100);
+                    
+                    // Show success toast only for manual syncs, not auto-syncs
+                    // showToast('Auto-synced to GitHub!', 'success');
+                } catch (error) {
+                    updateSyncStatus('failed', `Auto-sync failed: ${error.message}`);
+                    console.warn('Auto-sync failed:', error.message);
+                }
+            }
+        }
+
         // Toast Function
         function showToast(message, type) {
             const toast = document.getElementById('syncToast');
@@ -1237,17 +1501,26 @@
                     btn.textContent = 'Syncing...';
                     btn.disabled = true;
                     
-                    showLoadingBar('Syncing to GitHub...');
+                    updateSyncStatus('syncing', 'Manual sync in progress...');
                     await githubAPI.syncToGitHub();
-                    hideLoadingBar();
                     showToast('Successfully synced to GitHub!', 'success');
                 } catch (error) {
-                    hideLoadingBar();
                     showToast('Sync failed: ' + error.message, 'danger');
                 } finally {
                     btn.textContent = originalText;
                     btn.disabled = false;
                 }
+            });
+
+            // Close sync status indicator
+            document.getElementById('closeSyncStatus').addEventListener('click', function() {
+                document.getElementById('syncStatusIndicator').style.display = 'none';
+            });
+
+            // Click on sync status indicator to show/hide
+            document.getElementById('syncStateBadge').addEventListener('click', function() {
+                const indicator = document.getElementById('syncStatusIndicator');
+                indicator.style.display = indicator.style.display === 'none' ? 'block' : 'none';
             });
 
             // Load from GitHub on startup if credentials exist
