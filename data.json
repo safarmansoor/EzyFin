@@ -6,9 +6,9 @@
       "description": "Manbaone",
       "category": "Inventory",
       "status": "active",
-      "qty": 39,
+      "qty": 40,
       "amount": 111,
-      "total": 4329
+      "total": 4440
     },
     {
       "id": "mna3i1pwwrwyezxbt2",
@@ -302,6 +302,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T12:55:35.946Z",
+      "action": "Edited",
+      "item": "Manbaone",
+      "details": "Amount: AED 111.00, Category: Inventory, Status: active"
+    },
     {
       "timestamp": "2026-03-28T12:12:10.260Z",
       "action": "Edited",
