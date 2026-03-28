@@ -209,9 +209,25 @@
       "qty": 4,
       "amount": 23,
       "total": 92
+    },
+    {
+      "id": "mna3xxhgv0ww1t8zj3",
+      "date": "2026-03-28",
+      "description": "PS4 Controller Stand - Dead",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 1,
+      "amount": 20.88,
+      "total": 20.88
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:08:07.492Z",
+      "action": "Added",
+      "item": "PS4 Controller Stand - Dead",
+      "details": "Amount: AED 20.88, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T09:06:43.301Z",
       "action": "Added",
