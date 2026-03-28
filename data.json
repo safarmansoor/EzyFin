@@ -3,12 +3,12 @@
     {
       "id": "mna3hjlt9fzcaycv2r",
       "date": "2026-03-28",
-      "description": "Cash on Hand",
-      "category": "Liquidity",
+      "description": "Manbaone",
+      "category": "Inventory",
       "status": "active",
-      "qty": 1,
-      "amount": 35290,
-      "total": 35290
+      "qty": 39,
+      "amount": 111,
+      "total": 4329
     },
     {
       "id": "mna3i1pwwrwyezxbt2",
@@ -302,6 +302,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T11:01:59.217Z",
+      "action": "Edited",
+      "item": "Manbaone",
+      "details": "Amount: AED 111.00, Category: Inventory, Status: active"
+    },
     {
       "timestamp": "2026-03-28T10:37:38.560Z",
       "action": "Edited",
