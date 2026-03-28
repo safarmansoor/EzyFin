@@ -39,9 +39,25 @@
       "qty": 1,
       "amount": 5510,
       "total": 5510
+    },
+    {
+      "id": "mna3j9jj06ktjef6lrze",
+      "date": "2026-03-28",
+      "description": "Cash on India",
+      "category": "Liquidity",
+      "status": "active",
+      "qty": 1,
+      "amount": 18810,
+      "total": 18810
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T08:56:43.279Z",
+      "action": "Added",
+      "item": "Cash on India",
+      "details": "Amount: AED 18,810.00, Category: Liquidity"
+    },
     {
       "timestamp": "2026-03-28T08:56:21.339Z",
       "action": "Added",
