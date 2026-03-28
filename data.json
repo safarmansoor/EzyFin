@@ -79,9 +79,25 @@
       "qty": 1,
       "amount": 2385.2,
       "total": 2385.2
+    },
+    {
+      "id": "mna3kqz8dy8wk39l665",
+      "date": "2026-03-28",
+      "description": "Amazon India",
+      "category": "Receivable",
+      "status": "active",
+      "qty": 1,
+      "amount": 498.94,
+      "total": 498.94
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T08:57:52.532Z",
+      "action": "Added",
+      "item": "Amazon India",
+      "details": "Amount: AED 498.94, Category: Receivable"
+    },
     {
       "timestamp": "2026-03-28T08:57:37.902Z",
       "action": "Added",
