@@ -129,9 +129,25 @@
       "qty": 1,
       "amount": 2064,
       "total": 2064
+    },
+    {
+      "id": "mna3sseuycmkebmlnn",
+      "date": "2026-03-28",
+      "description": "Xreal 1S - Dead",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 3,
+      "amount": 1563.34,
+      "total": 4690.0199999999995
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:04:07.638Z",
+      "action": "Added",
+      "item": "Xreal 1S - Dead",
+      "details": "Amount: AED 1,563.34, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T09:01:55.745Z",
       "action": "Added",
