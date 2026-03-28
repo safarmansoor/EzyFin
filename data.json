@@ -289,9 +289,25 @@
       "qty": 1,
       "amount": 20117,
       "total": 20117
+    },
+    {
+      "id": "mna83xxo7q9zpri7xv2",
+      "date": "2026-03-28",
+      "description": "Cash on Hand",
+      "category": "Liquidity",
+      "status": "active",
+      "qty": 1,
+      "amount": 35290,
+      "total": 35290
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T11:04:46.476Z",
+      "action": "Added",
+      "item": "Cash on Hand",
+      "details": "Amount: AED 35,290.00, Category: Liquidity"
+    },
     {
       "timestamp": "2026-03-28T11:02:27.021Z",
       "action": "Deleted",
