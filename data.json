@@ -89,9 +89,25 @@
       "qty": 1,
       "amount": 498.94,
       "total": 498.94
+    },
+    {
+      "id": "mna3l3e63jk6oghxiwg",
+      "date": "2026-03-28",
+      "description": "Amir",
+      "category": "Receivable",
+      "status": "pending",
+      "qty": 1,
+      "amount": 300,
+      "total": 300
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T08:58:08.622Z",
+      "action": "Added",
+      "item": "Amir",
+      "details": "Amount: AED 300.00, Category: Receivable"
+    },
     {
       "timestamp": "2026-03-28T08:57:57.612Z",
       "action": "Edited",
