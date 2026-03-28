@@ -161,16 +161,6 @@
       "total": 1743.7
     },
     {
-      "id": "mna3v0kyj972rnzw07a",
-      "date": "2026-03-28",
-      "description": "MT6000 GLINET",
-      "category": "Inventory",
-      "status": "active",
-      "qty": 3,
-      "amount": 669.74,
-      "total": 2009.22
-    },
-    {
       "id": "mna3vebgkm9i9un2uk",
       "date": "2026-03-28",
       "description": "ALFA AXML",
@@ -302,6 +292,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T15:21:05.651Z",
+      "action": "Deleted",
+      "item": "MT6000 GLINET",
+      "details": "Amount: AED 669.74, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T15:19:01.330Z",
       "action": "Edited",
