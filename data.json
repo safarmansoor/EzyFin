@@ -3,12 +3,12 @@
     {
       "id": "mna3hjlt9fzcaycv2r",
       "date": "2026-03-28",
-      "description": "Cash on Hand",
-      "category": "Liquidity",
+      "description": "Manbaone",
+      "category": "Inventory",
       "status": "active",
-      "qty": 1,
-      "amount": 35290,
-      "total": 35290
+      "qty": 39,
+      "amount": 111,
+      "total": 4329
     },
     {
       "id": "mna3i1pwwrwyezxbt2",
@@ -67,8 +67,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 17720.35,
-      "total": 17720.35
+      "amount": 20058.5,
+      "total": 20058.5
     },
     {
       "id": "mna3kfou52enjeclsth",
@@ -109,16 +109,6 @@
       "qty": 1,
       "amount": 2064,
       "total": 2064
-    },
-    {
-      "id": "mna3ob527foqz9pht0s",
-      "date": "2026-03-28",
-      "description": "Manbaone",
-      "category": "Inventory",
-      "status": "active",
-      "qty": 48,
-      "amount": 111,
-      "total": 5328
     },
     {
       "id": "mna3pyn50wxqruorc14f",
@@ -299,9 +289,43 @@
       "qty": 1,
       "amount": 20117,
       "total": 20117
+    },
+    {
+      "id": "mna83xxo7q9zpri7xv2",
+      "date": "2026-03-28",
+      "description": "Cash on Hand",
+      "category": "Liquidity",
+      "status": "active",
+      "qty": 1,
+      "amount": 35290,
+      "total": 35290
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T11:04:46.476Z",
+      "action": "Added",
+      "item": "Cash on Hand",
+      "details": "Amount: AED 35,290.00, Category: Liquidity"
+    },
+    {
+      "timestamp": "2026-03-28T11:02:27.021Z",
+      "action": "Deleted",
+      "item": "Manbaone",
+      "details": "Amount: AED 111.00, Category: Inventory"
+    },
+    {
+      "timestamp": "2026-03-28T11:01:59.217Z",
+      "action": "Edited",
+      "item": "Manbaone",
+      "details": "Amount: AED 111.00, Category: Inventory, Status: active"
+    },
+    {
+      "timestamp": "2026-03-28T10:37:38.560Z",
+      "action": "Edited",
+      "item": "Amazon UAE",
+      "details": "Amount: AED 20,058.50, Category: Receivable, Status: pending"
+    },
     {
       "timestamp": "2026-03-28T09:19:59.349Z",
       "action": "Edited",
@@ -540,49 +564,49 @@
       "timestamp": "2026-03-28T07:24:17.973Z",
       "action": "Deleted",
       "item": "Charitable donations",
-      "details": "Amount: AEDÂ 1,000.00, Category: Giveable"
+      "details": "Amount: AED 1,000.00, Category: Giveable"
     },
     {
       "timestamp": "2026-03-28T07:24:16.520Z",
       "action": "Deleted",
       "item": "Client receivables",
-      "details": "Amount: AEDÂ 2,500.00, Category: Receivable"
+      "details": "Amount: AED 2,500.00, Category: Receivable"
     },
     {
       "timestamp": "2026-03-28T07:24:14.557Z",
       "action": "Deleted",
       "item": "Stock investments",
-      "details": "Amount: AEDÂ 3,000.00, Category: Investment"
+      "details": "Amount: AED 3,000.00, Category: Investment"
     },
     {
       "timestamp": "2026-03-28T07:24:13.009Z",
       "action": "Deleted",
       "item": "Laptop inventory",
-      "details": "Amount: AEDÂ 1,200.00, Category: Inventory"
+      "details": "Amount: AED 1,200.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T07:24:11.756Z",
       "action": "Deleted",
       "item": "Cash on hand",
-      "details": "Amount: AEDÂ 3,000.00, Category: Liquidity"
+      "details": "Amount: AED 3,000.00, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-27T21:30:00.795Z",
       "action": "Edited",
       "item": "Cash on hand",
-      "details": "Amount: AEDÃÂ 3,000.00, Category: Liquidity, Status: active"
+      "details": "Amount: AED 3,000.00, Category: Liquidity, Status: active"
     },
     {
       "timestamp": "2026-03-27T21:29:51.094Z",
       "action": "Edited",
       "item": "Cash on hand",
-      "details": "Amount: AEDÃÂ 3,000.00, Category: Liquidity, Status: pending"
+      "details": "Amount: AED 3,000.00, Category: Liquidity, Status: pending"
     },
     {
       "timestamp": "2026-03-27T19:34:13.168Z",
       "action": "Updated",
       "item": "Cash on hand",
-      "details": "Amount: AEDÃâÃÂ 3,000.00, Category: Liquidity"
+      "details": "Amount: AED 3,000.00, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-27T18:24:09.105Z",
