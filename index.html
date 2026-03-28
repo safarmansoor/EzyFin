@@ -1276,9 +1276,9 @@
 
         // Loading Bar Functions
         function showLoadingBar(message) {
-            const loadingBar = document.getElementById('syncLoadingBar');
-            const progressBar = document.getElementById('syncProgressBar');
-            const statusText = document.getElementById('syncStatusText');
+            const loadingBar = document.getElementById('syncStatusBar');
+            const progressBar = document.getElementById('syncProgressFill');
+            const statusText = document.getElementById('syncStatusMessage');
             
             loadingBar.style.display = 'block';
             statusText.style.display = 'block';
@@ -1292,13 +1292,13 @@
         }
 
         function hideLoadingBar() {
-            const loadingBar = document.getElementById('syncLoadingBar');
-            const statusText = document.getElementById('syncStatusText');
+            const loadingBar = document.getElementById('syncStatusBar');
+            const statusText = document.getElementById('syncStatusMessage');
             
             statusText.style.display = 'none';
             setTimeout(() => {
                 loadingBar.style.display = 'none';
-                document.getElementById('syncProgressBar').style.width = '0%';
+                document.getElementById('syncProgressFill').style.width = '0%';
             }, 300);
         }
 
@@ -1391,38 +1391,6 @@
             updateSyncStatus('idle', 'Ready to sync');
         }
 
-        // Enhanced loading bar functions with detailed progress
-        function showLoadingBar(message) {
-            const loadingBar = document.getElementById('syncLoadingBar');
-            const progressBar = document.getElementById('syncProgressBar');
-            const statusText = document.getElementById('syncStatusText');
-            
-            loadingBar.style.display = 'block';
-            statusText.style.display = 'block';
-            statusText.textContent = message;
-            progressBar.style.width = '0%';
-            
-            // Animate progress bar with stages
-            let progress = 0;
-            const interval = setInterval(() => {
-                progress += 10;
-                progressBar.style.width = progress + '%';
-                if (progress >= 100) {
-                    clearInterval(interval);
-                }
-            }, 50);
-        }
-
-        function hideLoadingBar() {
-            const loadingBar = document.getElementById('syncLoadingBar');
-            const statusText = document.getElementById('syncStatusText');
-            
-            statusText.style.display = 'none';
-            setTimeout(() => {
-                loadingBar.style.display = 'none';
-                document.getElementById('syncProgressBar').style.width = '0%';
-            }, 300);
-        }
 
         // Enhanced auto-sync function with debouncing
         async function syncToGitHubIfNeeded() {
