@@ -269,9 +269,25 @@
       "qty": 1,
       "amount": 8557,
       "total": 8557
+    },
+    {
+      "id": "mna4721q5n5meawjwed",
+      "date": "2026-03-28",
+      "description": "Fixed Deposit - ADCB",
+      "category": "Investment",
+      "status": "active",
+      "qty": 1,
+      "amount": 10319.44,
+      "total": 10319.44
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:15:13.310Z",
+      "action": "Added",
+      "item": "Fixed Deposit - ADCB",
+      "details": "Amount: AED 10,319.44, Category: Investment"
+    },
     {
       "timestamp": "2026-03-28T09:14:54.177Z",
       "action": "Added",
