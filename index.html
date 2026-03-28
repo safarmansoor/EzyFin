@@ -201,6 +201,21 @@
             }
         }
         
+        /* Mobile navigation buttons - ensure inline layout */
+        @media (max-width: 768px) {
+            .navbar-nav.ms-auto {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 0.5rem;
+            }
+            
+            .navbar-nav.ms-auto .btn {
+                margin: 0;
+                padding: 0.375rem 0.75rem;
+            }
+        }
+        
         /* Category button styling */
         .btn-check:checked + .btn-outline-secondary {
             background-color: #556B2F !important;
@@ -317,6 +332,22 @@
                 <div class="card mt-3">
                     <div class="card-body">
                         <div id="ledgerFeed" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"></div>
+                    </div>
+                </div>
+                
+                <!-- Total Summary -->
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-6">
+                                <h6 class="text-muted mb-1">Total Entries</h6>
+                                <h4 class="text-success" id="totalEntries">0</h4>
+                            </div>
+                            <div class="col-md-6">
+                                <h6 class="text-muted mb-1">Total Value</h6>
+                                <h4 class="text-success" id="totalValue">AED 0.00</h4>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -659,12 +690,28 @@
             }).format(amount);
         }
 
+        // Total Summary Function
+        function updateTotalSummary(filteredLedger, totalLedgerCount) {
+            const totalEntriesElement = document.getElementById('totalEntries');
+            const totalValueElement = document.getElementById('totalValue');
+            
+            // Calculate totals for filtered data
+            const totalEntries = filteredLedger.length;
+            const totalValue = filteredLedger.reduce((sum, item) => sum + item.total, 0);
+            
+            // Update the display
+            totalEntriesElement.textContent = totalEntries;
+            totalValueElement.textContent = formatCurrency(totalValue);
+        }
+
         function renderLedger() {
             const feed = document.getElementById('ledgerFeed');
             feed.innerHTML = '';
 
             if (state.ledger.length === 0) {
                 feed.innerHTML = '<div class="text-center text-muted p-5">No entries yet. Add your first entry!</div>';
+                // Update totals for empty state
+                updateTotalSummary([], 0);
                 return;
             }
 
@@ -706,6 +753,8 @@
 
             if (filteredLedger.length === 0 && searchTerm) {
                 feed.innerHTML = '<div class="text-center text-muted p-5">No entries found matching your search.</div>';
+                // Update totals for empty search results
+                updateTotalSummary([], 0);
                 return;
             }
 
@@ -794,6 +843,9 @@
                 }
                 feed.appendChild(card);
             });
+
+            // Update total summary with filtered data
+            updateTotalSummary(filteredLedger, state.ledger.length);
         }
 
         // Inline Editing Functions
