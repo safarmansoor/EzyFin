@@ -13,12 +13,12 @@
     {
       "id": "mna3i1pwwrwyezxbt2",
       "date": "2026-03-28",
-      "description": "ADCB",
-      "category": "Liquidity",
+      "description": "MT6000 GLINET",
+      "category": "Inventory",
       "status": "active",
-      "qty": 1,
-      "amount": 20630.69,
-      "total": 20630.69
+      "qty": 2,
+      "amount": 669.74,
+      "total": 1339.48
     },
     {
       "id": "mna3ibnqvge0c4zl59q",
@@ -302,6 +302,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T15:19:01.330Z",
+      "action": "Edited",
+      "item": "MT6000 GLINET",
+      "details": "Description: \"ADCB\"   \"MT6000 GLINET\"; Category: Liquidity   Inventory; Quantity: 1   2; Amount: AED 20,630.69   AED 669.74; Total: AED 20,630.69   AED 1,339.48"
+    },
     {
       "timestamp": "2026-03-28T15:13:04.559Z",
       "action": "Edited",
