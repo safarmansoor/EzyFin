@@ -219,9 +219,25 @@
       "qty": 1,
       "amount": 20.88,
       "total": 20.88
+    },
+    {
+      "id": "mna3y8jmnelwv9m159",
+      "date": "2026-03-28",
+      "description": "Pressure Washer - Dead",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 3,
+      "amount": 65,
+      "total": 195
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:08:21.826Z",
+      "action": "Added",
+      "item": "Pressure Washer - Dead",
+      "details": "Amount: AED 65.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T09:08:07.492Z",
       "action": "Added",
