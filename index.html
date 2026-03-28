@@ -600,11 +600,14 @@
         }
 
         function logAction(actionType, itemName, details) {
+            // Clean up any encoding issues in the details string
+            const cleanDetails = details.replace(/[^\x00-\x7F]/g, ' ');
+            
             state.audit_log.unshift({
                 timestamp: new Date().toISOString(),
                 action: actionType,
                 item: itemName,
-                details: details
+                details: cleanDetails
             });
         }
 
