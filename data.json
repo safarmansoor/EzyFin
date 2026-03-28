@@ -19,9 +19,25 @@
       "qty": 1,
       "amount": 20630.69,
       "total": 20630.69
+    },
+    {
+      "id": "mna3ibnqvge0c4zl59q",
+      "date": "2026-03-28",
+      "description": "CBD",
+      "category": "Liquidity",
+      "status": "active",
+      "qty": 1,
+      "amount": 18983.9,
+      "total": 18983.9
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T08:55:59.366Z",
+      "action": "Added",
+      "item": "CBD",
+      "details": "Amount: AED 18,983.90, Category: Liquidity"
+    },
     {
       "timestamp": "2026-03-28T08:55:46.484Z",
       "action": "Added",
