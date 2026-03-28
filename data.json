@@ -65,13 +65,19 @@
       "date": "2026-03-28",
       "description": "Amazon UAE",
       "category": "Receivable",
-      "status": "active",
+      "status": "pending",
       "qty": 1,
       "amount": 17720.35,
       "total": 17720.35
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T08:57:25.667Z",
+      "action": "Edited",
+      "item": "Amazon UAE",
+      "details": "Amount: AED 17,720.35, Category: Receivable, Status: pending"
+    },
     {
       "timestamp": "2026-03-28T08:57:15.557Z",
       "action": "Added",
