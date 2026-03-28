@@ -457,6 +457,12 @@
         </div>
     </div>
 
+    <!-- Loading Bar -->
+    <div id="syncLoadingBar" class="position-fixed bottom-0 start-0 w-100" style="height: 4px; z-index: 9999; display: none;">
+        <div id="syncProgressBar" class="w-100 h-100 bg-primary" style="width: 0%; transition: width 0.3s ease;"></div>
+        <div id="syncStatusText" class="position-absolute top-0 start-0 w-100 text-center text-white py-1" style="background-color: rgba(0,0,0,0.7); font-size: 0.8rem; display: none;"></div>
+    </div>
+
     <!-- Toast Container -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="syncToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
@@ -552,45 +558,78 @@
         // Inline Editing State Tracking
         let inlineEditingIndex = -1;
 
-        // GitHub Gist Integration
-        const gistAPI = {
-            getGistUrl() {
-                return localStorage.getItem('gist_url') || '';
+        // GitHub API Integration
+        const githubAPI = {
+            getCredentials() {
+                return {
+                    token: localStorage.getItem('github_token'),
+                    username: localStorage.getItem('github_username'),
+                    repo: localStorage.getItem('github_repo'),
+                    file: localStorage.getItem('github_file') || 'data.json'
+                };
             },
 
-            setGistUrl(url) {
-                localStorage.setItem('gist_url', url);
-            },
-
-            async fetchFromGist() {
-                const gistUrl = this.getGistUrl();
-                if (!gistUrl) {
-                    throw new Error('Gist URL not configured');
+            async fetchFromGitHub() {
+                const creds = this.getCredentials();
+                if (!creds.token || !creds.username || !creds.repo) {
+                    throw new Error('GitHub credentials not configured');
                 }
 
-                try {
-                    const response = await fetch(gistUrl);
-                    if (!response.ok) {
-                        throw new Error(`Gist fetch error: ${response.status}`);
+                const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}?ref=database`;
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `token ${creds.token}`,
+                        'Accept': 'application/vnd.github.v3+json'
                     }
-                    const data = await response.json();
-                    return data;
-                } catch (error) {
-                    // If gist fetch fails, return current state
-                    console.warn('Could not load from Gist:', error.message);
-                    return state;
+                });
+
+                if (!response.ok) {
+                    throw new Error(`GitHub API error: ${response.status}`);
                 }
+
+                const data = await response.json();
+                const content = JSON.parse(atob(data.content));
+                return { content, sha: data.sha };
             },
 
-            async syncToGist() {
-                const gistUrl = this.getGistUrl();
-                if (!gistUrl) {
-                    throw new Error('Gist URL not configured');
+            async syncToGitHub() {
+                const creds = this.getCredentials();
+                if (!creds.token || !creds.username || !creds.repo) {
+                    throw new Error('GitHub credentials not configured');
                 }
 
-                // Note: Gist editing requires GitHub API with authentication
-                // For now, we'll show instructions to manually update the gist
-                throw new Error('Manual update required: Edit your gist at ' + gistUrl.replace('/raw/', '/'));
+                // Get current file SHA
+                let sha = null;
+                try {
+                    const currentData = await this.fetchFromGitHub();
+                    sha = currentData.sha;
+                } catch (error) {
+                    // File doesn't exist, that's okay
+                }
+
+                const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}`;
+                const content = btoa(JSON.stringify(state, null, 2));
+                
+                const response = await fetch(url, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${creds.token}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: 'Update data.json via Wealth Snapshot',
+                        content: content,
+                        sha: sha,
+                        branch: "database"
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`GitHub API error: ${response.status}`);
+                }
+
+                return await response.json();
             }
         };
 
@@ -604,12 +643,15 @@
         }
         
         async function syncToGitHubIfNeeded() {
-            const gistUrl = gistAPI.getGistUrl();
-            if (gistUrl) {
+            const creds = githubAPI.getCredentials();
+            if (creds.token && creds.username && creds.repo) {
                 try {
-                    await gistAPI.syncToGist();
-                    showToast('Auto-synced to Gist!', 'success');
+                    showLoadingBar('Auto-syncing to GitHub...');
+                    await githubAPI.syncToGitHub();
+                    hideLoadingBar();
+                    showToast('Auto-synced to GitHub!', 'success');
                 } catch (error) {
+                    hideLoadingBar();
                     console.warn('Auto-sync failed:', error.message);
                     // Don't show toast for auto-sync failures to avoid spam
                 }
@@ -632,14 +674,14 @@
                 state = JSON.parse(saved);
                 migrateData();
             } else {
-                // Try to load from Gist first
+                // Try to load from GitHub first
                 try {
-                    const gistData = await gistAPI.fetchFromGist();
-                    state = gistData;
+                    const githubData = await githubAPI.fetchFromGitHub();
+                    state = githubData.content;
                     migrateData();
-                    showToast('Loaded data from Gist!', 'success');
+                    showToast('Loaded data from GitHub!', 'success');
                 } catch (error) {
-                    // Initialize with sample data if Gist fails
+                    // Initialize with sample data if GitHub fails
                     state.ledger = [
                         { id: generateId(), date: '2024-01-15', description: 'Cash on hand', category: 'Liquidity', status: 'active', qty: 1, amount: 5000, total: 5000 },
                         { id: generateId(), date: '2024-01-20', description: 'Laptop inventory', category: 'Inventory', status: 'active', qty: 2, amount: 1200, total: 2400 },
@@ -1038,6 +1080,34 @@
             document.getElementById('entryDate').value = new Date().toISOString().split('T')[0];
         }
 
+        // Loading Bar Functions
+        function showLoadingBar(message) {
+            const loadingBar = document.getElementById('syncLoadingBar');
+            const progressBar = document.getElementById('syncProgressBar');
+            const statusText = document.getElementById('syncStatusText');
+            
+            loadingBar.style.display = 'block';
+            statusText.style.display = 'block';
+            statusText.textContent = message;
+            progressBar.style.width = '0%';
+            
+            // Animate progress bar
+            setTimeout(() => {
+                progressBar.style.width = '100%';
+            }, 100);
+        }
+
+        function hideLoadingBar() {
+            const loadingBar = document.getElementById('syncLoadingBar');
+            const statusText = document.getElementById('syncStatusText');
+            
+            statusText.style.display = 'none';
+            setTimeout(() => {
+                loadingBar.style.display = 'none';
+                document.getElementById('syncProgressBar').style.width = '0%';
+            }, 300);
+        }
+
         // Toast Function
         function showToast(message, type) {
             const toast = document.getElementById('syncToast');
@@ -1167,9 +1237,12 @@
                     btn.textContent = 'Syncing...';
                     btn.disabled = true;
                     
+                    showLoadingBar('Syncing to GitHub...');
                     await githubAPI.syncToGitHub();
+                    hideLoadingBar();
                     showToast('Successfully synced to GitHub!', 'success');
                 } catch (error) {
+                    hideLoadingBar();
                     showToast('Sync failed: ' + error.message, 'danger');
                 } finally {
                     btn.textContent = originalText;
