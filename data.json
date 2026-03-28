@@ -29,9 +29,25 @@
       "qty": 1,
       "amount": 18983.9,
       "total": 18983.9
+    },
+    {
+      "id": "mna3ism2noh2pb6heor",
+      "date": "2026-03-28",
+      "description": "Gold 10g",
+      "category": "Investment",
+      "status": "active",
+      "qty": 1,
+      "amount": 5510,
+      "total": 5510
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T08:56:21.339Z",
+      "action": "Added",
+      "item": "Gold 10g",
+      "details": "Amount: AED 5,510.00, Category: Investment"
+    },
     {
       "timestamp": "2026-03-28T08:55:59.366Z",
       "action": "Added",
