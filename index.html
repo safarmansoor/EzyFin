@@ -429,7 +429,7 @@
                         <div class="mb-3">
                             <label class="form-label">Status</label>
                             <div class="btn-group d-flex" role="group" aria-label="Status selection">
-                                <input type="radio" class="btn-check" name="entryStatus" id="status-active" value="active" autocomplete="off">
+                                <input type="radio" class="btn-check" name="entryStatus" id="status-active" value="active" autocomplete="off" checked>
                                 <label class="btn btn-outline-success me-2" for="status-active">Active</label>
                                 
                                 <input type="radio" class="btn-check" name="entryStatus" id="status-pending" value="pending" autocomplete="off">
@@ -1017,6 +1017,14 @@
                         console.warn('Could not load from GitHub:', error.message);
                     });
             }
+
+            // Set today's date when the add entry modal opens
+            document.getElementById('addEntryModal').addEventListener('show.bs.modal', function() {
+                document.getElementById('entryDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('entryTotal').textContent = '0.00';
+                // Automatically focus the description field when modal opens
+                document.getElementById('entryDescription').focus();
+            });
         });
     </script>
 </body>
