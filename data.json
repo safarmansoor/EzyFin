@@ -304,14 +304,20 @@
       "id": "mnafxlq92hraiyuv7wv",
       "date": "2026-03-28",
       "description": "hh",
-      "category": "Inventory",
+      "category": "Investment",
       "status": "active",
-      "qty": 1,
-      "amount": 100,
-      "total": 100
+      "qty": 4,
+      "amount": 105,
+      "total": 420
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T14:45:26.720Z",
+      "action": "Edited",
+      "item": "hh",
+      "details": "Category: Inventory   Investment; Quantity: 1   4; Amount: AED 100.00   AED 105.00; Total: AED 100.00   AED 420.00"
+    },
     {
       "timestamp": "2026-03-28T14:43:47.650Z",
       "action": "Added",
