@@ -907,6 +907,22 @@
             // Initialize app
             loadState();
 
+            // Load saved settings on page load
+            function loadSavedSettings() {
+                const token = localStorage.getItem('github_token');
+                const username = localStorage.getItem('github_username');
+                const repo = localStorage.getItem('github_repo');
+                const file = localStorage.getItem('github_file');
+
+                if (token) document.getElementById('githubToken').value = token;
+                if (username) document.getElementById('githubUsername').value = username;
+                if (repo) document.getElementById('githubRepo').value = repo;
+                if (file) document.getElementById('githubFile').value = file;
+            }
+
+            // Initialize settings on page load
+            loadSavedSettings();
+
             // Settings form
             document.getElementById('saveSettingsBtn').addEventListener('click', function() {
                 const token = document.getElementById('githubToken').value;
