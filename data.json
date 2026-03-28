@@ -119,9 +119,25 @@
       "qty": 48,
       "amount": 111,
       "total": 5328
+    },
+    {
+      "id": "mna3pyn50wxqruorc14f",
+      "date": "2026-03-28",
+      "description": "Xreal One Pro - Dead",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 1,
+      "amount": 2064,
+      "total": 2064
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:01:55.745Z",
+      "action": "Added",
+      "item": "Xreal One Pro - Dead",
+      "details": "Amount: AED 2,064.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T09:00:51.634Z",
       "action": "Edited",
