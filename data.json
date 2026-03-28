@@ -103,7 +103,7 @@
     {
       "id": "mna3nu33icdfjhe3tgc",
       "date": "2026-03-28",
-      "description": "Xreal One - L",
+      "description": "Xreal One Pro - L",
       "category": "Inventory",
       "status": "active",
       "qty": 1,
@@ -122,6 +122,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:00:51.634Z",
+      "action": "Edited",
+      "item": "Xreal One Pro - L",
+      "details": "Amount: AED 2,064.00, Category: Inventory, Status: active"
+    },
     {
       "timestamp": "2026-03-28T09:00:38.630Z",
       "action": "Added",
