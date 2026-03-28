@@ -149,9 +149,25 @@
       "qty": 3,
       "amount": 718.11,
       "total": 2154.33
+    },
+    {
+      "id": "mna3u0xollx0x6dr6v",
+      "date": "2026-03-28",
+      "description": "MT3000 GLINET",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 1,
+      "amount": 371.06,
+      "total": 371.06
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:05:05.340Z",
+      "action": "Added",
+      "item": "MT3000 GLINET",
+      "details": "Amount: AED 371.06, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T09:04:46.913Z",
       "action": "Added",
