@@ -279,9 +279,25 @@
       "qty": 1,
       "amount": 10319.44,
       "total": 10319.44
+    },
+    {
+      "id": "mna48wk3ve5dgu4sw08",
+      "date": "2026-03-28",
+      "description": "Xcube",
+      "category": "Investment",
+      "status": "active",
+      "qty": 1,
+      "amount": 1587,
+      "total": 1587
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:16:39.507Z",
+      "action": "Added",
+      "item": "Xcube",
+      "details": "Amount: AED 1,587.00, Category: Investment"
+    },
     {
       "timestamp": "2026-03-28T09:15:13.310Z",
       "action": "Added",
