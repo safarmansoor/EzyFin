@@ -111,16 +111,6 @@
       "total": 2064
     },
     {
-      "id": "mna3ob527foqz9pht0s",
-      "date": "2026-03-28",
-      "description": "Manbaone",
-      "category": "Inventory",
-      "status": "active",
-      "qty": 48,
-      "amount": 111,
-      "total": 5328
-    },
-    {
       "id": "mna3pyn50wxqruorc14f",
       "date": "2026-03-28",
       "description": "Xreal One Pro - Dead",
@@ -302,6 +292,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T11:02:27.021Z",
+      "action": "Deleted",
+      "item": "Manbaone",
+      "details": "Amount: AED 111.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T11:01:59.217Z",
       "action": "Edited",
