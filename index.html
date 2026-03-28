@@ -96,6 +96,11 @@
             transition: all 0.3s ease;
         }
         
+        /* Alternate cards styling - make them slightly darker */
+        .ledger-card:nth-child(odd) {
+            background-color: #f8f9fa;
+        }
+        
         .ledger-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
@@ -112,7 +117,7 @@
         }
         
         .total-amount {
-            font-size: 1.5rem;
+            font-size: 1.25rem;
             font-weight: bold;
             color: #556B2F;
         }
