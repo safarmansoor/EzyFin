@@ -313,6 +313,11 @@
                     Audit Log
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab">
+                    Summary History
+                </button>
+            </li>
         </ul>
 
         <!-- Tab Content -->
@@ -579,7 +584,8 @@
         // State Management
         let state = {
             ledger: [],
-            audit_log: []
+            audit_log: [],
+            summary_history: []
         };
 
         // Inline Editing State Tracking
@@ -919,12 +925,126 @@
             const giveable = calculateCategoryTotal('Giveable');
             const netWorth = liquidity + inventory + investment + receivable + giveable;
 
+            // Track summary card changes for history
+            trackSummaryChanges(liquidity, inventory, investment, receivable, giveable, netWorth);
+
             document.getElementById('liquidityCard').textContent = formatCurrency(liquidity);
             document.getElementById('inventoryCard').textContent = formatCurrency(inventory);
             document.getElementById('investmentCard').textContent = formatCurrency(investment);
             document.getElementById('receivableCard').textContent = formatCurrency(receivable);
             document.getElementById('giveableCard').textContent = formatCurrency(giveable);
             document.getElementById('netWorthCard').textContent = formatCurrency(netWorth);
+        }
+
+        // Summary History Tracking Function
+        function trackSummaryChanges(liquidity, inventory, investment, receivable, giveable, netWorth) {
+            // Get current values from DOM to compare
+            const currentLiquidity = parseFloat(document.getElementById('liquidityCard').textContent.replace(/[^0-9.-]/g, ''));
+            const currentInventory = parseFloat(document.getElementById('inventoryCard').textContent.replace(/[^0-9.-]/g, ''));
+            const currentInvestment = parseFloat(document.getElementById('investmentCard').textContent.replace(/[^0-9.-]/g, ''));
+            const currentReceivable = parseFloat(document.getElementById('receivableCard').textContent.replace(/[^0-9.-]/g, ''));
+            const currentGiveable = parseFloat(document.getElementById('giveableCard').textContent.replace(/[^0-9.-]/g, ''));
+            const currentNetWorth = parseFloat(document.getElementById('netWorthCard').textContent.replace(/[^0-9.-]/g, ''));
+
+            // Check if any values have changed
+            const hasChanges = liquidity !== currentLiquidity || 
+                              inventory !== currentInventory || 
+                              investment !== currentInvestment || 
+                              receivable !== currentReceivable || 
+                              giveable !== currentGiveable || 
+                              netWorth !== currentNetWorth;
+
+            if (hasChanges) {
+                // Create snapshot entry
+                const snapshot = {
+                    timestamp: new Date().toISOString(),
+                    liquidity: liquidity,
+                    inventory: inventory,
+                    investment: investment,
+                    receivable: receivable,
+                    giveable: giveable,
+                    netWorth: netWorth,
+                    changes: []
+                };
+
+                // Track individual category changes
+                if (liquidity !== currentLiquidity) {
+                    snapshot.changes.push({
+                        category: 'Liquidity',
+                        oldValue: currentLiquidity,
+                        newValue: liquidity,
+                        changeAmount: liquidity - currentLiquidity,
+                        changePercent: currentLiquidity !== 0 ? ((liquidity - currentLiquidity) / currentLiquidity) * 100 : 0
+                    });
+                }
+
+                if (inventory !== currentInventory) {
+                    snapshot.changes.push({
+                        category: 'Inventory',
+                        oldValue: currentInventory,
+                        newValue: inventory,
+                        changeAmount: inventory - currentInventory,
+                        changePercent: currentInventory !== 0 ? ((inventory - currentInventory) / currentInventory) * 100 : 0
+                    });
+                }
+
+                if (investment !== currentInvestment) {
+                    snapshot.changes.push({
+                        category: 'Investment',
+                        oldValue: currentInvestment,
+                        newValue: investment,
+                        changeAmount: investment - currentInvestment,
+                        changePercent: currentInvestment !== 0 ? ((investment - currentInvestment) / currentInvestment) * 100 : 0
+                    });
+                }
+
+                if (receivable !== currentReceivable) {
+                    snapshot.changes.push({
+                        category: 'Receivable',
+                        oldValue: currentReceivable,
+                        newValue: receivable,
+                        changeAmount: receivable - currentReceivable,
+                        changePercent: currentReceivable !== 0 ? ((receivable - currentReceivable) / currentReceivable) * 100 : 0
+                    });
+                }
+
+                if (giveable !== currentGiveable) {
+                    snapshot.changes.push({
+                        category: 'Giveable',
+                        oldValue: currentGiveable,
+                        newValue: giveable,
+                        changeAmount: giveable - currentGiveable,
+                        changePercent: currentGiveable !== 0 ? ((giveable - currentGiveable) / currentGiveable) * 100 : 0
+                    });
+                }
+
+                if (netWorth !== currentNetWorth) {
+                    snapshot.changes.push({
+                        category: 'Net Worth',
+                        oldValue: currentNetWorth,
+                        newValue: netWorth,
+                        changeAmount: netWorth - currentNetWorth,
+                        changePercent: currentNetWorth !== 0 ? ((netWorth - currentNetWorth) / currentNetWorth) * 100 : 0
+                    });
+                }
+
+                // Add to history
+                state.summary_history.unshift(snapshot);
+
+                // Keep only last 1000 entries to prevent memory issues
+                if (state.summary_history.length > 1000) {
+                    state.summary_history = state.summary_history.slice(0, 1000);
+                }
+
+                // Log to audit log for major changes
+                if (snapshot.changes.length > 0) {
+                    const changeDetails = snapshot.changes.map(change => 
+                        `${change.category}: ${formatCurrency(change.oldValue)} → ${formatCurrency(change.newValue)} (${change.changeAmount >= 0 ? '+' : ''}${formatCurrency(change.changeAmount)})`
+                    ).join('; ');
+
+                    logAction('Summary Update', 'Summary Cards', changeDetails);
+                }
+            }
         }
 
         function calculateCategoryTotal(category) {
