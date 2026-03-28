@@ -390,26 +390,62 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">GitHub Settings</h5>
+                    <h5 class="modal-title">Data Management Settings</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form id="settingsForm">
-                        <div class="mb-3">
-                            <label for="githubToken" class="form-label">GitHub PAT</label>
-                            <input type="password" class="form-control" id="githubToken" placeholder="Enter GitHub Personal Access Token">
+                        <!-- GitHub Gist Section -->
+                        <div class="mb-4">
+                            <h6 class="text-success">GitHub Gist (Recommended)</h6>
+                            <p class="text-muted small">Use GitHub Gist for instant data access without GitHub Pages rebuilds.</p>
+                            <div class="mb-3">
+                                <label for="gistUrl" class="form-label">Gist Raw URL</label>
+                                <input type="url" class="form-control" id="gistUrl" placeholder="https://gist.githubusercontent.com/username/gist-id/raw/data.json">
+                                <div class="form-text">Get this URL from your gist by clicking "Raw" button</div>
+                            </div>
+                            <div class="alert alert-info" role="alert">
+                                <h6 class="alert-heading">How to Set Up GitHub Gist:</h6>
+                                <ol class="mb-0">
+                                    <li>Go to <a href="https://gist.github.com" target="_blank">gist.github.com</a></li>
+                                    <li>Create a new gist with your data.json content</li>
+                                    <li>Click "Raw" button and copy the URL</li>
+                                    <li>Paste the URL above and save</li>
+                                </ol>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="githubUsername" class="form-label">Username</label>
-                            <input type="text" class="form-control" id="githubUsername" placeholder="Enter GitHub username">
+                        
+                        <!-- Legacy GitHub Settings Section -->
+                        <div class="mb-4">
+                            <h6 class="text-primary">Legacy GitHub Settings</h6>
+                            <p class="text-muted small">For direct GitHub repository access (requires PAT token).</p>
+                            <div class="mb-3">
+                                <label for="githubToken" class="form-label">GitHub PAT</label>
+                                <input type="password" class="form-control" id="githubToken" placeholder="Enter GitHub Personal Access Token">
+                            </div>
+                            <div class="mb-3">
+                                <label for="githubUsername" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="githubUsername" placeholder="Enter GitHub username">
+                            </div>
+                            <div class="mb-3">
+                                <label for="githubRepo" class="form-label">Repository Name</label>
+                                <input type="text" class="form-control" id="githubRepo" placeholder="Enter repository name">
+                            </div>
+                            <div class="mb-3">
+                                <label for="githubFile" class="form-label">File Path</label>
+                                <input type="text" class="form-control" id="githubFile" value="data.json">
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="githubRepo" class="form-label">Repository Name</label>
-                            <input type="text" class="form-control" id="githubRepo" placeholder="Enter repository name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="githubFile" class="form-label">File Path</label>
-                            <input type="text" class="form-control" id="githubFile" value="data.json">
+                        
+                        <!-- Instructions -->
+                        <div class="alert alert-warning" role="alert">
+                            <h6 class="alert-heading">Important Notes:</h6>
+                            <ul class="mb-0">
+                                <li><strong>Gist is recommended</strong> - No GitHub Pages rebuilds needed</li>
+                                <li>Gist data is read-only from the website</li>
+                                <li>To update data, edit your gist manually on GitHub</li>
+                                <li>GitHub settings are for legacy compatibility</li>
+                            </ul>
                         </div>
                     </form>
                 </div>
@@ -516,78 +552,45 @@
         // Inline Editing State Tracking
         let inlineEditingIndex = -1;
 
-        // GitHub API Integration
-        const githubAPI = {
-            getCredentials() {
-                return {
-                    token: localStorage.getItem('github_token'),
-                    username: localStorage.getItem('github_username'),
-                    repo: localStorage.getItem('github_repo'),
-                    file: localStorage.getItem('github_file') || 'data.json'
-                };
+        // GitHub Gist Integration
+        const gistAPI = {
+            getGistUrl() {
+                return localStorage.getItem('gist_url') || '';
             },
 
-            async fetchFromGitHub() {
-                const creds = this.getCredentials();
-                if (!creds.token || !creds.username || !creds.repo) {
-                    throw new Error('GitHub credentials not configured');
-                }
-
-                const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}?ref=database`;
-                const response = await fetch(url, {
-                    headers: {
-                        'Authorization': `token ${creds.token}`,
-                        'Accept': 'application/vnd.github.v3+json'
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error(`GitHub API error: ${response.status}`);
-                }
-
-                const data = await response.json();
-                const content = JSON.parse(atob(data.content));
-                return { content, sha: data.sha };
+            setGistUrl(url) {
+                localStorage.setItem('gist_url', url);
             },
 
-            async syncToGitHub() {
-                const creds = this.getCredentials();
-                if (!creds.token || !creds.username || !creds.repo) {
-                    throw new Error('GitHub credentials not configured');
+            async fetchFromGist() {
+                const gistUrl = this.getGistUrl();
+                if (!gistUrl) {
+                    throw new Error('Gist URL not configured');
                 }
 
-                // Get current file SHA
-                let sha = null;
                 try {
-                    const currentData = await this.fetchFromGitHub();
-                    sha = currentData.sha;
+                    const response = await fetch(gistUrl);
+                    if (!response.ok) {
+                        throw new Error(`Gist fetch error: ${response.status}`);
+                    }
+                    const data = await response.json();
+                    return data;
                 } catch (error) {
-                    // File doesn't exist, that's okay
+                    // If gist fetch fails, return current state
+                    console.warn('Could not load from Gist:', error.message);
+                    return state;
+                }
+            },
+
+            async syncToGist() {
+                const gistUrl = this.getGistUrl();
+                if (!gistUrl) {
+                    throw new Error('Gist URL not configured');
                 }
 
-                const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}`;
-                const content = btoa(JSON.stringify(state, null, 2));
-                
-                const response = await fetch(url, {
-                    method: 'PUT',
-                    headers: {
-                        'Authorization': `token ${creds.token}`,
-                        'Accept': 'application/vnd.github.v3+json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        message: 'Update data.json via Wealth Snapshot',
-                        content: content,
-                        sha: sha,
-                        branch: "database"
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`GitHub API error: ${response.status}`);
-                }
-
-                return await response.json();
+                // Note: Gist editing requires GitHub API with authentication
+                // For now, we'll show instructions to manually update the gist
+                throw new Error('Manual update required: Edit your gist at ' + gistUrl.replace('/raw/', '/'));
             }
         };
 
@@ -601,11 +604,11 @@
         }
         
         async function syncToGitHubIfNeeded() {
-            const creds = githubAPI.getCredentials();
-            if (creds.token && creds.username && creds.repo) {
+            const gistUrl = gistAPI.getGistUrl();
+            if (gistUrl) {
                 try {
-                    await githubAPI.syncToGitHub();
-                    showToast('Auto-synced to GitHub!', 'success');
+                    await gistAPI.syncToGist();
+                    showToast('Auto-synced to Gist!', 'success');
                 } catch (error) {
                     console.warn('Auto-sync failed:', error.message);
                     // Don't show toast for auto-sync failures to avoid spam
@@ -623,23 +626,31 @@
             });
         }
 
-        function loadState() {
+        async function loadState() {
             const saved = localStorage.getItem('wealth_snapshot_state');
             if (saved) {
                 state = JSON.parse(saved);
                 migrateData();
             } else {
-                // Initialize with sample data
-                state.ledger = [
-                    { id: generateId(), date: '2024-01-15', description: 'Cash on hand', category: 'Liquidity', status: 'active', qty: 1, amount: 5000, total: 5000 },
-                    { id: generateId(), date: '2024-01-20', description: 'Laptop inventory', category: 'Inventory', status: 'active', qty: 2, amount: 1200, total: 2400 },
-                    { id: generateId(), date: '2024-01-25', description: 'Stock investments', category: 'Investment', status: 'active', qty: 1, amount: 3000, total: 3000 },
-                    { id: generateId(), date: '2024-01-28', description: 'Client receivables', category: 'Receivable', status: 'pending', qty: 1, amount: 2500, total: 2500 },
-                    { id: generateId(), date: '2024-01-30', description: 'Charitable donations', category: 'Giveable', status: 'active', qty: 1, amount: 1000, total: 1000 }
-                ];
-                state.audit_log = [
-                    { timestamp: new Date().toISOString(), action: 'INITIALIZE', item: 'STATE', details: 'Initial state created' }
-                ];
+                // Try to load from Gist first
+                try {
+                    const gistData = await gistAPI.fetchFromGist();
+                    state = gistData;
+                    migrateData();
+                    showToast('Loaded data from Gist!', 'success');
+                } catch (error) {
+                    // Initialize with sample data if Gist fails
+                    state.ledger = [
+                        { id: generateId(), date: '2024-01-15', description: 'Cash on hand', category: 'Liquidity', status: 'active', qty: 1, amount: 5000, total: 5000 },
+                        { id: generateId(), date: '2024-01-20', description: 'Laptop inventory', category: 'Inventory', status: 'active', qty: 2, amount: 1200, total: 2400 },
+                        { id: generateId(), date: '2024-01-25', description: 'Stock investments', category: 'Investment', status: 'active', qty: 1, amount: 3000, total: 3000 },
+                        { id: generateId(), date: '2024-01-28', description: 'Client receivables', category: 'Receivable', status: 'pending', qty: 1, amount: 2500, total: 2500 },
+                        { id: generateId(), date: '2024-01-30', description: 'Charitable donations', category: 'Giveable', status: 'active', qty: 1, amount: 1000, total: 1000 }
+                    ];
+                    state.audit_log = [
+                        { timestamp: new Date().toISOString(), action: 'INITIALIZE', item: 'STATE', details: 'Initial state created' }
+                    ];
+                }
             }
             saveState();
         }
@@ -1077,11 +1088,13 @@
                 const username = document.getElementById('githubUsername').value;
                 const repo = document.getElementById('githubRepo').value;
                 const file = document.getElementById('githubFile').value;
+                const gistUrl = document.getElementById('gistUrl').value;
 
                 localStorage.setItem('github_token', token);
                 localStorage.setItem('github_username', username);
                 localStorage.setItem('github_repo', repo);
                 localStorage.setItem('github_file', file);
+                localStorage.setItem('gist_url', gistUrl);
 
                 bootstrap.Modal.getInstance(document.getElementById('settingsModal')).hide();
                 alert('Settings saved successfully!');
