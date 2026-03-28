@@ -139,9 +139,25 @@
       "qty": 3,
       "amount": 1563.34,
       "total": 4690.0199999999995
+    },
+    {
+      "id": "mna3tmptm5ehwf6tvv",
+      "date": "2026-03-28",
+      "description": "BE3600 GLINET",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 3,
+      "amount": 718.11,
+      "total": 2154.33
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:04:46.913Z",
+      "action": "Added",
+      "item": "BE3600 GLINET",
+      "details": "Amount: AED 718.11, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T09:04:07.638Z",
       "action": "Added",
