@@ -259,9 +259,25 @@
       "qty": 1,
       "amount": 3202.76,
       "total": 3202.76
+    },
+    {
+      "id": "mna46na9sucmj21phtq",
+      "date": "2026-03-28",
+      "description": "Prypco",
+      "category": "Investment",
+      "status": "active",
+      "qty": 1,
+      "amount": 8557,
+      "total": 8557
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:14:54.177Z",
+      "action": "Added",
+      "item": "Prypco",
+      "details": "Amount: AED 8,557.00, Category: Investment"
+    },
     {
       "timestamp": "2026-03-28T09:14:27.119Z",
       "action": "Added",
