@@ -179,9 +179,25 @@
       "qty": 3,
       "amount": 669.74,
       "total": 2009.22
+    },
+    {
+      "id": "mna3vebgkm9i9un2uk",
+      "date": "2026-03-28",
+      "description": "ALFA AXML",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 1,
+      "amount": 213,
+      "total": 213
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:06:09.340Z",
+      "action": "Added",
+      "item": "ALFA AXML",
+      "details": "Amount: AED 213.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T09:05:51.539Z",
       "action": "Added",
