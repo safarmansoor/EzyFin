@@ -189,9 +189,25 @@
       "qty": 1,
       "amount": 213,
       "total": 213
+    },
+    {
+      "id": "mna3vn31mxg6u1g965",
+      "date": "2026-03-28",
+      "description": "Aurzen",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 1,
+      "amount": 950,
+      "total": 950
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:06:20.701Z",
+      "action": "Added",
+      "item": "Aurzen",
+      "details": "Amount: AED 950.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T09:06:09.340Z",
       "action": "Added",
