@@ -1,16 +1,6 @@
 {
   "ledger": [
     {
-      "id": "mn98d4sx7sfub9pro2p",
-      "date": "2024-01-15",
-      "description": "Cash on hand",
-      "category": "Liquidity",
-      "status": "active",
-      "qty": 1,
-      "amount": 3000,
-      "total": 3000
-    },
-    {
       "id": "mn98d4sxy4wakwmv9p",
       "date": "2024-01-20",
       "description": "Laptop inventory",
@@ -52,6 +42,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T07:24:11.756Z",
+      "action": "Deleted",
+      "item": "Cash on hand",
+      "details": "Amount: AED 3,000.00, Category: Liquidity"
+    },
     {
       "timestamp": "2026-03-27T21:30:00.795Z",
       "action": "Edited",
