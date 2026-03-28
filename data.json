@@ -1,16 +1,6 @@
 {
   "ledger": [
     {
-      "id": "mn98d4sxy4wakwmv9p",
-      "date": "2024-01-20",
-      "description": "Laptop inventory",
-      "category": "Inventory",
-      "status": "active",
-      "qty": 2,
-      "amount": 1200,
-      "total": 2400
-    },
-    {
       "id": "mn98d4sxlcj6yr00bbj",
       "date": "2024-01-25",
       "description": "Stock investments",
@@ -42,6 +32,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T07:24:13.009Z",
+      "action": "Deleted",
+      "item": "Laptop inventory",
+      "details": "Amount: AED 1,200.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T07:24:11.756Z",
       "action": "Deleted",
