@@ -299,9 +299,25 @@
       "qty": 1,
       "amount": 35290,
       "total": 35290
+    },
+    {
+      "id": "mnafixca3syhy03dw3b",
+      "date": "2026-03-28",
+      "description": "hh",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 1,
+      "amount": 90,
+      "total": 90
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T14:32:22.859Z",
+      "action": "Added",
+      "item": "hh",
+      "details": "Amount: AED 90.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T14:31:49.726Z",
       "action": "Edited",
