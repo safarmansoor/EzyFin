@@ -1136,8 +1136,8 @@
             const amount = parseFloat(document.getElementById(`edit-amount-${index}`).value);
             const total = qty * amount;
 
-            // Get the original entry for comparison
-            const originalEntry = state.ledger[index];
+            // Get the original entry for comparison - use the inlineEditingIndex which is the correct original array index
+            const originalEntry = state.ledger[inlineEditingIndex];
             
             // Build detailed change log
             let changeDetails = [];
@@ -1178,9 +1178,9 @@
                 hasChanges = true;
             }
 
-            // Update the entry
-            state.ledger[index] = { 
-                ...state.ledger[index], 
+            // Update the entry using the correct original array index
+            state.ledger[inlineEditingIndex] = { 
+                ...state.ledger[inlineEditingIndex], 
                 date, 
                 description, 
                 category, 
