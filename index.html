@@ -1009,7 +1009,20 @@
                 return;
             }
 
-            filteredLedger.forEach((item, index) => {
+            // Map inline editing index to filtered array
+            let filteredEditingIndex = -1;
+            if (inlineEditingIndex !== -1) {
+                // Find the position of the editing item in filtered results
+                const editingItemId = state.ledger[inlineEditingIndex]?.id;
+                filteredEditingIndex = filteredLedger.findIndex(item => item.id === editingItemId);
+                
+                // If the item being edited is not in search results, cancel editing
+                if (filteredEditingIndex === -1) {
+                    inlineEditingIndex = -1;
+                }
+            }
+
+            filteredLedger.forEach((item, filteredIndex) => {
                 const card = document.createElement('div');
                 const isDeadStock = item.category === 'Dead Stock';
                 const cardClass = isDeadStock ? 'card shadow-sm border-0 dead-stock-card' : 'card shadow-sm border-0 ledger-card';
@@ -1017,20 +1030,20 @@
                 card.className = cardClass;
                 
                 // Conditional rendering based on inline editing state
-                if (index === inlineEditingIndex) {
+                if (filteredIndex === filteredEditingIndex) {
                     // Edit Mode - Render form inputs with specific IDs (matching view mode layout)
                     card.innerHTML = `
                         <div class="card-body">
                             <!-- Line 1: Date on left, Status and Action buttons on right -->
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <input id="edit-date-${index}" type="date" class="form-control form-control-sm" value="${item.date}" style="width: auto;">
+                                <input id="edit-date-${filteredIndex}" type="date" class="form-control form-control-sm" value="${item.date}" style="width: auto;">
                                 <div class="d-flex align-items-center gap-2">
-                                    <select id="edit-status-${index}" class="form-select form-select-sm" style="width: auto;">
+                                    <select id="edit-status-${filteredIndex}" class="form-select form-select-sm" style="width: auto;">
                                         <option value="active" ${item.status === 'active' ? 'selected' : ''}>Active</option>
                                         <option value="pending" ${item.status === 'pending' ? 'selected' : ''}>Pending</option>
                                     </select>
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <button class="btn btn-sm btn-success p-1" onclick="saveInlineEdit(${index})" title="Save">
+                                        <button class="btn btn-sm btn-success p-1" onclick="saveInlineEdit(${filteredIndex})" title="Save">
                                             <i class="fas fa-save"></i>
                                         </button>
                                         <button class="btn btn-sm btn-secondary p-1" onclick="cancelInlineEdit()" title="Cancel">
@@ -1041,12 +1054,12 @@
                             </div>
                             <!-- Line 2: Description on left, Total amount on right -->
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <input id="edit-description-${index}" type="text" class="form-control form-control-sm" value="${item.description}">
+                                <input id="edit-description-${filteredIndex}" type="text" class="form-control form-control-sm" value="${item.description}">
                                 <div class="total-amount ${isDeadStock ? 'dead-stock-total' : ''}">${formatCurrency(item.total)}</div>
                             </div>
                             <!-- Line 3: Category on left, Quantity and Amount on right -->
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <select id="edit-category-${index}" class="form-select form-select-sm" style="width: auto;">
+                                <select id="edit-category-${filteredIndex}" class="form-select form-select-sm" style="width: auto;">
                                     <option value="Liquidity" ${item.category === 'Liquidity' ? 'selected' : ''}>Liquidity</option>
                                     <option value="Inventory" ${item.category === 'Inventory' ? 'selected' : ''}>Inventory</option>
                                     <option value="Investment" ${item.category === 'Investment' ? 'selected' : ''}>Investment</option>
@@ -1054,8 +1067,8 @@
                                     <option value="Giveable" ${item.category === 'Giveable' ? 'selected' : ''}>Giveable</option>
                                 </select>
                                 <div class="d-flex gap-2">
-                                    <input id="edit-qty-${index}" type="number" class="form-control form-control-sm" value="${item.qty}" min="1" style="width: 60px;">
-                                    <input id="edit-amount-${index}" type="number" class="form-control form-control-sm" value="${item.amount}" step="0.01" min="0" style="width: 120px;">
+                                    <input id="edit-qty-${filteredIndex}" type="number" class="form-control form-control-sm" value="${item.qty}" min="1" style="width: 60px;">
+                                    <input id="edit-amount-${filteredIndex}" type="number" class="form-control form-control-sm" value="${item.amount}" step="0.01" min="0" style="width: 120px;">
                                 </div>
                             </div>
                         </div>
@@ -1070,7 +1083,7 @@
                                 <div class="d-flex align-items-center gap-2">
                                     <span class="badge ${item.status === 'active' ? 'bg-success' : 'bg-warning'}">${item.status}</span>
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <button class="btn btn-sm text-secondary p-1" onclick="startInlineEdit(${index})" title="Edit">
+                                        <button class="btn btn-sm text-secondary p-1" onclick="startInlineEdit(${filteredIndex})" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-sm text-danger border-0 p-1" onclick="deleteEntryById('${item.id}')" title="Delete">
