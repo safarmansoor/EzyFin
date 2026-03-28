@@ -533,7 +533,7 @@
                     throw new Error('GitHub credentials not configured');
                 }
 
-                const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}`;
+                const url = `https://api.github.com/repos/${creds.username}/${creds.repo}/contents/${creds.file}?ref=database`;
                 const response = await fetch(url, {
                     headers: {
                         'Authorization': `token ${creds.token}`,
@@ -578,7 +578,8 @@
                     body: JSON.stringify({
                         message: 'Update data.json via Wealth Snapshot',
                         content: content,
-                        sha: sha
+                        sha: sha,
+                        branch: "database"
                     })
                 });
 
@@ -597,21 +598,8 @@
             inlineEditingIndex = -1;
             renderLedger();
             renderAuditLog();
-            syncToGitHubIfNeeded();
         }
         
-        async function syncToGitHubIfNeeded() {
-            const creds = githubAPI.getCredentials();
-            if (creds.token && creds.username && creds.repo) {
-                try {
-                    await githubAPI.syncToGitHub();
-                    showToast('Auto-synced to GitHub!', 'success');
-                } catch (error) {
-                    console.warn('Auto-sync failed:', error.message);
-                    // Don't show toast for auto-sync failures to avoid spam
-                }
-            }
-        }
 
         function migrateData() {
             // Add status field to existing entries that don't have it
