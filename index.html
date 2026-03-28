@@ -600,6 +600,19 @@
             renderAuditLog();
         }
         
+        async function syncToGitHubIfNeeded() {
+            const creds = githubAPI.getCredentials();
+            if (creds.token && creds.username && creds.repo) {
+                try {
+                    await githubAPI.syncToGitHub();
+                    showToast('Auto-synced to GitHub!', 'success');
+                } catch (error) {
+                    console.warn('Auto-sync failed:', error.message);
+                    // Don't show toast for auto-sync failures to avoid spam
+                }
+            }
+        }
+        
 
         function migrateData() {
             // Add status field to existing entries that don't have it
@@ -874,6 +887,9 @@
 
             // Save state to localStorage and update UI
             saveState();
+            
+            // Auto-sync to GitHub after editing
+            syncToGitHubIfNeeded();
         }
 
         function startEdit(id) {
@@ -948,6 +964,9 @@
             state.ledger.push(entry);
             logAction('Added', entry.description, `Amount: ${formatCurrency(entry.amount)}, Category: ${entry.category}`);
             saveState();
+            
+            // Auto-sync to GitHub after adding
+            syncToGitHubIfNeeded();
         }
 
         function updateEntry(id, updatedEntry) {
@@ -980,6 +999,9 @@
                     state.ledger.splice(index, 1);
                     logAction('Deleted', deletedEntry.description, `Amount: ${formatCurrency(deletedEntry.amount)}, Category: ${deletedEntry.category}`);
                     saveState();
+                    
+                    // Auto-sync to GitHub after deleting
+                    syncToGitHubIfNeeded();
                 }
             }
         }
