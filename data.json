@@ -33,12 +33,12 @@
     {
       "id": "mna3j9jj06ktjef6lrze",
       "date": "2026-03-28",
-      "description": "Cash on India",
-      "category": "Liquidity",
+      "description": "Manbaone",
+      "category": "Inventory",
       "status": "active",
-      "qty": 1,
-      "amount": 18810,
-      "total": 18810
+      "qty": 40,
+      "amount": 111,
+      "total": 4440
     },
     {
       "id": "mna3jidfuvk5ay4auzp",
@@ -302,6 +302,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T15:41:56.694Z",
+      "action": "Edited",
+      "item": "Manbaone",
+      "details": "Description: \"Cash on India\"   \"Manbaone\"; Category: Liquidity   Inventory; Quantity: 1   40; Amount: AED 18,810.00   AED 111.00; Total: AED 18,810.00   AED 4,440.00"
+    },
     {
       "timestamp": "2026-03-28T15:23:11.618Z",
       "action": "Added",
