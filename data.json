@@ -3,12 +3,12 @@
     {
       "id": "mna3hjlt9fzcaycv2r",
       "date": "2026-03-28",
-      "description": "Manbaone",
+      "description": "MT6000 GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 39,
-      "amount": 111,
-      "total": 4329
+      "qty": 1,
+      "amount": 669.74,
+      "total": 669.74
     },
     {
       "id": "mna3i1pwwrwyezxbt2",
@@ -302,6 +302,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T15:13:04.559Z",
+      "action": "Edited",
+      "item": "MT6000 GLINET",
+      "details": "Description: \"Manbaone\"   \"MT6000 GLINET\"; Quantity: 39   1; Amount: AED 111.00   AED 669.74; Total: AED 4,329.00   AED 669.74"
+    },
     {
       "timestamp": "2026-03-28T15:09:41.980Z",
       "action": "Deleted",
