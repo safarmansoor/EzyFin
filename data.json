@@ -239,9 +239,25 @@
       "qty": 2,
       "amount": 190,
       "total": 380
+    },
+    {
+      "id": "mna45f0wer4erohdwg",
+      "date": "2026-03-28",
+      "description": "Total Gold in CBD (1.99 XAU) includes Noaf's & Renu's",
+      "category": "Investment",
+      "status": "active",
+      "qty": 1,
+      "amount": 31043.94,
+      "total": 31043.94
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:13:56.816Z",
+      "action": "Added",
+      "item": "Total Gold in CBD (1.99 XAU) includes Noaf's & Renu's",
+      "details": "Amount: AED 31,043.94, Category: Investment"
+    },
     {
       "timestamp": "2026-03-28T09:12:09.498Z",
       "action": "Edited",
