@@ -386,6 +386,117 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Summary History Tab -->
+            <div class="tab-pane fade" id="history" role="tabpanel">
+                <!-- History Controls -->
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label class="form-label">Time Range</label>
+                                <select class="form-select" id="timeRangeFilter">
+                                    <option value="all">All Time</option>
+                                    <option value="24h">Last 24 Hours</option>
+                                    <option value="7d">Last 7 Days</option>
+                                    <option value="30d">Last 30 Days</option>
+                                    <option value="90d">Last 90 Days</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Category Filter</label>
+                                <select class="form-select" id="categoryFilter">
+                                    <option value="all">All Categories</option>
+                                    <option value="Liquidity">Liquidity</option>
+                                    <option value="Inventory">Inventory</option>
+                                    <option value="Investment">Investment</option>
+                                    <option value="Receivable">Receivable</option>
+                                    <option value="Giveable">Giveable</option>
+                                    <option value="Net Worth">Net Worth</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Change Type</label>
+                                <select class="form-select" id="changeTypeFilter">
+                                    <option value="all">All Changes</option>
+                                    <option value="increase">Increases Only</option>
+                                    <option value="decrease">Decreases Only</option>
+                                    <option value="nochange">No Changes</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Actions</label>
+                                <div class="d-flex gap-2">
+                                    <button class="btn btn-outline-primary btn-sm" id="exportHistoryBtn" title="Export History">
+                                        <i class="fas fa-download"></i> Export
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm" id="clearHistoryBtn" title="Clear History">
+                                        <i class="fas fa-trash"></i> Clear
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Summary Cards History -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Summary Cards Timeline</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="historyChart" style="height: 300px; background-color: #f8f9fa; border-radius: 4px; padding: 10px;">
+                                    <div class="text-center text-muted p-3">
+                                        <i class="fas fa-chart-line fa-2x mb-2"></i>
+                                        <div>Chart will display when history data is available</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Latest Changes</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="latestChanges" class="history-list">
+                                    <!-- Latest changes will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History Table -->
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="mb-0">Detailed History</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                            <table class="table table-sm">
+                                <thead class="table-light sticky-top">
+                                    <tr>
+                                        <th>Timestamp</th>
+                                        <th>Category</th>
+                                        <th>Old Value</th>
+                                        <th>New Value</th>
+                                        <th>Change Amount</th>
+                                        <th>Change %</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="historyTableBody">
+                                    <!-- History entries will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -1843,6 +1954,303 @@
             // Show success toast
             showToast('data.json downloaded successfully!', 'success');
         }
+
+        // History Tab Functions
+        function renderHistory() {
+            // Render latest changes
+            renderLatestChanges();
+            
+            // Render history table
+            renderHistoryTable();
+            
+            // Render chart
+            renderHistoryChart();
+        }
+
+        function renderLatestChanges() {
+            const container = document.getElementById('latestChanges');
+            container.innerHTML = '';
+
+            if (state.summary_history.length === 0) {
+                container.innerHTML = '<div class="text-center text-muted p-3">No history available yet. Changes will appear here as they occur.</div>';
+                return;
+            }
+
+            // Get latest 10 snapshots
+            const latestSnapshots = state.summary_history.slice(0, 10);
+
+            latestSnapshots.forEach(snapshot => {
+                const changeDiv = document.createElement('div');
+                changeDiv.className = 'history-item border-bottom pb-2 mb-2';
+                
+                const timestamp = new Date(snapshot.timestamp).toLocaleString();
+                let changesHtml = '';
+                
+                if (snapshot.changes.length > 0) {
+                    snapshot.changes.forEach(change => {
+                        const changeClass = change.changeAmount >= 0 ? 'text-success' : 'text-danger';
+                        const changeSymbol = change.changeAmount >= 0 ? '+' : '';
+                        changesHtml += `
+                            <div class="d-flex justify-content-between align-items-center">
+                                <span class="badge bg-light text-dark">${change.category}</span>
+                                <span class="${changeClass}">
+                                    ${changeSymbol}${formatCurrency(change.changeAmount)}
+                                    (${change.changePercent >= 0 ? '+' : ''}${change.changePercent.toFixed(2)}%)
+                                </span>
+                            </div>
+                        `;
+                    });
+                } else {
+                    changesHtml = '<div class="text-muted">No changes</div>';
+                }
+
+                changeDiv.innerHTML = `
+                    <div class="d-flex justify-content-between align-items-start mb-1">
+                        <small class="text-muted">${timestamp}</small>
+                        <small class="text-muted">Net Worth: ${formatCurrency(snapshot.netWorth)}</small>
+                    </div>
+                    ${changesHtml}
+                `;
+                
+                container.appendChild(changeDiv);
+            });
+        }
+
+        function renderHistoryTable() {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+
+            if (state.summary_history.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No history available yet.</td></tr>';
+                return;
+            }
+
+            // Get filtered history
+            const filteredHistory = getFilteredHistory();
+
+            if (filteredHistory.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted">No history matches your filters.</td></tr>';
+                return;
+            }
+
+            filteredHistory.forEach(snapshot => {
+                snapshot.changes.forEach(change => {
+                    const row = document.createElement('tr');
+                    const changeClass = change.changeAmount >= 0 ? 'text-success' : 'text-danger';
+                    const changeSymbol = change.changeAmount >= 0 ? '+' : '';
+                    
+                    row.innerHTML = `
+                        <td>${new Date(snapshot.timestamp).toLocaleString()}</td>
+                        <td><span class="badge bg-light text-dark">${change.category}</span></td>
+                        <td>${formatCurrency(change.oldValue)}</td>
+                        <td>${formatCurrency(change.newValue)}</td>
+                        <td class="${changeClass}">${changeSymbol}${formatCurrency(change.changeAmount)}</td>
+                        <td class="${changeClass}">${change.changePercent >= 0 ? '+' : ''}${change.changePercent.toFixed(2)}%</td>
+                        <td>
+                            <button class="btn btn-outline-primary btn-sm btn-restore" data-timestamp="${snapshot.timestamp}" data-category="${change.category}" title="Restore to this value">
+                                <i class="fas fa-undo"></i>
+                            </button>
+                        </td>
+                    `;
+                    
+                    tbody.appendChild(row);
+                });
+            });
+
+            // Add event listeners for restore buttons
+            document.querySelectorAll('.btn-restore').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const timestamp = this.getAttribute('data-timestamp');
+                    const category = this.getAttribute('data-category');
+                    restoreFromHistory(timestamp, category);
+                });
+            });
+        }
+
+        function renderHistoryChart() {
+            const chartContainer = document.getElementById('historyChart');
+            chartContainer.innerHTML = '';
+
+            if (state.summary_history.length === 0) {
+                chartContainer.innerHTML = `
+                    <div class="text-center text-muted p-3">
+                        <i class="fas fa-chart-line fa-2x mb-2"></i>
+                        <div>Chart will display when history data is available</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Get filtered history for chart
+            const filteredHistory = getFilteredHistory();
+            
+            if (filteredHistory.length === 0) {
+                chartContainer.innerHTML = `
+                    <div class="text-center text-muted p-3">
+                        <i class="fas fa-chart-line fa-2x mb-2"></i>
+                        <div>No data available for selected filters</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Create simple ASCII-style chart
+            const categories = ['Liquidity', 'Inventory', 'Investment', 'Receivable', 'Giveable', 'Net Worth'];
+            const colors = ['#28a745', '#17a2b8', '#ffc107', '#fd7e14', '#6f42c1', '#dc3545'];
+            
+            let chartHtml = '<div class="chart-container">';
+            
+            categories.forEach((category, index) => {
+                const values = filteredHistory.map(h => h[category.toLowerCase()]);
+                const max = Math.max(...values);
+                const min = Math.min(...values);
+                
+                chartHtml += `
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="badge" style="background-color: ${colors[index]}; color: white;">${category}</span>
+                            <small class="text-muted">${formatCurrency(min)} - ${formatCurrency(max)}</small>
+                        </div>
+                        <div class="chart-bar-container" style="height: 20px; background-color: #e9ecef; border-radius: 4px; overflow: hidden;">
+                            <div class="chart-bar" style="height: 100%; background-color: ${colors[index]}; width: ${((max - min) / max) * 100}%;"></div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            chartHtml += '</div>';
+            chartContainer.innerHTML = chartHtml;
+        }
+
+        function getFilteredHistory() {
+            let filtered = [...state.summary_history];
+
+            // Apply time range filter
+            const timeRange = document.getElementById('timeRangeFilter').value;
+            if (timeRange !== 'all') {
+                const now = new Date();
+                let cutoffDate;
+                
+                switch (timeRange) {
+                    case '24h':
+                        cutoffDate = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+                        break;
+                    case '7d':
+                        cutoffDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
+                        break;
+                    case '30d':
+                        cutoffDate = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+                        break;
+                    case '90d':
+                        cutoffDate = new Date(now.getTime() - 90 * 24 * 60 * 60 * 1000);
+                        break;
+                }
+                
+                filtered = filtered.filter(h => new Date(h.timestamp) >= cutoffDate);
+            }
+
+            // Apply category filter
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            if (categoryFilter !== 'all') {
+                filtered = filtered.filter(h => 
+                    h.changes.some(change => change.category === categoryFilter)
+                );
+            }
+
+            // Apply change type filter
+            const changeType = document.getElementById('changeTypeFilter').value;
+            if (changeType !== 'all') {
+                filtered = filtered.filter(h => {
+                    if (changeType === 'increase') {
+                        return h.changes.some(change => change.changeAmount > 0);
+                    } else if (changeType === 'decrease') {
+                        return h.changes.some(change => change.changeAmount < 0);
+                    } else if (changeType === 'nochange') {
+                        return h.changes.length === 0;
+                    }
+                    return true;
+                });
+            }
+
+            return filtered;
+        }
+
+        function restoreFromHistory(timestamp, category) {
+            if (!confirm(`Restore ${category} to value at ${new Date(timestamp).toLocaleString()}?`)) {
+                return;
+            }
+
+            const snapshot = state.summary_history.find(h => h.timestamp === timestamp);
+            if (!snapshot) return;
+
+            const change = snapshot.changes.find(c => c.category === category);
+            if (!change) return;
+
+            // Find the corresponding ledger entries and update them
+            // This is a simplified restore - in a real app, you'd need more sophisticated logic
+            alert(`To restore ${category} to ${formatCurrency(change.oldValue)}, you would need to manually adjust the relevant ledger entries.`);
+        }
+
+        function exportHistory() {
+            const filteredHistory = getFilteredHistory();
+            
+            if (filteredHistory.length === 0) {
+                showToast('No history data to export.', 'warning');
+                return;
+            }
+
+            // Create CSV content
+            let csvContent = 'Timestamp,Category,Old Value,New Value,Change Amount,Change %\n';
+            
+            filteredHistory.forEach(snapshot => {
+                snapshot.changes.forEach(change => {
+                    csvContent += `"${snapshot.timestamp}","${change.category}","${change.oldValue}","${change.newValue}","${change.changeAmount}","${change.changePercent}"\n`;
+                });
+            });
+
+            // Create blob and download
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'summary_history.csv';
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            showToast('History exported successfully!', 'success');
+        }
+
+        function clearHistory() {
+            if (!confirm('Are you sure you want to clear all summary history? This action cannot be undone.')) {
+                return;
+            }
+
+            state.summary_history = [];
+            saveState();
+            renderHistory();
+            showToast('History cleared successfully.', 'success');
+        }
+
+        // Event Listeners for History Tab
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize app
+            loadState();
+
+            // History tab event listeners
+            document.getElementById('timeRangeFilter').addEventListener('change', renderHistory);
+            document.getElementById('categoryFilter').addEventListener('change', renderHistory);
+            document.getElementById('changeTypeFilter').addEventListener('change', renderHistory);
+            document.getElementById('exportHistoryBtn').addEventListener('click', exportHistory);
+            document.getElementById('clearHistoryBtn').addEventListener('click', clearHistory);
+
+            // Tab switch event listener
+            document.getElementById('history-tab').addEventListener('shown.bs.tab', function() {
+                renderHistory();
+            });
+        });
     </script>
 </body>
 </html>
