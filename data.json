@@ -289,9 +289,25 @@
       "qty": 1,
       "amount": 1587,
       "total": 1587
+    },
+    {
+      "id": "mna49iyk2z9dv2is7s7",
+      "date": "2026-03-28",
+      "description": "Renu",
+      "category": "Giveable",
+      "status": "active",
+      "qty": 1,
+      "amount": 20117,
+      "total": 20117
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:17:08.540Z",
+      "action": "Added",
+      "item": "Renu",
+      "details": "Amount: AED 20,117.00, Category: Giveable"
+    },
     {
       "timestamp": "2026-03-28T09:16:39.507Z",
       "action": "Added",
