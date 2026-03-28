@@ -1,17 +1,12 @@
 {
-  "ledger": [
-    {
-      "id": "mn98d4sx9kml5hqw8rt",
-      "date": "2024-01-30",
-      "description": "Charitable donations",
-      "category": "Giveable",
-      "status": "active",
-      "qty": 1,
-      "amount": 1000,
-      "total": 1000
-    }
-  ],
+  "ledger": [],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T07:24:17.973Z",
+      "action": "Deleted",
+      "item": "Charitable donations",
+      "details": "Amount: AED 1,000.00, Category: Giveable"
+    },
     {
       "timestamp": "2026-03-28T07:24:16.520Z",
       "action": "Deleted",
