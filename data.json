@@ -99,9 +99,25 @@
       "qty": 1,
       "amount": 300,
       "total": 300
+    },
+    {
+      "id": "mna3nu33icdfjhe3tgc",
+      "date": "2026-03-28",
+      "description": "Xreal One - L",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 1,
+      "amount": 2064,
+      "total": 2064
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T09:00:16.528Z",
+      "action": "Added",
+      "item": "Xreal One - L",
+      "details": "Amount: AED 2,064.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T08:58:08.622Z",
       "action": "Added",
