@@ -279,9 +279,25 @@
       "qty": 1,
       "amount": 35290,
       "total": 35290
+    },
+    {
+      "id": "mnaha74ccx1usmnway",
+      "date": "2026-03-28",
+      "description": "Manbaone",
+      "category": "Inventory",
+      "status": "active",
+      "qty": 39,
+      "amount": 111,
+      "total": 4329
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T15:21:34.860Z",
+      "action": "Added",
+      "item": "Manbaone",
+      "details": "Amount: AED 111.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T15:21:08.695Z",
       "action": "Deleted",
