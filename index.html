@@ -1083,7 +1083,7 @@
                                 <div class="d-flex align-items-center gap-2">
                                     <span class="badge ${item.status === 'active' ? 'bg-success' : 'bg-warning'}">${item.status}</span>
                                     <div class="btn-group btn-group-sm" role="group">
-                                        <button class="btn btn-sm text-secondary p-1" onclick="startInlineEdit(${filteredIndex})" title="Edit">
+                                        <button class="btn btn-sm text-secondary p-1" onclick="startInlineEdit(${state.ledger.findIndex(ledgerItem => ledgerItem.id === '${item.id}')})" title="Edit">
                                             <i class="fas fa-edit"></i>
                                         </button>
                                         <button class="btn btn-sm text-danger border-0 p-1" onclick="deleteEntryById('${item.id}')" title="Delete">
