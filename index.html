@@ -830,16 +830,24 @@
             return Date.now().toString(36) + Math.random().toString(36).substr(2);
         }
 
-        function logAction(actionType, itemName, details) {
+        function logAction(actionType, itemName, details, oldValue = null, newValue = null) {
             // Clean up any encoding issues in the details string
             const cleanDetails = details.replace(/[^\x00-\x7F]/g, ' ');
             
-            state.audit_log.unshift({
+            let logEntry = {
                 timestamp: new Date().toISOString(),
                 action: actionType,
                 item: itemName,
                 details: cleanDetails
-            });
+            };
+
+            // Add old/new value tracking if provided
+            if (oldValue !== null && newValue !== null) {
+                logEntry.oldValue = oldValue;
+                logEntry.newValue = newValue;
+            }
+            
+            state.audit_log.unshift(logEntry);
         }
 
         // UI Update Functions
@@ -1052,6 +1060,48 @@
             const amount = parseFloat(document.getElementById(`edit-amount-${index}`).value);
             const total = qty * amount;
 
+            // Get the original entry for comparison
+            const originalEntry = state.ledger[index];
+            
+            // Build detailed change log
+            let changeDetails = [];
+            let hasChanges = false;
+
+            if (originalEntry.date !== date) {
+                changeDetails.push(`Date: ${originalEntry.date} → ${date}`);
+                hasChanges = true;
+            }
+            
+            if (originalEntry.description !== description) {
+                changeDetails.push(`Description: "${originalEntry.description}" → "${description}"`);
+                hasChanges = true;
+            }
+            
+            if (originalEntry.category !== category) {
+                changeDetails.push(`Category: ${originalEntry.category} → ${category}`);
+                hasChanges = true;
+            }
+            
+            if (originalEntry.status !== status) {
+                changeDetails.push(`Status: ${originalEntry.status} → ${status}`);
+                hasChanges = true;
+            }
+            
+            if (originalEntry.qty !== qty) {
+                changeDetails.push(`Quantity: ${originalEntry.qty} → ${qty}`);
+                hasChanges = true;
+            }
+            
+            if (originalEntry.amount !== amount) {
+                changeDetails.push(`Amount: ${formatCurrency(originalEntry.amount)} → ${formatCurrency(amount)}`);
+                hasChanges = true;
+            }
+            
+            if (originalEntry.total !== total) {
+                changeDetails.push(`Total: ${formatCurrency(originalEntry.total)} → ${formatCurrency(total)}`);
+                hasChanges = true;
+            }
+
             // Update the entry
             state.ledger[index] = { 
                 ...state.ledger[index], 
@@ -1064,8 +1114,10 @@
                 total 
             };
 
-            // Log the action
-            logAction('Edited', description, `Amount: ${formatCurrency(amount)}, Category: ${category}, Status: ${status}`);
+            // Log the action with detailed changes
+            if (hasChanges) {
+                logAction('Edited', description, changeDetails.join('; '));
+            }
 
             // Save state to localStorage and update UI
             saveState();
@@ -1131,11 +1183,24 @@
 
             recentLogs.forEach(log => {
                 const row = document.createElement('tr');
+                
+                // Format old/new values if they exist
+                let detailsHtml = log.details;
+                if (log.oldValue !== undefined && log.newValue !== undefined) {
+                    detailsHtml = `
+                        <div class="d-flex flex-column">
+                            <span>${log.details}</span>
+                            <small class="text-success">New: ${log.newValue}</small>
+                            <small class="text-danger">Old: ${log.oldValue}</small>
+                        </div>
+                    `;
+                }
+                
                 row.innerHTML = `
                     <td>${new Date(log.timestamp).toLocaleString()}</td>
                     <td><span class="badge bg-secondary">${log.action}</span></td>
                     <td>${log.item}</td>
-                    <td class="audit-log-entry">${log.details}</td>
+                    <td class="audit-log-entry">${detailsHtml}</td>
                 `;
                 tbody.appendChild(row);
             });
@@ -1319,6 +1384,11 @@
                 default:
                     miniProgress.classList.add('bg-secondary');
             }
+        }
+
+        // Initialize sync status on page load
+        function initializeSyncStatus() {
+            updateSyncStatus('idle', 'Ready to sync');
         }
 
         // Enhanced loading bar functions with detailed progress
@@ -1535,6 +1605,9 @@
                         console.warn('Could not load from GitHub:', error.message);
                     });
             }
+
+            // Initialize sync status on page load
+            initializeSyncStatus();
 
             // Set today's date when the add entry modal opens
             document.getElementById('addEntryModal').addEventListener('shown.bs.modal', function() {
