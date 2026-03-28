@@ -1,16 +1,6 @@
 {
   "ledger": [
     {
-      "id": "mn98d4sxlcj6yr00bbj",
-      "date": "2024-01-25",
-      "description": "Stock investments",
-      "category": "Investment",
-      "status": "active",
-      "qty": 1,
-      "amount": 3000,
-      "total": 3000
-    },
-    {
       "id": "mn98d4sx8htk4gnwmj9",
       "date": "2024-01-28",
       "description": "Client receivables",
@@ -32,6 +22,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T07:24:14.557Z",
+      "action": "Deleted",
+      "item": "Stock investments",
+      "details": "Amount: AED 3,000.00, Category: Investment"
+    },
     {
       "timestamp": "2026-03-28T07:24:13.009Z",
       "action": "Deleted",
