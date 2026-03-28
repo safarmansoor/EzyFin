@@ -49,9 +49,25 @@
       "qty": 1,
       "amount": 18810,
       "total": 18810
+    },
+    {
+      "id": "mna3jidfuvk5ay4auzp",
+      "date": "2026-03-28",
+      "description": "USD",
+      "category": "Liquidity",
+      "status": "active",
+      "qty": 1,
+      "amount": 426,
+      "total": 426
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T08:56:54.723Z",
+      "action": "Added",
+      "item": "USD",
+      "details": "Amount: AED 426.00, Category: Liquidity"
+    },
     {
       "timestamp": "2026-03-28T08:56:43.279Z",
       "action": "Added",
