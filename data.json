@@ -303,18 +303,6 @@
   ],
   "audit_log": [
     {
-      "timestamp": "2026-03-28T14:16:19.542Z",
-      "action": "Edited",
-      "item": "Manbaone",
-      "details": "Amount: AED 111.00, Category: Inventory, Status: active"
-    },
-    {
-      "timestamp": "2026-03-28T13:54:31.369Z",
-      "action": "Edited",
-      "item": "Manbaone",
-      "details": "Amount: AED 111.00, Category: Inventory, Status: active"
-    },
-    {
       "timestamp": "2026-03-28T12:55:35.946Z",
       "action": "Edited",
       "item": "Manbaone",
