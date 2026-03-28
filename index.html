@@ -835,14 +835,22 @@
                 }
             }
 
-            // Try to load from GitHub in the background
+            // ALWAYS try to load from GitHub to ensure it's the source of truth
             const creds = githubAPI.getCredentials();
             if (creds.token && creds.username && creds.repo) {
                 try {
                     const githubData = await githubAPI.fetchFromGitHub();
+                    // GitHub is the absolute source of truth - update appState with fresh data
                     state = githubData.content;
                     migrateData();
-                    saveState();
+                    
+                    // Immediately re-render the UI to show fresh GitHub data
+                    updateSummaryCards();
+                    renderLedger();
+                    
+                    // Overwrite local backup with fresh GitHub data to ensure synchronization
+                    saveLocalBackup();
+                    
                     showToast('Loaded data from GitHub!', 'success');
                 } catch (error) {
                     console.warn('Could not load from GitHub:', error.message);
