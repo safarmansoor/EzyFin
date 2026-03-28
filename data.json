@@ -85,13 +85,19 @@
       "date": "2026-03-28",
       "description": "Amazon India",
       "category": "Receivable",
-      "status": "active",
+      "status": "pending",
       "qty": 1,
       "amount": 498.94,
       "total": 498.94
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T08:57:57.612Z",
+      "action": "Edited",
+      "item": "Amazon India",
+      "details": "Amount: AED 498.94, Category: Receivable, Status: pending"
+    },
     {
       "timestamp": "2026-03-28T08:57:52.532Z",
       "action": "Added",
