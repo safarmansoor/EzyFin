@@ -289,9 +289,25 @@
       "qty": 39,
       "amount": 111,
       "total": 4329
+    },
+    {
+      "id": "mnahc9s2qrazxvxlghl",
+      "date": "2026-03-28",
+      "description": "ADCB",
+      "category": "Liquidity",
+      "status": "active",
+      "qty": 1,
+      "amount": 20630.69,
+      "total": 20630.69
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T15:23:11.618Z",
+      "action": "Added",
+      "item": "ADCB",
+      "details": "Amount: AED 20,630.69, Category: Liquidity"
+    },
     {
       "timestamp": "2026-03-28T15:21:34.860Z",
       "action": "Added",
