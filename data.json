@@ -1,16 +1,6 @@
 {
   "ledger": [
     {
-      "id": "mn98d4sx8htk4gnwmj9",
-      "date": "2024-01-28",
-      "description": "Client receivables",
-      "category": "Receivable",
-      "status": "pending",
-      "qty": 1,
-      "amount": 2500,
-      "total": 2500
-    },
-    {
       "id": "mn98d4sx9kml5hqw8rt",
       "date": "2024-01-30",
       "description": "Charitable donations",
@@ -22,6 +12,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T07:24:16.520Z",
+      "action": "Deleted",
+      "item": "Client receivables",
+      "details": "Amount: AED 2,500.00, Category: Receivable"
+    },
     {
       "timestamp": "2026-03-28T07:24:14.557Z",
       "action": "Deleted",
