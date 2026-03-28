@@ -11,16 +11,6 @@
       "total": 669.74
     },
     {
-      "id": "mna3i1pwwrwyezxbt2",
-      "date": "2026-03-28",
-      "description": "MT6000 GLINET",
-      "category": "Inventory",
-      "status": "active",
-      "qty": 2,
-      "amount": 669.74,
-      "total": 1339.48
-    },
-    {
       "id": "mna3ibnqvge0c4zl59q",
       "date": "2026-03-28",
       "description": "CBD",
@@ -292,6 +282,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-28T15:21:08.695Z",
+      "action": "Deleted",
+      "item": "MT6000 GLINET",
+      "details": "Amount: AED 669.74, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-28T15:21:05.651Z",
       "action": "Deleted",
