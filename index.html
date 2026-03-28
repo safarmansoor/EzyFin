@@ -194,6 +194,13 @@
                 }
             }
         }
+        
+        /* Category button styling */
+        .btn-check:checked + .btn-outline-secondary {
+            background-color: #556B2F !important;
+            border-color: #556B2F !important;
+            color: white !important;
+        }
     </style>
 </head>
 <body>
@@ -384,41 +391,53 @@
                 <div class="modal-body">
                     <form id="entryForm">
                         <input type="hidden" id="entryId">
-                        <div class="mb-3">
-                            <label for="entryDate" class="form-label">Date</label>
-                            <input type="date" class="form-control" id="entryDate" required>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <input type="date" class="form-control" id="entryDate" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control" id="entryDescription" placeholder="Description" style="cursor: default;" required>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <label for="entryDescription" class="form-label">Description</label>
-                            <input type="text" class="form-control" id="entryDescription" placeholder="Enter description" required>
+                            <label class="form-label">Category</label>
+                            <div class="btn-group d-flex flex-wrap" role="group" aria-label="Category selection">
+                                <input type="radio" class="btn-check" name="entryCategory" id="cat-liquidity" value="Liquidity" autocomplete="off">
+                                <label class="btn btn-success me-2 mb-2" for="cat-liquidity">Liquidity</label>
+                                
+                                <input type="radio" class="btn-check" name="entryCategory" id="cat-inventory" value="Inventory" autocomplete="off">
+                                <label class="btn btn-success me-2 mb-2" for="cat-inventory">Inventory</label>
+                                
+                                <input type="radio" class="btn-check" name="entryCategory" id="cat-investment" value="Investment" autocomplete="off">
+                                <label class="btn btn-success me-2 mb-2" for="cat-investment">Investment</label>
+                                
+                                <input type="radio" class="btn-check" name="entryCategory" id="cat-receivable" value="Receivable" autocomplete="off">
+                                <label class="btn btn-success me-2 mb-2" for="cat-receivable">Receivable</label>
+                                
+                                <input type="radio" class="btn-check" name="entryCategory" id="cat-giveable" value="Giveable" autocomplete="off">
+                                <label class="btn btn-success me-2 mb-2" for="cat-giveable">Giveable</label>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="entryAmount" step="0.01" min="0" placeholder="Amount per Unit" required>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" class="form-control" id="entryQty" value="1" min="1" placeholder="Quantity" required>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <label for="entryCategory" class="form-label">Category</label>
-                            <select class="form-select" id="entryCategory" required>
-                                <option value="Liquidity">Liquidity</option>
-                                <option value="Inventory">Inventory</option>
-                                <option value="Investment">Investment</option>
-                                <option value="Receivable">Receivable</option>
-                                <option value="Giveable">Giveable</option>
-                            </select>
+                            <label class="form-label">Status</label>
+                            <div class="btn-group d-flex" role="group" aria-label="Status selection">
+                                <input type="radio" class="btn-check" name="entryStatus" id="status-active" value="active" autocomplete="off">
+                                <label class="btn btn-outline-success me-2" for="status-active">Active</label>
+                                
+                                <input type="radio" class="btn-check" name="entryStatus" id="status-pending" value="pending" autocomplete="off">
+                                <label class="btn btn-outline-warning" for="status-pending">Pending</label>
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <label for="entryStatus" class="form-label">Status</label>
-                            <select class="form-select" id="entryStatus" required>
-                                <option value="active">Active</option>
-                                <option value="pending">Pending</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="entryQty" class="form-label">Quantity</label>
-                            <input type="number" class="form-control" id="entryQty" value="1" min="1" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="entryAmount" class="form-label">Amount per Unit</label>
-                            <input type="number" class="form-control" id="entryAmount" step="0.01" min="0" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Total: $<span id="entryTotal">0.00</span></label>
+                            <label class="form-label">Total: AED <span id="entryTotal">0.00</span></label>
                         </div>
                     </form>
                 </div>
@@ -943,8 +962,8 @@
             document.getElementById('saveEntryBtn').addEventListener('click', function() {
                 const date = document.getElementById('entryDate').value;
                 const description = document.getElementById('entryDescription').value;
-                const category = document.getElementById('entryCategory').value;
-                const status = document.getElementById('entryStatus').value;
+                const category = document.querySelector('input[name="entryCategory"]:checked')?.value || 'Liquidity';
+                const status = document.querySelector('input[name="entryStatus"]:checked')?.value || 'active';
                 const qty = parseInt(document.getElementById('entryQty').value);
                 const amount = parseFloat(document.getElementById('entryAmount').value);
                 const total = qty * amount;
