@@ -962,11 +962,41 @@
             document.getElementById('saveEntryBtn').addEventListener('click', function() {
                 const date = document.getElementById('entryDate').value;
                 const description = document.getElementById('entryDescription').value;
-                const category = document.querySelector('input[name="entryCategory"]:checked')?.value || 'Liquidity';
+                const category = document.querySelector('input[name="entryCategory"]:checked')?.value;
                 const status = document.querySelector('input[name="entryStatus"]:checked')?.value || 'active';
                 const qty = parseInt(document.getElementById('entryQty').value);
                 const amount = parseFloat(document.getElementById('entryAmount').value);
                 const total = qty * amount;
+
+                // Validation: Check if required fields are filled
+                if (!date) {
+                    showToast('Please select a date.', 'danger');
+                    document.getElementById('entryDate').focus();
+                    return;
+                }
+
+                if (!description.trim()) {
+                    showToast('Please enter a description.', 'danger');
+                    document.getElementById('entryDescription').focus();
+                    return;
+                }
+
+                if (!category) {
+                    showToast('Please select a category.', 'danger');
+                    return;
+                }
+
+                if (!amount || amount <= 0) {
+                    showToast('Please enter a valid amount greater than 0.', 'danger');
+                    document.getElementById('entryAmount').focus();
+                    return;
+                }
+
+                if (!qty || qty <= 0) {
+                    showToast('Please enter a valid quantity greater than 0.', 'danger');
+                    document.getElementById('entryQty').focus();
+                    return;
+                }
 
                 // Modal ONLY creates new entries - no editing logic
                 const entry = { id: generateId(), date, description, category, status, qty, amount, total };
@@ -1019,7 +1049,7 @@
             }
 
             // Set today's date when the add entry modal opens
-            document.getElementById('addEntryModal').addEventListener('show.bs.modal', function() {
+            document.getElementById('addEntryModal').addEventListener('shown.bs.modal', function() {
                 document.getElementById('entryDate').value = new Date().toISOString().split('T')[0];
                 document.getElementById('entryTotal').textContent = '0.00';
                 // Automatically focus the description field when modal opens
