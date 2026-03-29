@@ -147,8 +147,8 @@
       "category": "Inventory",
       "status": "active",
       "qty": 2,
-      "amount": 871.85,
-      "total": 1743.7
+      "amount": 580,
+      "total": 1160
     },
     {
       "id": "mna3vebgkm9i9un2uk",
@@ -302,6 +302,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-29T14:51:48.781Z",
+      "action": "Edited",
+      "item": "MT3600BE GLINET",
+      "details": "Amount: AED 871.85   AED 580.00; Total: AED 1,743.70   AED 1,160.00"
+    },
     {
       "timestamp": "2026-03-29T14:00:07.150Z",
       "action": "Edited",
