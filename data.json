@@ -267,8 +267,8 @@
       "category": "Giveable",
       "status": "active",
       "qty": 1,
-      "amount": 20117,
-      "total": 20117
+      "amount": 13617,
+      "total": 13617
     },
     {
       "id": "mna83xxo7q9zpri7xv2",
@@ -332,6 +332,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-31T14:32:59.456Z",
+      "action": "Edited",
+      "item": "Renu",
+      "details": "Amount: AED 20,117.00   AED 13,617.00; Total: AED 20,117.00   AED 13,617.00"
+    },
     {
       "timestamp": "2026-03-31T12:35:54.964Z",
       "action": "Added",
