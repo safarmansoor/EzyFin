@@ -67,8 +67,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 2385.2,
-      "total": 2385.2
+      "amount": 5055.24,
+      "total": 5055.24
     },
     {
       "id": "mna3kqz8dy8wk39l665",
@@ -322,6 +322,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-31T12:33:55.957Z",
+      "action": "Edited",
+      "item": "Amazon Saudi",
+      "details": "Amount: AED 2,385.20   AED 5,055.24; Total: AED 2,385.20   AED 5,055.24"
+    },
     {
       "timestamp": "2026-03-31T12:32:01.143Z",
       "action": "Edited",
