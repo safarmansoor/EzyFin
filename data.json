@@ -297,8 +297,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 20630.69,
-      "total": 20630.69
+      "amount": 14130,
+      "total": 14130
     },
     {
       "id": "mnek2q6xas55cjvdvwn",
@@ -332,6 +332,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-31T14:33:19.889Z",
+      "action": "Edited",
+      "item": "ADCB",
+      "details": "Amount: AED 20,630.69   AED 14,130.00; Total: AED 20,630.69   AED 14,130.00"
+    },
     {
       "timestamp": "2026-03-31T14:32:59.456Z",
       "action": "Edited",
