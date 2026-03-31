@@ -309,9 +309,25 @@
       "qty": 5,
       "amount": 498.53,
       "total": 2492.6499999999996
+    },
+    {
+      "id": "mnek3uzhmwlhjsmnk1k",
+      "date": "2026-03-31",
+      "description": "MT6000 GLINET",
+      "category": "Inventory",
+      "status": "pending",
+      "qty": 5,
+      "amount": 587.57,
+      "total": 2937.8500000000004
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-31T11:51:42.750Z",
+      "action": "Added",
+      "item": "MT6000 GLINET",
+      "details": "Amount: AED 587.57, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-31T11:50:49.882Z",
       "action": "Added",
