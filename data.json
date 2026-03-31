@@ -57,8 +57,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 21191.83,
-      "total": 21191.83
+      "amount": 13450.57,
+      "total": 13450.57
     },
     {
       "id": "mna3kfou52enjeclsth",
@@ -322,6 +322,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-31T12:32:01.143Z",
+      "action": "Edited",
+      "item": "Amazon UAE",
+      "details": "Amount: AED 21,191.83   AED 13,450.57; Total: AED 21,191.83   AED 13,450.57"
+    },
     {
       "timestamp": "2026-03-31T11:51:42.750Z",
       "action": "Added",
