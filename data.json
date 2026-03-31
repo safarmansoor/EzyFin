@@ -299,9 +299,25 @@
       "qty": 1,
       "amount": 20630.69,
       "total": 20630.69
+    },
+    {
+      "id": "mnek2q6xas55cjvdvwn",
+      "date": "2026-03-31",
+      "description": "MT3600BE GLINET",
+      "category": "Inventory",
+      "status": "pending",
+      "qty": 5,
+      "amount": 498.53,
+      "total": 2492.6499999999996
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-03-31T11:50:49.882Z",
+      "action": "Added",
+      "item": "MT3600BE GLINET",
+      "details": "Amount: AED 498.53, Category: Inventory"
+    },
     {
       "timestamp": "2026-03-31T11:34:24.735Z",
       "action": "Edited",
