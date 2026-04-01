@@ -329,9 +329,25 @@
       "qty": 80,
       "amount": 111.35,
       "total": 8908
+    },
+    {
+      "id": "mnfo6ttmpa5mnyn7th",
+      "date": "2026-04-01",
+      "description": "Xreal One Pro - M",
+      "category": "Inventory",
+      "status": "pending",
+      "qty": 2,
+      "amount": 2064,
+      "total": 4128
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-01T06:33:45.851Z",
+      "action": "Added",
+      "item": "Xreal One Pro - M",
+      "details": "Amount: AED 2,064.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-04-01T06:33:22.495Z",
       "action": "Edited",
