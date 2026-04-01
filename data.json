@@ -95,10 +95,10 @@
       "date": "2026-03-28",
       "description": "Xreal One Pro - L",
       "category": "Inventory",
-      "status": "active",
-      "qty": 0,
+      "status": "pending",
+      "qty": 2,
       "amount": 2064,
-      "total": 0
+      "total": 4128
     },
     {
       "id": "mna3pyn50wxqruorc14f",
@@ -332,6 +332,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-01T06:33:22.495Z",
+      "action": "Edited",
+      "item": "Xreal One Pro - L",
+      "details": "Status: active   pending; Quantity: 0   2; Total: AED 0.00   AED 4,128.00"
+    },
     {
       "timestamp": "2026-04-01T06:21:19.521Z",
       "action": "Edited",
