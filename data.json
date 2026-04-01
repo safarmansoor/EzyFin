@@ -146,9 +146,9 @@
       "description": "MT3600BE GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 2,
+      "qty": 0,
       "amount": 580,
-      "total": 1160
+      "total": 0
     },
     {
       "id": "mna3vebgkm9i9un2uk",
@@ -352,6 +352,12 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-01T12:16:59.649Z",
+      "action": "Edited",
+      "item": "MT3600BE GLINET",
+      "details": "Quantity: 2   0; Total: AED 1,160.00   AED 0.00"
+    },
     {
       "timestamp": "2026-04-01T06:34:34.840Z",
       "action": "Edited",
