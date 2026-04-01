@@ -339,9 +339,25 @@
       "qty": 2,
       "amount": 2064,
       "total": 4128
+    },
+    {
+      "id": "mnfo7hj8v5ybtkoxljf",
+      "date": "2026-04-01",
+      "description": "Xreal 1S",
+      "category": "Inventory",
+      "status": "pending",
+      "qty": 1,
+      "amount": 1595,
+      "total": 1595
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-01T06:34:16.581Z",
+      "action": "Added",
+      "item": "Xreal 1S",
+      "details": "Amount: AED 1,595.00, Category: Inventory"
+    },
     {
       "timestamp": "2026-04-01T06:33:45.851Z",
       "action": "Added",
