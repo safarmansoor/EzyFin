@@ -349,9 +349,25 @@
       "qty": 3,
       "amount": 1595,
       "total": 4785
+    },
+    {
+      "id": "mnh07fwu8mguxkh7q3t",
+      "date": "2026-04-02",
+      "description": "Boruit v10",
+      "category": "Inventory",
+      "status": "pending",
+      "qty": 60,
+      "amount": 27.25,
+      "total": 1635
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-02T04:57:56.047Z",
+      "action": "Added",
+      "item": "Boruit v10",
+      "details": "Amount: AED 27.25, Category: Inventory"
+    },
     {
       "timestamp": "2026-04-02T04:56:45.952Z",
       "action": "Edited",
