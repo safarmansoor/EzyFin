@@ -2151,12 +2151,17 @@
                     isPositive = false;
                 } else if (log.action === 'Edited' || log.action === 'Updated') {
                     if (log.oldValue !== undefined && log.newValue !== undefined) {
+                        // We have exact delta values
                         const delta = log.newValue - log.oldValue;
                         previousTotal = runningTotal - delta;
                         changeAmount = delta;
                         isPositive = delta >= 0;
                     } else {
-                        continue;
+                        // No delta info - treat as a positive change with the final amount
+                        // This handles cases where we only know the entry was edited
+                        previousTotal = runningTotal - amount;
+                        changeAmount = amount;
+                        isPositive = true;
                     }
                 }
                 
