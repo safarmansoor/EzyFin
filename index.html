@@ -223,6 +223,110 @@
             color: white !important;
         }
 
+        /* Dashboard Summary Cards - Vertical Layout */
+        .summary-card {
+            display: flex;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            margin-bottom: 0.75rem;
+            border-radius: 0.5rem;
+            border-left: 5px solid;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .summary-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15) !important;
+        }
+        
+        .summary-card .card-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .summary-card .card-content {
+            flex: 1;
+        }
+        
+        .summary-card .card-title {
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .summary-card .card-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #556B2F;
+        }
+        
+        /* Color coding for each category */
+        .summary-card.liquidity {
+            border-left-color: #0d6efd;
+            background: linear-gradient(90deg, rgba(13,110,253,0.05) 0%, rgba(255,255,255,1) 100%);
+        }
+        .summary-card.liquidity .card-icon {
+            background-color: #0d6efd;
+            color: white;
+        }
+        
+        .summary-card.inventory {
+            border-left-color: #198754;
+            background: linear-gradient(90deg, rgba(25,135,84,0.05) 0%, rgba(255,255,255,1) 100%);
+        }
+        .summary-card.inventory .card-icon {
+            background-color: #198754;
+            color: white;
+        }
+        
+        .summary-card.investment {
+            border-left-color: #6f42c1;
+            background: linear-gradient(90deg, rgba(111,66,193,0.05) 0%, rgba(255,255,255,1) 100%);
+        }
+        .summary-card.investment .card-icon {
+            background-color: #6f42c1;
+            color: white;
+        }
+        
+        .summary-card.receivable {
+            border-left-color: #fd7e14;
+            background: linear-gradient(90deg, rgba(253,126,20,0.05) 0%, rgba(255,255,255,1) 100%);
+        }
+        .summary-card.receivable .card-icon {
+            background-color: #fd7e14;
+            color: white;
+        }
+        
+        .summary-card.giveable {
+            border-left-color: #d63384;
+            background: linear-gradient(90deg, rgba(214,51,132,0.05) 0%, rgba(255,255,255,1) 100%);
+        }
+        .summary-card.giveable .card-icon {
+            background-color: #d63384;
+            color: white;
+        }
+        
+        .summary-card.networth {
+            border-left-color: #D4AF37;
+            background: linear-gradient(90deg, rgba(212,175,55,0.08) 0%, rgba(255,255,255,1) 100%);
+        }
+        .summary-card.networth .card-icon {
+            background-color: #D4AF37;
+            color: white;
+        }
+        .summary-card.networth .card-value {
+            color: #D4AF37;
+        }
+
         /* Net Worth History - Vertical List */
         .networth-history-list {
             max-height: 300px;
@@ -296,63 +400,83 @@
 
     <!-- Main Content -->
     <div class="container mt-4">
-        <!-- Summary Cards -->
+        <!-- Summary Cards - Vertical Layout with Icons -->
         <div class="row mb-4">
-            <div class="col-6 col-md-2">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-muted">Liquidity</h6>
-                        <h3 class="card-text" id="liquidityCard">$0.00</h3>
+            <div class="col-md-8 mx-auto">
+                <!-- Liquidity Card -->
+                <div class="card summary-card liquidity shadow-sm">
+                    <div class="card-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Liquidity</div>
+                        <div class="card-value" id="liquidityCard">AED 0.00</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 col-md-2">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-muted">Inventory</h6>
-                        <h3 class="card-text" id="inventoryCard">$0.00</h3>
+                
+                <!-- Inventory Card -->
+                <div class="card summary-card inventory shadow-sm">
+                    <div class="card-icon">
+                        <i class="fas fa-boxes-stacked"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Inventory</div>
+                        <div class="card-value" id="inventoryCard">AED 0.00</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 col-md-2">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-muted">Investment</h6>
-                        <h3 class="card-text" id="investmentCard">$0.00</h3>
+                
+                <!-- Investment Card -->
+                <div class="card summary-card investment shadow-sm">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Investment</div>
+                        <div class="card-value" id="investmentCard">AED 0.00</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 col-md-2">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-muted">Receivable</h6>
-                        <h3 class="card-text" id="receivableCard">$0.00</h3>
+                
+                <!-- Receivable Card -->
+                <div class="card summary-card receivable shadow-sm">
+                    <div class="card-icon">
+                        <i class="fas fa-hand-holding-dollar"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Receivable</div>
+                        <div class="card-value" id="receivableCard">AED 0.00</div>
                     </div>
                 </div>
-            </div>
-            <div class="col-6 col-md-2">
-                <div class="card">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-muted">Giveable</h6>
-                        <h3 class="card-text" id="giveableCard">$0.00</h3>
+                
+                <!-- Giveable Card -->
+                <div class="card summary-card giveable shadow-sm">
+                    <div class="card-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Giveable</div>
+                        <div class="card-value" id="giveableCard">AED 0.00</div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <!-- Net Worth Card - Separate Full Width Tile -->
-        <div class="row mb-4">
-            <div class="col-12">
-                <div class="card networth-card" id="netWorthCardContainer" style="cursor: pointer; transition: transform 0.2s;">
-                    <div class="card-body text-center">
-                        <h6 class="card-title text-muted">Net Worth</h6>
-                        <div class="d-flex justify-content-center align-items-center gap-2">
-                            <h3 class="card-text" id="netWorthCard" style="margin: 0;">$0.00</h3>
+                
+                <!-- Net Worth Card -->
+                <div class="card summary-card networth shadow-sm" id="netWorthCardContainer" style="cursor: pointer;">
+                    <div class="card-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-title">Net Worth</div>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="card-value" id="netWorthCard">AED 0.00</div>
                             <span id="netWorthTrend" class="networth-trend-indicator" style="display: none;"></span>
                         </div>
-                        <div id="netWorthChanges" class="mt-2 networth-history-list text-start" style="display: none; max-height: 300px;"></div>
+                    </div>
+                    <div class="card-action">
+                        <i class="fas fa-chevron-down" id="netWorthChevron" style="color: #D4AF37; transition: transform 0.3s;"></i>
                     </div>
                 </div>
+                
+                <!-- Net Worth History (Hidden by default) -->
+                <div id="netWorthChanges" class="mt-2 networth-history-list" style="display: none; max-height: 300px; overflow-y: auto; padding-left: 65px;"></div>
             </div>
         </div>
 
@@ -1915,13 +2039,16 @@
                 e.stopPropagation();
                 
                 const changesContainer = document.getElementById('netWorthChanges');
+                const chevron = document.getElementById('netWorthChevron');
                 
                 netWorthHistoryVisible = !netWorthHistoryVisible;
                 
                 if (netWorthHistoryVisible) {
                     changesContainer.style.display = 'block';
+                    chevron.style.transform = 'rotate(180deg)';
                 } else {
                     changesContainer.style.display = 'none';
+                    chevron.style.transform = 'rotate(0deg)';
                 }
             });
         });
