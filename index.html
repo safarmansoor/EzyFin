@@ -339,11 +339,17 @@
                 </div>
             </div>
             <div class="col-6 col-md-2">
-                <div class="card">
+                <div class="card networth-card" id="netWorthCardContainer" style="cursor: pointer; transition: transform 0.2s;">
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Net Worth</h6>
-                        <h3 class="card-text" id="netWorthCard">$0.00</h3>
-                        <div id="netWorthChanges" class="mt-2 networth-history-list text-start"></div>
+                        <div class="d-flex justify-content-center align-items-center gap-2">
+                            <h3 class="card-text" id="netWorthCard" style="margin: 0;">$0.00</h3>
+                            <span id="netWorthTrend" class="networth-trend-indicator" style="display: none;"></span>
+                        </div>
+                        <div id="netWorthToggle" class="text-muted" style="font-size: 0.65rem; margin-top: 0.25rem;">
+                            <i class="fas fa-chevron-down"></i> Click for history
+                        </div>
+                        <div id="netWorthChanges" class="mt-2 networth-history-list text-start" style="display: none;"></div>
                     </div>
                 </div>
             </div>
@@ -991,7 +997,9 @@
         // Render last 5 historical net worth values from audit log (vertical list)
         function renderNetWorthChanges() {
             const changesContainer = document.getElementById('netWorthChanges');
+            const trendIndicator = document.getElementById('netWorthTrend');
             changesContainer.innerHTML = '';
+            trendIndicator.style.display = 'none';
 
             if (!state.audit_log || state.audit_log.length === 0) {
                 return;
@@ -1004,6 +1012,7 @@
             const relevantActions = ['Added', 'Deleted', 'Edited', 'Updated'];
             const historicalValues = [];
             let runningNetWorth = currentNetWorth;
+            let latestChange = null;
 
             // Go through audit log in order (most recent first) to calculate historical values
             for (const log of state.audit_log) {
@@ -1041,6 +1050,14 @@
                 // Determine if this was a positive or negative change
                 const isPositive = changeAmount >= 0;
                 
+                // Store the latest change for the trend indicator
+                if (!latestChange) {
+                    latestChange = {
+                        change: changeAmount,
+                        isPositive: isPositive
+                    };
+                }
+                
                 historicalValues.push({
                     netWorth: previousNetWorth,
                     change: changeAmount,
@@ -1054,8 +1071,22 @@
                 runningNetWorth = previousNetWorth;
             }
 
-            // Create vertical list items for each historical value
-            historicalValues.forEach((history, index) => {
+            // Show latest trend indicator next to current net worth
+            if (latestChange) {
+                const changeSign = latestChange.isPositive ? '+' : '-';
+                const changeClass = latestChange.isPositive ? 'positive' : 'negative';
+                const changeArrow = latestChange.isPositive ? '▲' : '▼';
+                
+                trendIndicator.innerHTML = `
+                    <span class="networth-history-change ${changeClass}" style="font-size: 0.9rem;">
+                        ${changeArrow} ${changeSign}AED ${Math.abs(latestChange.change).toLocaleString('en-AE', { minimumFractionDigits: 0 })}
+                    </span>
+                `;
+                trendIndicator.style.display = 'inline';
+            }
+
+            // Create vertical list items for each historical value (skip the first one as it's shown in trend)
+            historicalValues.slice(1).forEach((history, index) => {
                 const item = document.createElement('div');
                 item.className = 'networth-history-item';
                 
@@ -1874,6 +1905,26 @@
             // Download functionality
             document.getElementById('downloadBtn').addEventListener('click', function() {
                 downloadData();
+            });
+
+            // Net Worth card click to toggle history
+            let netWorthHistoryVisible = false;
+            document.getElementById('netWorthCardContainer').addEventListener('click', function(e) {
+                // Prevent click from triggering other elements
+                e.stopPropagation();
+                
+                const changesContainer = document.getElementById('netWorthChanges');
+                const toggleIndicator = document.getElementById('netWorthToggle');
+                
+                netWorthHistoryVisible = !netWorthHistoryVisible;
+                
+                if (netWorthHistoryVisible) {
+                    changesContainer.style.display = 'block';
+                    toggleIndicator.innerHTML = '<i class="fas fa-chevron-up"></i> Click to hide history';
+                } else {
+                    changesContainer.style.display = 'none';
+                    toggleIndicator.innerHTML = '<i class="fas fa-chevron-down"></i> Click for history';
+                }
             });
         });
 
