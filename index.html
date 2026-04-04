@@ -1108,11 +1108,15 @@
             // Clean up any encoding issues in the details string
             const cleanDetails = details.replace(/[^\x00-\x7F]/g, ' ');
             
+            // Calculate current net worth
+            const currentNetWorth = calculateTotalNetWorth();
+            
             let logEntry = {
                 timestamp: new Date().toISOString(),
                 action: actionType,
                 item: itemName,
-                details: cleanDetails
+                details: cleanDetails,
+                netWorth: currentNetWorth
             };
 
             // Add old/new value tracking if provided
@@ -1171,10 +1175,10 @@
             // Get relevant audit entries (skip INITIALIZE and non-value-changing actions)
             const relevantActions = ['Added', 'Deleted', 'Edited', 'Updated'];
             const historicalValues = [];
-            let runningNetWorth = currentNetWorth;
             let latestChange = null;
+            let previousNetWorth = currentNetWorth;
 
-            // Go through audit log in order (most recent first) to calculate historical values
+            // Go through audit log in order (most recent first)
             for (const log of state.audit_log) {
                 if (historicalValues.length >= 5) break;
                 
@@ -1183,29 +1187,37 @@
                 const amount = extractAmountFromDetails(log.details);
                 if (amount <= 0) continue;
                 
-                // Calculate what net worth was BEFORE this change
-                let previousNetWorth;
+                // Use the stored netWorth if available, otherwise calculate
+                let netWorthAtChange;
                 let changeAmount;
                 
-                if (log.action === 'Added') {
-                    // Before this add, net worth was lower
-                    previousNetWorth = runningNetWorth - amount;
-                    changeAmount = amount;
-                } else if (log.action === 'Deleted') {
-                    // Before this delete, net worth was higher
-                    previousNetWorth = runningNetWorth + amount;
-                    changeAmount = -amount;
-                } else if (log.action === 'Edited' || log.action === 'Updated') {
-                    // For edited entries, check if we have old/new values
-                    if (log.oldValue !== undefined && log.newValue !== undefined) {
-                        const delta = log.newValue - log.oldValue;
-                        previousNetWorth = runningNetWorth - delta;
-                        changeAmount = delta;
-                    } else {
-                        // No delta info - treat as a positive change with the final amount
-                        // This handles cases where we only know the entry was edited
-                        previousNetWorth = runningNetWorth - amount;
+                if (log.netWorth !== undefined && historicalValues.length > 0) {
+                    // Use the stored net worth value from the previous entry
+                    // The stored netWorth is the net worth AFTER that change was made
+                    netWorthAtChange = historicalValues[historicalValues.length - 1].netWorth;
+                    changeAmount = netWorthAtChange - log.netWorth;
+                    netWorthAtChange = log.netWorth;
+                } else if (log.netWorth !== undefined) {
+                    // First entry - the stored netWorth should equal current net worth
+                    netWorthAtChange = log.netWorth;
+                    changeAmount = 0;
+                } else {
+                    // Fallback: calculate based on action type
+                    if (log.action === 'Added') {
+                        netWorthAtChange = previousNetWorth - amount;
                         changeAmount = amount;
+                    } else if (log.action === 'Deleted') {
+                        netWorthAtChange = previousNetWorth + amount;
+                        changeAmount = -amount;
+                    } else {
+                        if (log.oldValue !== undefined && log.newValue !== undefined) {
+                            const delta = log.newValue - log.oldValue;
+                            netWorthAtChange = previousNetWorth - delta;
+                            changeAmount = delta;
+                        } else {
+                            netWorthAtChange = previousNetWorth - amount;
+                            changeAmount = amount;
+                        }
                     }
                 }
                 
@@ -1221,7 +1233,7 @@
                 }
                 
                 historicalValues.push({
-                    netWorth: previousNetWorth,
+                    netWorth: netWorthAtChange,
                     change: changeAmount,
                     isPositive: isPositive,
                     action: log.action,
@@ -1229,8 +1241,8 @@
                     timestamp: log.timestamp
                 });
                 
-                // Update running net worth for next iteration
-                runningNetWorth = previousNetWorth;
+                // Update for next iteration
+                previousNetWorth = netWorthAtChange;
             }
 
             // Show latest trend indicator next to current net worth
