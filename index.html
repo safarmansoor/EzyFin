@@ -222,6 +222,25 @@
             border-color: #556B2F !important;
             color: white !important;
         }
+
+        /* Net Worth Changes Badges */
+        .networth-change-badge {
+            font-size: 0.7rem;
+            padding: 0.15rem 0.5rem;
+            border-radius: 1rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .networth-change-positive {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .networth-change-negative {
+            background-color: #dc3545;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -296,6 +315,7 @@
                     <div class="card-body text-center">
                         <h6 class="card-title text-muted">Net Worth</h6>
                         <h3 class="card-text" id="netWorthCard">$0.00</h3>
+                        <div id="netWorthChanges" class="mt-2 d-flex flex-wrap justify-content-center gap-1"></div>
                     </div>
                 </div>
             </div>
@@ -925,6 +945,73 @@
             document.getElementById('receivableCard').textContent = formatCurrency(receivable);
             document.getElementById('giveableCard').textContent = formatCurrency(giveable);
             document.getElementById('netWorthCard').textContent = formatCurrency(netWorth);
+            
+            // Render net worth changes
+            renderNetWorthChanges();
+        }
+
+        // Extract amount from audit log details string
+        function extractAmountFromDetails(details) {
+            // Match "Amount: AED XX,XXX.XX" pattern
+            const match = details.match(/Amount:\s*AED\s*([\d,]+\.?\d*)/);
+            if (match) {
+                return parseFloat(match[1].replace(/,/g, ''));
+            }
+            return 0;
+        }
+
+        // Render last 5 net worth changes from audit log
+        function renderNetWorthChanges() {
+            const changesContainer = document.getElementById('netWorthChanges');
+            changesContainer.innerHTML = '';
+
+            if (!state.audit_log || state.audit_log.length === 0) {
+                return;
+            }
+
+            // Get the last 5 entries that affect net worth (skip INITIALIZE actions)
+            const relevantActions = ['Added', 'Deleted', 'Edited', 'Updated'];
+            const changes = [];
+
+            for (const log of state.audit_log) {
+                if (changes.length >= 5) break;
+                if (relevantActions.includes(log.action)) {
+                    const amount = extractAmountFromDetails(log.details);
+                    if (amount > 0) {
+                        // Added/Updated = positive, Deleted = negative
+                        // For Edited, we show the final amount as positive (since we can't calculate delta)
+                        const isPositive = log.action === 'Added' || log.action === 'Updated' || log.action === 'Edited';
+                        changes.push({
+                            amount: amount,
+                            isPositive: isPositive,
+                            action: log.action
+                        });
+                    }
+                }
+            }
+
+            // Create badges for each change
+            changes.forEach(change => {
+                const badge = document.createElement('span');
+                const formattedAmount = formatShortCurrency(change.amount);
+                const sign = change.isPositive ? '+' : '-';
+                
+                badge.className = `networth-change-badge ${change.isPositive ? 'networth-change-positive' : 'networth-change-negative'}`;
+                badge.textContent = `${sign}${formattedAmount}`;
+                badge.title = `${change.action}: AED ${change.amount.toLocaleString('en-AE', { minimumFractionDigits: 2 })}`;
+                
+                changesContainer.appendChild(badge);
+            });
+        }
+
+        // Format currency in short form for badges
+        function formatShortCurrency(amount) {
+            if (amount >= 1000000) {
+                return (amount / 1000000).toFixed(1) + 'M';
+            } else if (amount >= 1000) {
+                return (amount / 1000).toFixed(1) + 'K';
+            }
+            return amount.toFixed(0);
         }
 
         function calculateCategoryTotal(category) {
