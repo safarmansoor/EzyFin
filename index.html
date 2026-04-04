@@ -1202,8 +1202,10 @@
                         previousNetWorth = runningNetWorth - delta;
                         changeAmount = delta;
                     } else {
-                        // Can't determine delta, skip this entry
-                        continue;
+                        // No delta info - treat as a positive change with the final amount
+                        // This handles cases where we only know the entry was edited
+                        previousNetWorth = runningNetWorth - amount;
+                        changeAmount = amount;
                     }
                 }
                 
