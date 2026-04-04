@@ -7,8 +7,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 18820,
-      "total": 18820
+      "amount": 18810,
+      "total": 18810
     },
     {
       "id": "mna3ibnqvge0c4zl59q",
@@ -352,6 +352,13 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-04T22:59:59.135Z",
+      "action": "Edited",
+      "item": "Cash on India",
+      "details": "Amount: AED 18,820.00   AED 18,810.00; Total: AED 18,820.00   AED 18,810.00",
+      "netWorth": 212965.13000000003
+    },
     {
       "timestamp": "2026-04-04T22:59:40.310Z",
       "action": "Edited",
