@@ -419,7 +419,7 @@
         <div class="row mb-4">
             <div class="col-md-8 mx-auto">
                 <!-- Liquidity Card -->
-                <div class="card summary-card liquidity shadow-sm">
+                <div class="card summary-card liquidity shadow-sm" id="liquidityCardContainer" style="cursor: pointer;">
                     <div class="card-content">
                         <div class="card-content-left">
                             <div class="card-icon">
@@ -428,11 +428,13 @@
                             <div class="card-title">Liquidity</div>
                         </div>
                         <div class="card-value" id="liquidityCard">AED 0.00</div>
+                        <i class="fas fa-chevron-down category-chevron" style="color: #0d6efd; transition: transform 0.3s; margin-left: 0.5rem;"></i>
                     </div>
                 </div>
+                <div id="liquidityChanges" class="mt-2 networth-history-list" style="display: none; max-height: 300px; overflow-y: auto; padding-left: 65px; margin-bottom: 0.75rem;"></div>
                 
                 <!-- Inventory Card -->
-                <div class="card summary-card inventory shadow-sm">
+                <div class="card summary-card inventory shadow-sm" id="inventoryCardContainer" style="cursor: pointer;">
                     <div class="card-content">
                         <div class="card-content-left">
                             <div class="card-icon">
@@ -441,11 +443,13 @@
                             <div class="card-title">Inventory</div>
                         </div>
                         <div class="card-value" id="inventoryCard">AED 0.00</div>
+                        <i class="fas fa-chevron-down category-chevron" style="color: #198754; transition: transform 0.3s; margin-left: 0.5rem;"></i>
                     </div>
                 </div>
+                <div id="inventoryChanges" class="mt-2 networth-history-list" style="display: none; max-height: 300px; overflow-y: auto; padding-left: 65px; margin-bottom: 0.75rem;"></div>
                 
                 <!-- Investment Card -->
-                <div class="card summary-card investment shadow-sm">
+                <div class="card summary-card investment shadow-sm" id="investmentCardContainer" style="cursor: pointer;">
                     <div class="card-content">
                         <div class="card-content-left">
                             <div class="card-icon">
@@ -454,11 +458,13 @@
                             <div class="card-title">Investment</div>
                         </div>
                         <div class="card-value" id="investmentCard">AED 0.00</div>
+                        <i class="fas fa-chevron-down category-chevron" style="color: #6f42c1; transition: transform 0.3s; margin-left: 0.5rem;"></i>
                     </div>
                 </div>
+                <div id="investmentChanges" class="mt-2 networth-history-list" style="display: none; max-height: 300px; overflow-y: auto; padding-left: 65px; margin-bottom: 0.75rem;"></div>
                 
                 <!-- Receivable Card -->
-                <div class="card summary-card receivable shadow-sm">
+                <div class="card summary-card receivable shadow-sm" id="receivableCardContainer" style="cursor: pointer;">
                     <div class="card-content">
                         <div class="card-content-left">
                             <div class="card-icon">
@@ -467,11 +473,13 @@
                             <div class="card-title">Receivable</div>
                         </div>
                         <div class="card-value" id="receivableCard">AED 0.00</div>
+                        <i class="fas fa-chevron-down category-chevron" style="color: #fd7e14; transition: transform 0.3s; margin-left: 0.5rem;"></i>
                     </div>
                 </div>
+                <div id="receivableChanges" class="mt-2 networth-history-list" style="display: none; max-height: 300px; overflow-y: auto; padding-left: 65px; margin-bottom: 0.75rem;"></div>
                 
                 <!-- Giveable Card -->
-                <div class="card summary-card giveable shadow-sm">
+                <div class="card summary-card giveable shadow-sm" id="giveableCardContainer" style="cursor: pointer;">
                     <div class="card-content">
                         <div class="card-content-left">
                             <div class="card-icon">
@@ -480,8 +488,10 @@
                             <div class="card-title">Giveable</div>
                         </div>
                         <div class="card-value" id="giveableCard">AED 0.00</div>
+                        <i class="fas fa-chevron-down category-chevron" style="color: #d63384; transition: transform 0.3s; margin-left: 0.5rem;"></i>
                     </div>
                 </div>
+                <div id="giveableChanges" class="mt-2 networth-history-list" style="display: none; max-height: 300px; overflow-y: auto; padding-left: 65px; margin-bottom: 0.75rem;"></div>
                 
                 <!-- Net Worth Card -->
                 <div class="card summary-card networth shadow-sm" id="netWorthCardContainer" style="cursor: pointer;">
@@ -496,9 +506,7 @@
                             <div class="card-value" id="netWorthCard">AED 0.00</div>
                             <span id="netWorthTrend" class="networth-trend-indicator" style="display: none;"></span>
                         </div>
-                    </div>
-                    <div class="card-action">
-                        <i class="fas fa-chevron-down" id="netWorthChevron" style="color: #D4AF37; transition: transform 0.3s;"></i>
+                        <i class="fas fa-chevron-down category-chevron" style="color: #D4AF37; transition: transform 0.3s; margin-left: 0.5rem;"></i>
                     </div>
                 </div>
                 
@@ -2059,14 +2067,40 @@
                 downloadData();
             });
 
+            // Category cards click to toggle history
+            const categories = ['liquidity', 'inventory', 'investment', 'receivable', 'giveable'];
+            const categoryHistoryVisible = {};
+            
+            categories.forEach(category => {
+                categoryHistoryVisible[category] = false;
+                const cardContainer = document.getElementById(category + 'CardContainer');
+                const changesContainer = document.getElementById(category + 'Changes');
+                const chevron = cardContainer.querySelector('.category-chevron');
+                
+                cardContainer.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    categoryHistoryVisible[category] = !categoryHistoryVisible[category];
+                    
+                    if (categoryHistoryVisible[category]) {
+                        changesContainer.style.display = 'block';
+                        chevron.style.transform = 'rotate(180deg)';
+                        // Render category history
+                        renderCategoryHistory(category, changesContainer);
+                    } else {
+                        changesContainer.style.display = 'none';
+                        chevron.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+            
             // Net Worth card click to toggle history
             let netWorthHistoryVisible = false;
             document.getElementById('netWorthCardContainer').addEventListener('click', function(e) {
-                // Prevent click from triggering other elements
                 e.stopPropagation();
                 
                 const changesContainer = document.getElementById('netWorthChanges');
-                const chevron = document.getElementById('netWorthChevron');
+                const chevron = this.querySelector('.category-chevron');
                 
                 netWorthHistoryVisible = !netWorthHistoryVisible;
                 
@@ -2079,6 +2113,98 @@
                 }
             });
         });
+
+        // Render category-specific history from audit log
+        function renderCategoryHistory(category, container) {
+            container.innerHTML = '';
+            
+            if (!state.audit_log || state.audit_log.length === 0) {
+                container.innerHTML = '<div class="text-muted small">No history available</div>';
+                return;
+            }
+            
+            const relevantActions = ['Added', 'Deleted', 'Edited', 'Updated'];
+            const historyItems = [];
+            let runningTotal = calculateCategoryTotal(category);
+            
+            for (const log of state.audit_log) {
+                if (historyItems.length >= 5) break;
+                if (!relevantActions.includes(log.action)) continue;
+                
+                // Check if this log entry is for the current category
+                if (!log.details.includes(`Category: ${category}`)) continue;
+                
+                const amount = extractAmountFromDetails(log.details);
+                if (amount <= 0) continue;
+                
+                let previousTotal;
+                let changeAmount;
+                let isPositive;
+                
+                if (log.action === 'Added') {
+                    previousTotal = runningTotal - amount;
+                    changeAmount = amount;
+                    isPositive = true;
+                } else if (log.action === 'Deleted') {
+                    previousTotal = runningTotal + amount;
+                    changeAmount = -amount;
+                    isPositive = false;
+                } else if (log.action === 'Edited' || log.action === 'Updated') {
+                    if (log.oldValue !== undefined && log.newValue !== undefined) {
+                        const delta = log.newValue - log.oldValue;
+                        previousTotal = runningTotal - delta;
+                        changeAmount = delta;
+                        isPositive = delta >= 0;
+                    } else {
+                        continue;
+                    }
+                }
+                
+                historyItems.push({
+                    action: log.action,
+                    item: log.item,
+                    amount: amount,
+                    changeAmount: changeAmount,
+                    isPositive: isPositive,
+                    previousTotal: previousTotal,
+                    timestamp: log.timestamp
+                });
+                
+                runningTotal = previousTotal;
+            }
+            
+            if (historyItems.length === 0) {
+                container.innerHTML = '<div class="text-muted small">No history available</div>';
+                return;
+            }
+            
+            historyItems.forEach(item => {
+                const entry = document.createElement('div');
+                entry.className = 'networth-history-item';
+                
+                const date = new Date(item.timestamp);
+                const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const timeStr = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                
+                const changeSign = item.isPositive ? '+' : '-';
+                const changeClass = item.isPositive ? 'positive' : 'negative';
+                const changeArrow = item.isPositive ? '▲' : '▼';
+                
+                entry.innerHTML = `
+                    <div class="networth-history-date">
+                        <i class="fas fa-clock me-1"></i>${dateStr}, ${timeStr}
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="networth-history-value">${item.action}: ${item.item}</span>
+                        <span class="networth-history-change ${changeClass}">
+                            ${changeArrow} ${changeSign}AED ${Math.abs(item.changeAmount).toLocaleString('en-AE', { minimumFractionDigits: 0 })}
+                        </span>
+                    </div>
+                `;
+                
+                container.appendChild(entry);
+            });
+        }
 
         // Download function
         function downloadData() {
