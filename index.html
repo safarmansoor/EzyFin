@@ -960,7 +960,7 @@
             return 0;
         }
 
-        // Render last 5 net worth changes from audit log
+        // Render last 5 historical net worth values from audit log
         function renderNetWorthChanges() {
             const changesContainer = document.getElementById('netWorthChanges');
             changesContainer.innerHTML = '';
@@ -969,39 +969,91 @@
                 return;
             }
 
-            // Get the last 5 entries that affect net worth (skip INITIALIZE actions)
+            // Calculate current net worth
+            let currentNetWorth = calculateTotalNetWorth();
+            
+            // Get relevant audit entries (skip INITIALIZE and non-value-changing actions)
             const relevantActions = ['Added', 'Deleted', 'Edited', 'Updated'];
-            const changes = [];
+            const historicalValues = [];
+            let runningNetWorth = currentNetWorth;
 
+            // Go through audit log in order (most recent first) to calculate historical values
             for (const log of state.audit_log) {
-                if (changes.length >= 5) break;
-                if (relevantActions.includes(log.action)) {
-                    const amount = extractAmountFromDetails(log.details);
-                    if (amount > 0) {
-                        // Added/Updated = positive, Deleted = negative
-                        // For Edited, we show the final amount as positive (since we can't calculate delta)
-                        const isPositive = log.action === 'Added' || log.action === 'Updated' || log.action === 'Edited';
-                        changes.push({
-                            amount: amount,
-                            isPositive: isPositive,
-                            action: log.action
-                        });
+                if (historicalValues.length >= 5) break;
+                
+                if (!relevantActions.includes(log.action)) continue;
+                
+                const amount = extractAmountFromDetails(log.details);
+                if (amount <= 0) continue;
+                
+                // Calculate what net worth was BEFORE this change
+                let previousNetWorth;
+                let changeAmount;
+                
+                if (log.action === 'Added') {
+                    // Before this add, net worth was lower
+                    previousNetWorth = runningNetWorth - amount;
+                    changeAmount = amount;
+                } else if (log.action === 'Deleted') {
+                    // Before this delete, net worth was higher
+                    previousNetWorth = runningNetWorth + amount;
+                    changeAmount = -amount;
+                } else if (log.action === 'Edited' || log.action === 'Updated') {
+                    // For edited entries, check if we have old/new values
+                    if (log.oldValue !== undefined && log.newValue !== undefined) {
+                        const delta = log.newValue - log.oldValue;
+                        previousNetWorth = runningNetWorth - delta;
+                        changeAmount = delta;
+                    } else {
+                        // Can't determine delta, skip this entry
+                        continue;
                     }
                 }
+                
+                // Determine if this was a positive or negative change
+                const isPositive = changeAmount >= 0;
+                
+                historicalValues.push({
+                    netWorth: previousNetWorth,
+                    change: changeAmount,
+                    isPositive: isPositive,
+                    action: log.action,
+                    item: log.item,
+                    timestamp: log.timestamp
+                });
+                
+                // Update running net worth for next iteration
+                runningNetWorth = previousNetWorth;
             }
 
-            // Create badges for each change
-            changes.forEach(change => {
+            // Create badges for each historical value
+            historicalValues.forEach((history, index) => {
                 const badge = document.createElement('span');
-                const formattedAmount = formatShortCurrency(change.amount);
-                const sign = change.isPositive ? '+' : '-';
+                const formattedNetWorth = formatShortCurrency(history.netWorth);
                 
-                badge.className = `networth-change-badge ${change.isPositive ? 'networth-change-positive' : 'networth-change-negative'}`;
-                badge.textContent = `${sign}${formattedAmount}`;
-                badge.title = `${change.action}: AED ${change.amount.toLocaleString('en-AE', { minimumFractionDigits: 2 })}`;
+                badge.className = `networth-change-badge ${history.isPositive ? 'networth-change-positive' : 'networth-change-negative'}`;
+                badge.textContent = formattedNetWorth;
+                
+                // Format timestamp for tooltip
+                const date = new Date(history.timestamp);
+                const timeStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + 
+                               ' ' + date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+                
+                const changeStr = history.isPositive ? '+' : '-';
+                badge.title = `${timeStr}: ${history.action} "${history.item}" (${changeStr}AED ${Math.abs(history.change).toLocaleString('en-AE', { minimumFractionDigits: 0 })})`;
                 
                 changesContainer.appendChild(badge);
             });
+        }
+
+        // Calculate total net worth from all categories
+        function calculateTotalNetWorth() {
+            const liquidity = calculateCategoryTotal('Liquidity');
+            const inventory = calculateCategoryTotal('Inventory');
+            const investment = calculateCategoryTotal('Investment');
+            const receivable = calculateCategoryTotal('Receivable');
+            const giveable = calculateCategoryTotal('Giveable');
+            return liquidity + inventory + investment + receivable + giveable;
         }
 
         // Format currency in short form for badges
