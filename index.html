@@ -1198,56 +1198,14 @@
                 
                 if (!relevantActions.includes(log.action)) continue;
                 
-                // Prefer stored netWorthChange/netWorthBefore if available (new format)
-                if (log.netWorthChange !== undefined && log.netWorthBefore !== undefined) {
-                    const changeAmount = log.netWorthChange;
-                    const netWorthBeforeChange = log.netWorthBefore;
-                    const isPositive = changeAmount >= 0;
-                    
-                    if (!latestChange) {
-                        latestChange = {
-                            change: changeAmount,
-                            isPositive: isPositive
-                        };
-                    }
-                    
-                    historicalValues.push({
-                        netWorth: netWorthBeforeChange,
-                        change: changeAmount,
-                        isPositive: isPositive,
-                        action: log.action,
-                        item: log.item,
-                        timestamp: log.timestamp
-                    });
+                // Only use entries with the new format (netWorthChange and netWorthBefore)
+                // Skip entries without these fields entirely
+                if (log.netWorthChange === undefined || log.netWorthBefore === undefined) {
                     continue;
                 }
                 
-                // Fallback for old audit entries without stored values
-                const amount = extractAmountFromDetails(log.details);
-                if (amount <= 0) continue;
-                
-                // Use the stored netWorth as current, and calculate backwards
-                const currentNetWorth = log.netWorth !== undefined ? log.netWorth : calculateTotalNetWorth();
-                let netWorthBeforeChange;
-                let changeAmount;
-                
-                if (log.action === 'Added') {
-                    changeAmount = amount;
-                    netWorthBeforeChange = currentNetWorth - amount;
-                } else if (log.action === 'Deleted') {
-                    changeAmount = -amount;
-                    netWorthBeforeChange = currentNetWorth + amount;
-                } else if (log.action === 'Edited' || log.action === 'Updated') {
-                    if (log.oldValue !== undefined && log.newValue !== undefined) {
-                        const delta = log.newValue - log.oldValue;
-                        changeAmount = delta;
-                        netWorthBeforeChange = currentNetWorth - delta;
-                    } else {
-                        changeAmount = amount;
-                        netWorthBeforeChange = currentNetWorth - amount;
-                    }
-                }
-                
+                const changeAmount = log.netWorthChange;
+                const netWorthBeforeChange = log.netWorthBefore;
                 const isPositive = changeAmount >= 0;
                 
                 if (!latestChange) {
