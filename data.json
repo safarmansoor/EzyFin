@@ -116,9 +116,9 @@
       "description": "BE3600 GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 3,
+      "qty": 2,
       "amount": 718.11,
-      "total": 2154.33
+      "total": 1436.22
     },
     {
       "id": "mna3u0xollx0x6dr6v",
@@ -352,6 +352,13 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-08T12:06:13.283Z",
+      "action": "Edited",
+      "item": "BE3600 GLINET",
+      "details": "Quantity: 3   2; Total: AED 2,154.33   AED 1,436.22",
+      "netWorth": 212498.17
+    },
     {
       "timestamp": "2026-04-05T11:29:22.536Z",
       "action": "Edited",
