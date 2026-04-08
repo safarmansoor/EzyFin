@@ -1104,12 +1104,15 @@
             return Date.now().toString(36) + Math.random().toString(36).substr(2);
         }
 
-        function logAction(actionType, itemName, details, oldValue = null, newValue = null) {
+        function logAction(actionType, itemName, details, options = {}) {
             // Clean up any encoding issues in the details string
             const cleanDetails = details.replace(/[^\x00-\x7F]/g, ' ');
             
-            // Calculate current net worth
+            // Calculate current net worth (after the change)
             const currentNetWorth = calculateTotalNetWorth();
+            
+            // Extract options
+            const { oldValue, newValue, entryTotal, netWorthChange, netWorthBefore } = options;
             
             let logEntry = {
                 timestamp: new Date().toISOString(),
@@ -1120,9 +1123,24 @@
             };
 
             // Add old/new value tracking if provided
-            if (oldValue !== null && newValue !== null) {
+            if (oldValue !== undefined && newValue !== undefined) {
                 logEntry.oldValue = oldValue;
                 logEntry.newValue = newValue;
+            }
+            
+            // Add entry total if provided
+            if (entryTotal !== undefined) {
+                logEntry.entryTotal = entryTotal;
+            }
+            
+            // Add net worth change if provided (most accurate - use this when available)
+            if (netWorthChange !== undefined) {
+                logEntry.netWorthChange = netWorthChange;
+            }
+            
+            // Add net worth before if provided
+            if (netWorthBefore !== undefined) {
+                logEntry.netWorthBefore = netWorthBefore;
             }
             
             state.audit_log.unshift(logEntry);
@@ -1169,14 +1187,10 @@
                 return;
             }
 
-            // Calculate current net worth from ledger
-            let currentNetWorth = calculateTotalNetWorth();
-            
             // Get relevant audit entries
             const relevantActions = ['Added', 'Deleted', 'Edited', 'Updated'];
             const historicalValues = [];
             let latestChange = null;
-            let previousNetWorth = currentNetWorth;
 
             // Go through audit log in order (most recent first)
             for (const log of state.audit_log) {
@@ -1184,38 +1198,58 @@
                 
                 if (!relevantActions.includes(log.action)) continue;
                 
+                // Prefer stored netWorthChange/netWorthBefore if available (new format)
+                if (log.netWorthChange !== undefined && log.netWorthBefore !== undefined) {
+                    const changeAmount = log.netWorthChange;
+                    const netWorthBeforeChange = log.netWorthBefore;
+                    const isPositive = changeAmount >= 0;
+                    
+                    if (!latestChange) {
+                        latestChange = {
+                            change: changeAmount,
+                            isPositive: isPositive
+                        };
+                    }
+                    
+                    historicalValues.push({
+                        netWorth: netWorthBeforeChange,
+                        change: changeAmount,
+                        isPositive: isPositive,
+                        action: log.action,
+                        item: log.item,
+                        timestamp: log.timestamp
+                    });
+                    continue;
+                }
+                
+                // Fallback for old audit entries without stored values
                 const amount = extractAmountFromDetails(log.details);
                 if (amount <= 0) continue;
                 
-                // Calculate the net worth BEFORE this change based on action type
+                // Use the stored netWorth as current, and calculate backwards
+                const currentNetWorth = log.netWorth !== undefined ? log.netWorth : calculateTotalNetWorth();
                 let netWorthBeforeChange;
                 let changeAmount;
                 
                 if (log.action === 'Added') {
-                    // Adding an entry increased net worth, so before it was less
                     changeAmount = amount;
-                    netWorthBeforeChange = previousNetWorth - amount;
+                    netWorthBeforeChange = currentNetWorth - amount;
                 } else if (log.action === 'Deleted') {
-                    // Deleting an entry decreased net worth, so before it was more
                     changeAmount = -amount;
-                    netWorthBeforeChange = previousNetWorth + amount;
+                    netWorthBeforeChange = currentNetWorth + amount;
                 } else if (log.action === 'Edited' || log.action === 'Updated') {
                     if (log.oldValue !== undefined && log.newValue !== undefined) {
-                        // We have exact old/new values for the entry total
                         const delta = log.newValue - log.oldValue;
                         changeAmount = delta;
-                        netWorthBeforeChange = previousNetWorth - delta;
+                        netWorthBeforeChange = currentNetWorth - delta;
                     } else {
-                        // Fallback: treat the amount as the change
                         changeAmount = amount;
-                        netWorthBeforeChange = previousNetWorth - amount;
+                        netWorthBeforeChange = currentNetWorth - amount;
                     }
                 }
                 
-                // Determine if this was a positive or negative change
                 const isPositive = changeAmount >= 0;
                 
-                // Store the latest change for the trend indicator
                 if (!latestChange) {
                     latestChange = {
                         change: changeAmount,
@@ -1231,9 +1265,6 @@
                     item: log.item,
                     timestamp: log.timestamp
                 });
-                
-                // Update for next iteration - the "before" becomes the new "previous"
-                previousNetWorth = netWorthBeforeChange;
             }
 
             // Show latest trend indicator next to current net worth
@@ -1559,6 +1590,9 @@
                 hasChanges = true;
             }
 
+            // Capture the old total before updating
+            const oldTotal = originalEntry.total;
+            
             // Update the entry using the correct original array index
             state.ledger[inlineEditingIndex] = { 
                 ...state.ledger[inlineEditingIndex], 
@@ -1571,9 +1605,16 @@
                 total 
             };
 
-            // Log the action with detailed changes
+            // Log the action with detailed changes and net worth change info
             if (hasChanges) {
-                logAction('Edited', description, changeDetails.join('; '));
+                const netWorthDelta = total - oldTotal;
+                const netWorthBefore = calculateTotalNetWorth() - netWorthDelta;
+                logAction('Edited', description, changeDetails.join('; '), {
+                    oldValue: oldTotal,
+                    newValue: total,
+                    netWorthChange: netWorthDelta,
+                    netWorthBefore: netWorthBefore
+                });
             }
 
             // Save state to localStorage and update UI
@@ -1665,8 +1706,17 @@
 
         // CRUD Operations
         function addEntry(entry) {
+            // Calculate net worth before adding
+            const netWorthBefore = calculateTotalNetWorth();
+            
             state.ledger.push(entry);
-            logAction('Added', entry.description, `Amount: ${formatCurrency(entry.amount)}, Category: ${entry.category}`);
+            
+            // Log with net worth change info
+            logAction('Added', entry.description, `Amount: ${formatCurrency(entry.amount)}, Category: ${entry.category}`, {
+                entryTotal: entry.total,
+                netWorthChange: entry.total,
+                netWorthBefore: netWorthBefore
+            });
             saveState();
             
             // Auto-sync to GitHub after adding
@@ -1700,8 +1750,17 @@
             if (index !== -1) {
                 const deletedEntry = state.ledger[index];
                 if (window.confirm(`Are you sure you want to delete "${deletedEntry.description}"?`)) {
+                    // Calculate net worth before deletion (current includes this entry)
+                    const netWorthBefore = calculateTotalNetWorth();
+                    
                     state.ledger.splice(index, 1);
-                    logAction('Deleted', deletedEntry.description, `Amount: ${formatCurrency(deletedEntry.amount)}, Category: ${deletedEntry.category}`);
+                    
+                    // Log with net worth change info (deletion decreases net worth)
+                    logAction('Deleted', deletedEntry.description, `Amount: ${formatCurrency(deletedEntry.amount)}, Category: ${deletedEntry.category}`, {
+                        entryTotal: deletedEntry.total,
+                        netWorthChange: -deletedEntry.total,
+                        netWorthBefore: netWorthBefore
+                    });
                     saveState();
                     
                     // Auto-sync to GitHub after deleting
