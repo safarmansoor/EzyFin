@@ -257,8 +257,8 @@
       "category": "Giveable",
       "status": "active",
       "qty": 1,
-      "amount": 13617,
-      "total": 13617
+      "amount": 11617.78,
+      "total": 11617.78
     },
     {
       "id": "mna83xxo7q9zpri7xv2",
@@ -352,6 +352,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-09T19:08:42.813Z",
+      "action": "Edited",
+      "item": "Renu",
+      "details": "Amount: AED 13,617.00   AED 11,617.78; Total: AED 13,617.00   AED 11,617.78",
+      "netWorth": 208918.13,
+      "oldValue": 13617,
+      "newValue": 11617.78,
+      "netWorthChange": -1999.2199999999993,
+      "netWorthBefore": 210917.35
+    },
     {
       "timestamp": "2026-04-09T19:06:51.410Z",
       "action": "Edited",
