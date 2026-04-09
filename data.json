@@ -287,8 +287,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 14130,
-      "total": 14130
+      "amount": 11635.13,
+      "total": 11635.13
     },
     {
       "id": "mnek2q6xas55cjvdvwn",
@@ -352,6 +352,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-09T19:06:51.410Z",
+      "action": "Edited",
+      "item": "ADCB",
+      "details": "Amount: AED 14,130.00   AED 11,635.13; Total: AED 14,130.00   AED 11,635.13",
+      "netWorth": 210917.35,
+      "oldValue": 14130,
+      "newValue": 11635.13,
+      "netWorthChange": -2494.870000000001,
+      "netWorthBefore": 213412.22
+    },
     {
       "timestamp": "2026-04-09T19:06:06.126Z",
       "action": "Edited",
