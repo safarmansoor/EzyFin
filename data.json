@@ -305,7 +305,7 @@
       "date": "2026-03-31",
       "description": "MT6000 GLINET",
       "category": "Inventory",
-      "status": "pending",
+      "status": "active",
       "qty": 5,
       "amount": 587.57,
       "total": 2937.8500000000004
@@ -352,6 +352,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-10T11:42:47.587Z",
+      "action": "Edited",
+      "item": "MT6000 GLINET",
+      "details": "Status: pending   active",
+      "netWorth": 209566.49,
+      "oldValue": 2937.8500000000004,
+      "newValue": 2937.8500000000004,
+      "netWorthChange": 0,
+      "netWorthBefore": 209566.49
+    },
     {
       "timestamp": "2026-04-10T11:42:43.489Z",
       "action": "Edited",
