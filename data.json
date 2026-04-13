@@ -306,9 +306,9 @@
       "description": "MT6000 GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 5,
+      "qty": 3,
       "amount": 587.57,
-      "total": 2937.8500000000004
+      "total": 1762.71
     },
     {
       "id": "mnelopg3aif1uxj7ist",
@@ -352,6 +352,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-13T04:23:33.096Z",
+      "action": "Edited",
+      "item": "MT6000 GLINET",
+      "details": "Quantity: 5   3; Total: AED 2,937.85   AED 1,762.71",
+      "netWorth": 208391.35,
+      "oldValue": 2937.8500000000004,
+      "newValue": 1762.71,
+      "netWorthChange": -1175.1400000000003,
+      "netWorthBefore": 209566.49000000002
+    },
     {
       "timestamp": "2026-04-10T11:42:47.587Z",
       "action": "Edited",
