@@ -146,9 +146,9 @@
       "description": "ALFA AXML",
       "category": "Inventory",
       "status": "active",
-      "qty": 1,
+      "qty": 0,
       "amount": 213,
-      "total": 213
+      "total": 0
     },
     {
       "id": "mna3vn31mxg6u1g965",
@@ -352,6 +352,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-13T17:49:37.425Z",
+      "action": "Edited",
+      "item": "ALFA AXML",
+      "details": "Quantity: 1   0; Total: AED 213.00   AED 0.00",
+      "netWorth": 210154.88999999998,
+      "oldValue": 213,
+      "newValue": 0,
+      "netWorthChange": -213,
+      "netWorthBefore": 210367.88999999998
+    },
     {
       "timestamp": "2026-04-13T04:27:21.908Z",
       "action": "Edited",
