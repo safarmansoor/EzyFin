@@ -145,10 +145,10 @@
       "date": "2026-03-28",
       "description": "ALFA AXML",
       "category": "Inventory",
-      "status": "active",
-      "qty": 0,
-      "amount": 213,
-      "total": 0
+      "status": "pending",
+      "qty": 3,
+      "amount": 222.82,
+      "total": 668.46
     },
     {
       "id": "mna3vn31mxg6u1g965",
@@ -352,6 +352,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-13T17:49:57.456Z",
+      "action": "Edited",
+      "item": "ALFA AXML",
+      "details": "Status: active   pending; Quantity: 0   3; Amount: AED 213.00   AED 222.82; Total: AED 0.00   AED 668.46",
+      "netWorth": 210823.35,
+      "oldValue": 0,
+      "newValue": 668.46,
+      "netWorthChange": 668.46,
+      "netWorthBefore": 210154.89
+    },
     {
       "timestamp": "2026-04-13T17:49:37.425Z",
       "action": "Edited",
