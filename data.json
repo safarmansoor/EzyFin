@@ -17,8 +17,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 26708.53,
-      "total": 26708.53
+      "amount": 26808.53,
+      "total": 26808.53
     },
     {
       "id": "mna3ism2noh2pb6heor",
@@ -352,6 +352,27 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-14T19:29:26.543Z",
+      "action": "Deleted Expense",
+      "item": "test",
+      "details": "Amount: AED 100.00, Category: Food",
+      "netWorth": 215961.80000000002,
+      "entryTotal": 100,
+      "netWorthChange": 100,
+      "netWorthBefore": 215861.80000000002
+    },
+    {
+      "timestamp": "2026-04-14T19:29:26.543Z",
+      "action": "Expense Reversal",
+      "item": "test",
+      "details": "Amount: AED 100.00, Category: Food, Restored to: CBD",
+      "netWorth": 215961.80000000002,
+      "oldValue": 26708.53,
+      "newValue": 26808.53,
+      "netWorthChange": 100,
+      "netWorthBefore": 215861.80000000002
+    },
     {
       "timestamp": "2026-04-14T19:19:27.212Z",
       "action": "Added Expense",
@@ -1343,14 +1364,5 @@
       "details": "Initial state created"
     }
   ],
-  "expenses": [
-    {
-      "id": "mnz09l2kff3drya1hpq",
-      "date": "2026-04-14",
-      "category": "Food",
-      "amount": 100,
-      "description": "test",
-      "liquidityId": "mna3ibnqvge0c4zl59q"
-    }
-  ]
+  "expenses": []
 }
