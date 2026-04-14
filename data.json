@@ -353,6 +353,13 @@
   ],
   "audit_log": [
     {
+      "timestamp": "2026-04-14T19:09:09.439Z",
+      "action": "Deleted Expense",
+      "item": "test",
+      "details": "Amount: AED 100.00, Category: Food",
+      "netWorth": 215961.80000000002
+    },
+    {
       "timestamp": "2026-04-14T19:08:25.677Z",
       "action": "Added Expense",
       "item": "test",
@@ -1276,14 +1283,5 @@
       "details": "Initial state created"
     }
   ],
-  "expenses": [
-    {
-      "id": "mnyzveml0v6dnip88o5m",
-      "date": "2026-04-14",
-      "category": "Food",
-      "amount": 100,
-      "description": "test",
-      "liquidityId": "mna3ibnqvge0c4zl59q"
-    }
-  ]
+  "expenses": []
 }
