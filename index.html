@@ -527,6 +527,11 @@
                     Audit Log
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="expense-tab" data-bs-toggle="tab" data-bs-target="#expense" type="button" role="tab">
+                    Expense Tracker
+                </button>
+            </li>
         </ul>
 
         <!-- Tab Content -->
@@ -591,6 +596,95 @@
                                     <!-- Audit log entries will be inserted here -->
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Expense Tracker Tab -->
+            <div class="tab-pane fade" id="expense" role="tabpanel">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">Expense Tracker</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Expense Form -->
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <form id="expenseForm">
+                                    <div class="row">
+                                        <div class="col-md-3 mb-3">
+                                            <label for="expenseDate" class="form-label">Date</label>
+                                            <input type="date" class="form-control" id="expenseDate" required>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="expenseCategory" class="form-label">Category</label>
+                                            <select class="form-select" id="expenseCategory" required>
+                                                <option value="">Select Category</option>
+                                                <option value="Food">Food</option>
+                                                <option value="Transportation">Transportation</option>
+                                                <option value="Entertainment">Entertainment</option>
+                                                <option value="Shopping">Shopping</option>
+                                                <option value="Utilities">Utilities</option>
+                                                <option value="Healthcare">Healthcare</option>
+                                                <option value="Other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="expenseAmount" class="form-label">Amount (AED)</label>
+                                            <input type="number" class="form-control" id="expenseAmount" step="0.01" min="0" placeholder="0.00" required>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="expenseDescription" class="form-label">Description</label>
+                                            <input type="text" class="form-control" id="expenseDescription" placeholder="Enter description" required>
+                                        </div>
+                                        <div class="col-md-3 mb-3">
+                                            <label for="expenseLiquidity" class="form-label">Deduct from Liquidity</label>
+                                            <select class="form-select" id="expenseLiquidity" required>
+                                                <option value="">Select Liquidity Account</option>
+                                                <!-- Liquidity options will be populated dynamically -->
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary">Add Expense</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Expenses List -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>Recent Expenses</h6>
+                                <div id="expensesList" class="mt-3">
+                                    <!-- Expenses will be listed here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Total Expense Summary -->
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row text-center">
+                                            <div class="col-md-4">
+                                                <h6 class="text-muted mb-1">Total Expenses</h6>
+                                                <h4 class="text-danger" id="totalExpenses">AED 0.00</h4>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h6 class="text-muted mb-1">Number of Expenses</h6>
+                                                <h4 class="text-danger" id="expenseCount">0</h4>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <h6 class="text-muted mb-1">Average Expense</h6>
+                                                <h4 class="text-danger" id="avgExpense">AED 0.00</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -793,7 +887,8 @@
         // State Management
         let state = {
             ledger: [],
-            audit_log: []
+            audit_log: [],
+            expenses: []
         };
 
         // Inline Editing State Tracking
@@ -1033,6 +1128,11 @@
                     entry.status = 'active';
                 }
             });
+
+            // Ensure expenses array exists
+            if (!state.expenses) {
+                state.expenses = [];
+            }
         }
 
         async function loadState() {
@@ -2264,6 +2364,228 @@
             // Show success toast
             showToast('data.json downloaded successfully!', 'success');
         }
+
+        // Populate liquidity dropdown with existing liquidity entries
+        function populateLiquidityDropdown() {
+            const liquidityDropdown = document.getElementById('expenseLiquidity');
+            if (!liquidityDropdown) return;
+            
+            // Clear existing options (keep the first one)
+            liquidityDropdown.innerHTML = '<option value="">Select Liquidity Account</option>';
+            
+            // Get all liquidity entries
+            const liquidityEntries = state.ledger.filter(item => item.category === 'Liquidity');
+            
+            // Add each liquidity entry as an option
+            liquidityEntries.forEach(entry => {
+                const option = document.createElement('option');
+                option.value = entry.id;
+                option.textContent = `${entry.description} (AED ${formatCurrency(entry.total)})`;
+                liquidityDropdown.appendChild(option);
+            });
+        }
+
+        // Expense Management Functions
+        function addExpense(expense) {
+            state.expenses.push(expense);
+            logAction('Added Expense', expense.description, `Amount: ${formatCurrency(expense.amount)}, Category: ${expense.category}`);
+            saveState();
+            renderExpenses();
+            updateExpenseSummary();
+            
+            // Auto-sync to GitHub after adding
+            syncToGitHubIfNeeded();
+        }
+
+        // Add expense with liquidity deduction
+        function addExpenseWithLiquidity(expenseData) {
+            const { date, category, amount, description, liquidityId } = expenseData;
+            
+            // Create expense record
+            const expense = {
+                id: generateId(),
+                date,
+                category,
+                amount,
+                description,
+                liquidityId: liquidityId || null
+            };
+            
+            // Add to expenses array
+            state.expenses.push(expense);
+            
+            // If liquidityId is provided, deduct from that liquidity entry
+            if (liquidityId) {
+                const liquidityIndex = state.ledger.findIndex(item => item.id === liquidityId);
+                if (liquidityIndex !== -1) {
+                    const liquidityEntry = state.ledger[liquidityIndex];
+                    const oldTotal = liquidityEntry.total;
+                    
+                    // Deduct expense amount from liquidity
+                    liquidityEntry.total -= amount;
+                    liquidityEntry.amount = liquidityEntry.total / liquidityEntry.qty;
+                    
+                    // Log the deduction
+                    logAction('Expense Deduction', description, `Amount: ${formatCurrency(amount)}, Category: ${category}, Deducted from: ${liquidityEntry.description}`, {
+                        oldValue: oldTotal,
+                        newValue: liquidityEntry.total,
+                        netWorthChange: -amount,
+                        netWorthBefore: calculateTotalNetWorth() + amount
+                    });
+                }
+            }
+            
+            // Log the expense
+            logAction('Added Expense', description, `Amount: ${formatCurrency(amount)}, Category: ${category}`, {
+                entryTotal: amount,
+                netWorthChange: -amount,
+                netWorthBefore: calculateTotalNetWorth() + amount
+            });
+            
+            saveState();
+            renderExpenses();
+            updateExpenseSummary();
+            
+            // Auto-sync to GitHub after adding
+            syncToGitHubIfNeeded();
+        }
+
+        function deleteExpense(id) {
+            const index = state.expenses.findIndex(item => item.id === id);
+            if (index !== -1) {
+                const deletedExpense = state.expenses[index];
+                if (window.confirm(`Are you sure you want to delete "${deletedExpense.description}"?`)) {
+                    state.expenses.splice(index, 1);
+                    logAction('Deleted Expense', deletedExpense.description, `Amount: ${formatCurrency(deletedExpense.amount)}, Category: ${deletedExpense.category}`);
+                    saveState();
+                    renderExpenses();
+                    updateExpenseSummary();
+                    
+                    // Auto-sync to GitHub after deleting
+                    syncToGitHubIfNeeded();
+                }
+            }
+        }
+
+        function renderExpenses() {
+            const expensesList = document.getElementById('expensesList');
+            expensesList.innerHTML = '';
+
+            if (state.expenses.length === 0) {
+                expensesList.innerHTML = '<div class="text-center text-muted p-3">No expenses recorded yet.</div>';
+                return;
+            }
+
+            // Sort expenses by date (newest first)
+            const sortedExpenses = [...state.expenses].sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Show only the 10 most recent expenses
+            const recentExpenses = sortedExpenses.slice(0, 10);
+
+            recentExpenses.forEach(expense => {
+                const expenseCard = document.createElement('div');
+                expenseCard.className = 'card mb-2';
+                expenseCard.innerHTML = `
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <h6 class="card-title mb-1">${expense.description}</h6>
+                                <small class="text-muted">${expense.date} • ${expense.category}</small>
+                            </div>
+                            <div class="d-flex flex-column align-items-end">
+                                <span class="text-danger fw-bold">${formatCurrency(expense.amount)}</span>
+                                <div class="btn-group btn-group-sm mt-1" role="group">
+                                    <button class="btn btn-sm btn-danger p-1" onclick="deleteExpense('${expense.id}')" title="Delete">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                expensesList.appendChild(expenseCard);
+            });
+        }
+
+        function updateExpenseSummary() {
+            const totalExpenses = state.expenses.reduce((sum, expense) => sum + expense.amount, 0);
+            const expenseCount = state.expenses.length;
+            const avgExpense = expenseCount > 0 ? totalExpenses / expenseCount : 0;
+
+            document.getElementById('totalExpenses').textContent = formatCurrency(totalExpenses);
+            document.getElementById('expenseCount').textContent = expenseCount;
+            document.getElementById('avgExpense').textContent = formatCurrency(avgExpense);
+        }
+
+        // Initialize expense tracking when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default for expense form
+            document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
+            
+            // Populate liquidity dropdown on page load
+            populateLiquidityDropdown();
+            
+            // Add event listener for expense form submission
+            document.getElementById('expenseForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const date = document.getElementById('expenseDate').value;
+                const category = document.getElementById('expenseCategory').value;
+                const amount = parseFloat(document.getElementById('expenseAmount').value);
+                const description = document.getElementById('expenseDescription').value;
+                const liquidityId = document.getElementById('expenseLiquidity').value;
+                
+                // Validation
+                if (!date) {
+                    showToast('Please select a date.', 'danger');
+                    return;
+                }
+                
+                if (!category) {
+                    showToast('Please select a category.', 'danger');
+                    return;
+                }
+                
+                if (!amount || amount <= 0) {
+                    showToast('Please enter a valid amount greater than 0.', 'danger');
+                    return;
+                }
+                
+                if (!description.trim()) {
+                    showToast('Please enter a description.', 'danger');
+                    return;
+                }
+                
+                if (!liquidityId) {
+                    showToast('Please select a liquidity account to deduct from.', 'danger');
+                    return;
+                }
+                
+                // Create expense object with liquidity
+                const expenseData = {
+                    date,
+                    category,
+                    amount,
+                    description,
+                    liquidityId
+                };
+                
+                // Add expense with liquidity deduction
+                addExpenseWithLiquidity(expenseData);
+                
+                // Reset form
+                document.getElementById('expenseForm').reset();
+                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('expenseLiquidity').value = '';
+                
+                // Show success message
+                showToast('Expense added successfully and deducted from liquidity!', 'success');
+            });
+            
+            // Initialize expenses display
+            renderExpenses();
+            updateExpenseSummary();
+        });
     </script>
 </body>
 </html>
