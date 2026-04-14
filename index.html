@@ -2455,6 +2455,27 @@
             if (index !== -1) {
                 const deletedExpense = state.expenses[index];
                 if (window.confirm(`Are you sure you want to delete "${deletedExpense.description}"?`)) {
+                    // If liquidityId exists, restore the amount back to that liquidity entry
+                    if (deletedExpense.liquidityId) {
+                        const liquidityIndex = state.ledger.findIndex(item => item.id === deletedExpense.liquidityId);
+                        if (liquidityIndex !== -1) {
+                            const liquidityEntry = state.ledger[liquidityIndex];
+                            const oldTotal = liquidityEntry.total;
+                            
+                            // Add back the expense amount to liquidity
+                            liquidityEntry.total += deletedExpense.amount;
+                            liquidityEntry.amount = liquidityEntry.total / liquidityEntry.qty;
+                            
+                            // Log the reversal
+                            logAction('Expense Reversal', deletedExpense.description, `Amount: ${formatCurrency(deletedExpense.amount)}, Category: ${deletedExpense.category}, Restored to: ${liquidityEntry.description}`, {
+                                oldValue: oldTotal,
+                                newValue: liquidityEntry.total,
+                                netWorthChange: deletedExpense.amount,
+                                netWorthBefore: calculateTotalNetWorth() - deletedExpense.amount
+                            });
+                        }
+                    }
+                    
                     state.expenses.splice(index, 1);
                     logAction('Deleted Expense', deletedExpense.description, `Amount: ${formatCurrency(deletedExpense.amount)}, Category: ${deletedExpense.category}`);
                     saveState();
@@ -2515,6 +2536,9 @@
             document.getElementById('totalExpenses').textContent = formatCurrency(totalExpenses);
             document.getElementById('expenseCount').textContent = expenseCount;
             document.getElementById('avgExpense').textContent = formatCurrency(avgExpense);
+            
+            // Update summary cards to ensure net worth is properly updated
+            updateSummaryCards();
         }
 
         // Initialize expense tracking when page loads
