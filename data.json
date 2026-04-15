@@ -359,9 +359,29 @@
       "qty": 10,
       "amount": 215,
       "total": 2150
+    },
+    {
+      "id": "mo0ag2wd06fwyjqugukf",
+      "date": "2026-04-15",
+      "description": "Xreal One",
+      "category": "Inventory",
+      "status": "pending",
+      "qty": 2,
+      "amount": 1236.26,
+      "total": 2472.52
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-15T16:52:12.590Z",
+      "action": "Added",
+      "item": "Xreal One",
+      "details": "Amount: AED 1,236.26, Category: Inventory",
+      "netWorth": 220584.32,
+      "entryTotal": 2472.52,
+      "netWorthChange": 2472.52,
+      "netWorthBefore": 218111.80000000002
+    },
     {
       "timestamp": "2026-04-15T16:51:26.838Z",
       "action": "Added",
