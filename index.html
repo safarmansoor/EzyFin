@@ -2496,6 +2496,7 @@
             saveState();
             renderExpenses();
             updateExpenseSummary();
+            updateSummaryCards();  // Update net worth after expense
             
             // Auto-sync to GitHub after adding
             syncToGitHubIfNeeded();
@@ -2549,6 +2550,7 @@
             saveState();
             renderExpenses();
             updateExpenseSummary();
+            updateSummaryCards();  // Update net worth after expense
             
             // Auto-sync to GitHub after adding
             syncToGitHubIfNeeded();
@@ -2902,6 +2904,9 @@
             
             // Re-populate dropdowns and tables
             populateSalesDropdowns();
+            
+            // Auto-sync to GitHub after sale
+            syncToGitHubIfNeeded();
         }
         
         // Render inventory table for sales form
