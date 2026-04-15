@@ -77,8 +77,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 498.94,
-      "total": 498.94
+      "amount": 698.94,
+      "total": 698.94
     },
     {
       "id": "mna3nu33icdfjhe3tgc",
@@ -375,13 +375,34 @@
       "date": "2026-04-15",
       "description": "test",
       "category": "Inventory",
-      "status": "active",
-      "qty": 1,
+      "status": "inactive",
+      "qty": 0,
       "amount": 100,
-      "total": 100
+      "total": 0
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-15T19:12:34.561Z",
+      "action": "Sale",
+      "item": "test x1 (Profit: AED 100.00)",
+      "details": "Amount: AED 200.00, Inventory: test",
+      "netWorth": 215463.22,
+      "entryTotal": 200,
+      "netWorthChange": 200,
+      "netWorthBefore": 215263.22
+    },
+    {
+      "timestamp": "2026-04-15T19:12:34.561Z",
+      "action": "Receivable Updated",
+      "item": "Receivable: Amazon India",
+      "details": "Amount: AED 200.00, Sale: test",
+      "netWorth": 215463.22,
+      "oldValue": 498.94,
+      "newValue": 698.94,
+      "netWorthChange": 200,
+      "netWorthBefore": 215263.22
+    },
     {
       "timestamp": "2026-04-15T19:12:11.200Z",
       "action": "Added",
