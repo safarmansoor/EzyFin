@@ -532,6 +532,11 @@
                     Expense Tracker
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="sales-tab" data-bs-toggle="tab" data-bs-target="#sales" type="button" role="tab">
+                    Sales Tracker
+                </button>
+            </li>
         </ul>
 
         <!-- Tab Content -->
@@ -569,9 +574,106 @@
                             <div class="col-md-6">
                                 <h6 class="text-muted mb-1">Total Value</h6>
                                 <h4 class="text-success" id="totalValue">AED 0.00</h4>
+            </div>
+        </div>
+        
+        <!-- Sales Tracker Tab -->
+        <div class="tab-pane fade" id="sales" role="tabpanel">
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="mb-0">Sales Tracker</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Sales Form -->
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <form id="salesForm">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label for="saleDate" class="form-label">Date</label>
+                                        <input type="date" class="form-control" id="saleDate" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="saleInventory" class="form-label">Select Inventory Item</label>
+                                        <select class="form-select" id="saleInventory" required>
+                                            <option value="">Select Inventory Item</option>
+                                            <!-- Inventory options will be populated dynamically -->
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="saleAmount" class="form-label">Sale Amount (AED)</label>
+                                        <input type="number" class="form-control" id="saleAmount" step="0.01" min="0" placeholder="0.00" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="saleQuantity" class="form-label">Quantity Sold</label>
+                                        <input type="number" class="form-control" id="saleQuantity" value="1" min="1" required>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="saleReceivable" class="form-label">Add to Receivable</label>
+                                        <select class="form-select" id="saleReceivable" required>
+                                            <option value="">Select Receivable</option>
+                                            <!-- Receivable options will be populated dynamically -->
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label for="saleProfit" class="form-label">Profit (AED)</label>
+                                        <input type="text" class="form-control" id="saleProfit" readonly>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary">Record Sale</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Inventory Items Table -->
+                    <div class="row mb-4">
+                        <div class="col-md-12">
+                            <h6>Available Inventory</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Quantity</th>
+                                            <th>Unit Cost</th>
+                                            <th>Total Value</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="inventoryTableBody">
+                                        <!-- Inventory table rows will be populated here -->
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Receivables Table -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h6>Receivables</h6>
+                            <div class="table-responsive">
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Description</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="receivablesTableBody">
+                                        <!-- Receivables table rows will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
                 </div>
             </div>
 
@@ -2615,7 +2717,240 @@
             // Initialize expenses display
             renderExpenses();
             updateExpenseSummary();
+            
+            // Initialize sales tracking
+            initializeSalesTracking();
         });
+        
+        // Sales Tracking Functions
+        function initializeSalesTracking() {
+            // Set today's date as default for sales form
+            document.getElementById('saleDate').value = new Date().toISOString().split('T')[0];
+            
+            // Populate inventory and receivable dropdowns
+            populateSalesDropdowns();
+            
+            // Add event listener for sales form submission
+            document.getElementById('salesForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                processSale();
+            });
+            
+            // Listen for changes in inventory selection to update quantity and unit cost
+            document.getElementById('saleInventory').addEventListener('change', function() {
+                updateSaleFormFromInventory(this.value);
+            });
+            
+            // Listen for changes in sale amount to calculate profit
+            document.getElementById('saleAmount').addEventListener('input', calculateProfit);
+            document.getElementById('saleQuantity').addEventListener('input', calculateProfit);
+        }
+        
+        // Populate dropdowns for sales form
+        function populateSalesDropdowns() {
+            // Populate inventory dropdown
+            const inventoryDropdown = document.getElementById('saleInventory');
+            const inventoryItems = state.ledger.filter(item => item.category === 'Inventory' && item.qty > 0);
+            
+            inventoryDropdown.innerHTML = '<option value="">Select Inventory Item</option>';
+            inventoryItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = `${item.description} (Qty: ${item.qty}, Cost: ${formatCurrency(item.amount)})`;
+                inventoryDropdown.appendChild(option);
+            });
+            
+            // Populate receivables dropdown
+            const receivablesDropdown = document.getElementById('saleReceivable');
+            const receivableItems = state.ledger.filter(item => item.category === 'Receivable');
+            
+            receivablesDropdown.innerHTML = '<option value="">Select Receivable</option>';
+            receivableItems.forEach(item => {
+                const option = document.createElement('option');
+                option.value = item.id;
+                option.textContent = `${item.description} (Amount: ${formatCurrency(item.total)})`;
+                receivablesDropdown.appendChild(option);
+            });
+            
+            // Render inventory and receivables tables
+            renderInventoryTable();
+            renderReceivablesTable();
+        }
+        
+        // Update form fields when inventory item is selected
+        function updateSaleFormFromInventory(itemId) {
+            if (!itemId) return;
+            
+            const item = state.ledger.find(i => i.id === itemId && i.category === 'Inventory');
+            if (item) {
+                // Auto-populate quantity and unit cost
+                document.getElementById('saleQuantity').value = 1;
+                document.getElementById('saleAmount').value = item.amount.toFixed(2);
+                
+                // Calculate profit
+                calculateProfit();
+            }
+        }
+        
+        // Calculate profit based on sale amount and inventory cost
+        function calculateProfit() {
+            const saleAmount = parseFloat(document.getElementById('saleAmount').value) || 0;
+            const saleQuantity = parseInt(document.getElementById('saleQuantity').value) || 1;
+            const inventoryId = document.getElementById('saleInventory').value;
+            
+            let profit = 0;
+            if (inventoryId) {
+                const inventoryItem = state.ledger.find(i => i.id === inventoryId && i.category === 'Inventory');
+                if (inventoryItem) {
+                    const inventoryCost = inventoryItem.amount;
+                    const totalInventoryCost = inventoryCost * saleQuantity;
+                    profit = saleAmount - totalInventoryCost;
+                }
+            }
+            
+            document.getElementById('saleProfit').value = formatCurrency(profit);
+        }
+        
+        // Process a new sale
+        function processSale() {
+            const date = document.getElementById('saleDate').value;
+            const inventoryId = document.getElementById('saleInventory').value;
+            const saleAmount = parseFloat(document.getElementById('saleAmount').value);
+            const saleQuantity = parseInt(document.getElementById('saleQuantity').value);
+            const receivableId = document.getElementById('saleReceivable').value;
+            
+            // Validation
+            if (!date) {
+                showToast('Please select a date.', 'danger');
+                return;
+            }
+            
+            if (!inventoryId) {
+                showToast('Please select an inventory item.', 'danger');
+                return;
+            }
+            
+            if (!saleAmount || saleAmount <= 0) {
+                showToast('Please enter a valid sale amount greater than 0.', 'danger');
+                return;
+            }
+            
+            if (!saleQuantity || saleQuantity <= 0) {
+                showToast('Please enter a valid quantity greater than 0.', 'danger');
+                return;
+            }
+            
+            if (!receivableId) {
+                showToast('Please select a receivable to add the sale to.', 'danger');
+                return;
+            }
+            
+            // Find the inventory item
+            const inventoryItem = state.ledger.find(item => item.id === inventoryId);
+            if (!inventoryItem) {
+                showToast('Selected inventory item not found.', 'danger');
+                return;
+            }
+            
+            // Check if there's enough quantity
+            if (inventoryItem.qty < saleQuantity) {
+                showToast(`Insufficient quantity. Available: ${inventoryItem.qty}`, 'danger');
+                return;
+            }
+            
+            // Find the receivable item
+            const receivableItem = state.ledger.find(item => item.id === receivableId);
+            if (!receivableItem) {
+                showToast('Selected receivable item not found.', 'danger');
+                return;
+            }
+            
+            // Deduct quantity from inventory
+            inventoryItem.qty -= saleQuantity;
+            inventoryItem.total = inventoryItem.qty * inventoryItem.amount;
+            
+            // If quantity is 0, mark as inactive
+            if (inventoryItem.qty === 0) {
+                inventoryItem.status = 'inactive';
+            }
+            
+            // Add sale amount to receivable
+            receivableItem.total += saleAmount;
+            receivableItem.amount = receivableItem.total / receivableItem.qty;
+            
+            // Calculate profit
+            const inventoryCost = inventoryItem.amount;
+            const totalInventoryCost = inventoryCost * saleQuantity;
+            const profit = saleAmount - totalInventoryCost;
+            
+            // Log the sale
+            const saleDescription = `${inventoryItem.description} x${saleQuantity} (Profit: ${formatCurrency(profit)})`;
+            logAction('Sale', saleDescription, `Amount: ${formatCurrency(saleAmount)}, Inventory: ${inventoryItem.description}`, {
+                entryTotal: saleAmount,
+                netWorthChange: saleAmount,  
+                netWorthBefore: calculateTotalNetWorth() - saleAmount
+            });
+            
+            // Save state and update UI
+            saveState();
+            showToast('Sale recorded successfully!', 'success');
+            
+            // Reset form
+            document.getElementById('salesForm').reset();
+            document.getElementById('saleDate').value = new Date().toISOString().split('T')[0];
+            
+            // Re-populate dropdowns and tables
+            populateSalesDropdowns();
+        }
+        
+        // Render inventory table for sales form
+        function renderInventoryTable() {
+            const tbody = document.getElementById('inventoryTableBody');
+            tbody.innerHTML = '';
+            
+            const inventoryItems = state.ledger.filter(item => item.category === 'Inventory' && item.qty > 0);
+            
+            if (inventoryItems.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No inventory items available</td></tr>';
+                return;
+            }
+            
+            inventoryItems.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.description}</td>
+                    <td>${item.category}</td>
+                    <td>${item.qty}</td>
+                    <td>${formatCurrency(item.amount)}</td>
+                    <td>${formatCurrency(item.total)}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+        
+        // Render receivables table for sales form
+        function renderReceivablesTable() {
+            const tbody = document.getElementById('receivablesTableBody');
+            tbody.innerHTML = '';
+            
+            const receivableItems = state.ledger.filter(item => item.category === 'Receivable');
+            
+            if (receivableItems.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">No receivable items available</td></tr>';
+                return;
+            }
+            
+            receivableItems.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${item.description}</td>
+                    <td>${item.category}</td>
+                    <td>${formatCurrency(item.total)}</td>
+                    <td><span class="badge ${item.status === 'active' ? 'bg-success' : 'bg-warning'}">${item.status}</span></td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
     </script>
 </body>
 </html>
