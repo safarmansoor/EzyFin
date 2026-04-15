@@ -57,8 +57,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 4032.54,
-      "total": 4032.54
+      "amount": 4711.26,
+      "total": 4711.26
     },
     {
       "id": "mna3kfou52enjeclsth",
@@ -296,9 +296,9 @@
       "description": "MT3600BE GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 5,
+      "qty": 4,
       "amount": 498.53,
-      "total": 2492.6499999999996
+      "total": 1994.12
     },
     {
       "id": "mnek3uzhmwlhjsmnk1k",
@@ -372,6 +372,16 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-15T18:59:00.897Z",
+      "action": "Sale",
+      "item": "MT3600BE GLINET x1 (Profit: AED 180.19)",
+      "details": "Amount: AED 678.72, Inventory: MT3600BE GLINET",
+      "netWorth": 215263.22,
+      "entryTotal": 678.72,
+      "netWorthChange": 678.72,
+      "netWorthBefore": 214584.5
+    },
     {
       "timestamp": "2026-04-15T18:14:49.229Z",
       "action": "Added Expense",
