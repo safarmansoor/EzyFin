@@ -17,8 +17,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 21219.14,
-      "total": 21219.14
+      "amount": 21128.84,
+      "total": 21128.84
     },
     {
       "id": "mna3ism2noh2pb6heor",
@@ -372,6 +372,27 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-15T18:14:49.229Z",
+      "action": "Added Expense",
+      "item": "Saudi shipment",
+      "details": "Amount: AED 90.30, Category: Business",
+      "netWorth": 215083.03,
+      "entryTotal": 90.3,
+      "netWorthChange": -90.3,
+      "netWorthBefore": 215173.33
+    },
+    {
+      "timestamp": "2026-04-15T18:14:49.229Z",
+      "action": "Expense Deduction",
+      "item": "Saudi shipment",
+      "details": "Amount: AED 90.30, Category: Business, Deducted from: CBD",
+      "netWorth": 215083.03,
+      "oldValue": 21219.14,
+      "newValue": 21128.84,
+      "netWorthChange": -90.3,
+      "netWorthBefore": 215173.33
+    },
     {
       "timestamp": "2026-04-15T18:09:35.300Z",
       "action": "Edited",
@@ -1518,6 +1539,14 @@
       "category": "Food",
       "amount": 64.39,
       "description": "Rice potato noodles ricepowder",
+      "liquidityId": "mna3ibnqvge0c4zl59q"
+    },
+    {
+      "id": "mo0debgt9rky0jz03x",
+      "date": "2026-04-15",
+      "category": "Business",
+      "amount": 90.3,
+      "description": "Saudi shipment",
       "liquidityId": "mna3ibnqvge0c4zl59q"
     }
   ]
