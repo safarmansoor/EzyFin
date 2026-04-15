@@ -1546,8 +1546,8 @@
             if (state.audit_log) {
                 for (const log of state.audit_log) {
                     if (log.action === 'Sale') {
-                        // Extract profit from details
-                        const match = log.details.match(/Profit:\s*AED\s*([\d,]+\.?\d*)/);
+                        // Extract profit from item (the profit is stored in the item field)
+                        const match = log.item.match(/Profit:\s*AED\s*([\d,]+\.?\d*)/);
                         if (match) {
                             totalProfit += parseFloat(match[1].replace(/,/g, ''));
                         }
