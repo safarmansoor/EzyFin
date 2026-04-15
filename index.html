@@ -574,106 +574,107 @@
                             <div class="col-md-6">
                                 <h6 class="text-muted mb-1">Total Value</h6>
                                 <h4 class="text-success" id="totalValue">AED 0.00</h4>
-            </div>
-        </div>
-        
-        <!-- Sales Tracker Tab -->
-        <div class="tab-pane fade" id="sales" role="tabpanel">
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h5 class="mb-0">Sales Tracker</h5>
-                </div>
-                <div class="card-body">
-                    <!-- Sales Form -->
-                    <div class="row mb-4">
-                        <div class="col-md-12">
-                            <form id="salesForm">
-                                <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <label for="saleDate" class="form-label">Date</label>
-                                        <input type="date" class="form-control" id="saleDate" required>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label for="saleInventory" class="form-label">Select Inventory Item</label>
-                                        <select class="form-select" id="saleInventory" required>
-                                            <option value="">Select Inventory Item</option>
-                                            <!-- Inventory options will be populated dynamically -->
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label for="saleAmount" class="form-label">Sale Amount (AED)</label>
-                                        <input type="number" class="form-control" id="saleAmount" step="0.01" min="0" placeholder="0.00" required>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label for="saleQuantity" class="form-label">Quantity Sold</label>
-                                        <input type="number" class="form-control" id="saleQuantity" value="1" min="1" required>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label for="saleReceivable" class="form-label">Add to Receivable</label>
-                                        <select class="form-select" id="saleReceivable" required>
-                                            <option value="">Select Receivable</option>
-                                            <!-- Receivable options will be populated dynamically -->
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <label for="saleProfit" class="form-label">Profit (AED)</label>
-                                        <input type="text" class="form-control" id="saleProfit" readonly>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary">Record Sale</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    
-                    <!-- Inventory Items Table -->
-                    <div class="row mb-4">
-                        <div class="col-md-12">
-                            <h6>Available Inventory</h6>
-                            <div class="table-responsive">
-                                <table class="table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th>Description</th>
-                                            <th>Category</th>
-                                            <th>Quantity</th>
-                                            <th>Unit Cost</th>
-                                            <th>Total Value</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="inventoryTableBody">
-                                        <!-- Inventory table rows will be populated here -->
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Receivables Table -->
-                    <div class="row">
-                        <div class="col-md-12">
-                            <h6>Receivables</h6>
-                            <div class="table-responsive">
-                                <table class="table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th>Description</th>
-                                            <th>Category</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="receivablesTableBody">
-                                        <!-- Receivables table rows will be populated here -->
-                                    </tbody>
-                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+
+            <!-- Sales Tracker Tab -->
+            <div class="tab-pane fade" id="sales" role="tabpanel">
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h5 class="mb-0">Sales Tracker</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Sales Form -->
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <form id="salesForm">
+                                    <div class="row">
+                                        <div class="col-md-4 mb-3">
+                                            <label for="saleDate" class="form-label">Date</label>
+                                            <input type="date" class="form-control" id="saleDate" required>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="saleInventory" class="form-label">Select Inventory Item</label>
+                                            <select class="form-select" id="saleInventory" required>
+                                                <option value="">Select Inventory Item</option>
+                                                <!-- Inventory options will be populated dynamically -->
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="saleAmount" class="form-label">Sale Amount (AED)</label>
+                                            <input type="number" class="form-control" id="saleAmount" step="0.01" min="0" placeholder="0.00" required>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="saleQuantity" class="form-label">Quantity Sold</label>
+                                            <input type="number" class="form-control" id="saleQuantity" value="1" min="1" required>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="saleReceivable" class="form-label">Add to Receivable</label>
+                                            <select class="form-select" id="saleReceivable" required>
+                                                <option value="">Select Receivable</option>
+                                                <!-- Receivable options will be populated dynamically -->
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 mb-3">
+                                            <label for="saleProfit" class="form-label">Profit (AED)</label>
+                                            <input type="text" class="form-control" id="saleProfit" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" class="btn btn-primary">Record Sale</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Inventory Items Table -->
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <h6>Available Inventory</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Category</th>
+                                                <th>Quantity</th>
+                                                <th>Unit Cost</th>
+                                                <th>Total Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="inventoryTableBody">
+                                            <!-- Inventory table rows will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Receivables Table -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h6>Receivables</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Description</th>
+                                                <th>Category</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="receivablesTableBody">
+                                            <!-- Receivables table rows will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
