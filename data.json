@@ -126,9 +126,9 @@
       "description": "MT3000 GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 15,
+      "qty": 14,
       "amount": 371.06,
-      "total": 5565.9
+      "total": 5194.84
     },
     {
       "id": "mna3ugf612rhx9su11bq",
@@ -372,6 +372,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-15T18:00:13.066Z",
+      "action": "Edited",
+      "item": "MT3000 GLINET",
+      "details": "Quantity: 15   14; Total: AED 5,565.90   AED 5,194.84",
+      "netWorth": 214533.57,
+      "oldValue": 5565.9,
+      "newValue": 5194.84,
+      "netWorthChange": -371.0599999999995,
+      "netWorthBefore": 214904.63
+    },
     {
       "timestamp": "2026-04-15T17:47:32.150Z",
       "action": "Added Expense",
