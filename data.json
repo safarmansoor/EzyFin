@@ -17,8 +17,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 21193.23,
-      "total": 21193.23
+      "amount": 21128.84,
+      "total": 21128.84
     },
     {
       "id": "mna3ism2noh2pb6heor",
@@ -372,6 +372,27 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-15T17:47:32.150Z",
+      "action": "Added Expense",
+      "item": "Rice potato noodles ricepowder",
+      "details": "Amount: AED 64.39, Category: Food",
+      "netWorth": 214904.63,
+      "entryTotal": 64.39,
+      "netWorthChange": -64.39,
+      "netWorthBefore": 214969.02000000002
+    },
+    {
+      "timestamp": "2026-04-15T17:47:32.150Z",
+      "action": "Expense Deduction",
+      "item": "Rice potato noodles ricepowder",
+      "details": "Amount: AED 64.39, Category: Food, Deducted from: CBD",
+      "netWorth": 214904.63,
+      "oldValue": 21193.23,
+      "newValue": 21128.84,
+      "netWorthChange": -64.39,
+      "netWorthBefore": 214969.02000000002
+    },
     {
       "timestamp": "2026-04-15T16:53:09.353Z",
       "action": "Edited",
@@ -1457,5 +1478,14 @@
       "details": "Initial state created"
     }
   ],
-  "expenses": []
+  "expenses": [
+    {
+      "id": "mo0cf8ad22v8e81h783",
+      "date": "2026-04-15",
+      "category": "Food",
+      "amount": 64.39,
+      "description": "Rice potato noodles ricepowder",
+      "liquidityId": "mna3ibnqvge0c4zl59q"
+    }
+  ]
 }
