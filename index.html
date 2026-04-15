@@ -341,6 +341,18 @@
         .summary-card.networth .card-value {
             color: #D4AF37;
         }
+        
+        .summary-card.profit {
+            border-left-color: #28a745;
+            background: linear-gradient(90deg, rgba(40,167,69,0.05) 0%, rgba(255,255,255,1) 100%);
+        }
+        .summary-card.profit .card-icon {
+            background-color: #28a745;
+            color: white;
+        }
+        .summary-card.profit .card-value {
+            color: #28a745;
+        }
 
         /* Net Worth History - Vertical List */
         .networth-history-list {
@@ -477,6 +489,21 @@
                     </div>
                 </div>
                 <div id="receivableChanges" class="mt-2 networth-history-list" style="display: none; max-height: 300px; overflow-y: auto; padding-left: 65px; margin-bottom: 0.75rem;"></div>
+                
+                <!-- Profit Card -->
+                <div class="card summary-card profit shadow-sm" id="profitCardContainer" style="cursor: pointer;">
+                    <div class="card-content">
+                        <div class="card-content-left">
+                            <div class="card-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="card-title">Profit</div>
+                        </div>
+                        <div class="card-value" id="profitCard">AED 0.00</div>
+                        <i class="fas fa-chevron-down category-chevron" style="color: #28a745; transition: transform 0.3s; margin-left: 0.5rem;"></i>
+                    </div>
+                </div>
+                <div id="profitChanges" class="mt-2 networth-history-list" style="display: none; max-height: 300px; overflow-y: auto; padding-left: 65px; margin-bottom: 0.75rem;"></div>
                 
                 <!-- Giveable Card -->
                 <div class="card summary-card giveable shadow-sm" id="giveableCardContainer" style="cursor: pointer;">
@@ -992,7 +1019,8 @@
         let state = {
             ledger: [],
             audit_log: [],
-            expenses: []
+            expenses: [],
+            totalProfit: 0
         };
 
         // Inline Editing State Tracking
@@ -1357,17 +1385,22 @@
             const investment = calculateCategoryTotal('Investment');
             const receivable = calculateCategoryTotal('Receivable');
             const giveable = calculateCategoryTotal('Giveable');
-            const netWorth = liquidity + inventory + investment + receivable + giveable;
+            const profit = calculateTotalProfit();
+            const netWorth = liquidity + inventory + investment + receivable + giveable + profit;
 
             document.getElementById('liquidityCard').textContent = formatCurrency(liquidity);
             document.getElementById('inventoryCard').textContent = formatCurrency(inventory);
             document.getElementById('investmentCard').textContent = formatCurrency(investment);
             document.getElementById('receivableCard').textContent = formatCurrency(receivable);
             document.getElementById('giveableCard').textContent = formatCurrency(giveable);
+            document.getElementById('profitCard').textContent = formatCurrency(profit);
             document.getElementById('netWorthCard').textContent = formatCurrency(netWorth);
             
             // Render net worth changes
             renderNetWorthChanges();
+            
+            // Render profit changes
+            renderProfitChanges();
         }
 
         // Extract amount from audit log details string
@@ -1505,6 +1538,89 @@
             return state.ledger
                 .filter(item => item.category === category)
                 .reduce((total, item) => total + item.total, 0);
+        }
+
+        // Calculate total profit from sales
+        function calculateTotalProfit() {
+            let totalProfit = 0;
+            if (state.audit_log) {
+                for (const log of state.audit_log) {
+                    if (log.action === 'Sale') {
+                        // Extract profit from details
+                        const match = log.details.match(/Profit:\s*AED\s*([\d,]+\.?\d*)/);
+                        if (match) {
+                            totalProfit += parseFloat(match[1].replace(/,/g, ''));
+                        }
+                    }
+                }
+            }
+            return totalProfit;
+        }
+
+        // Render profit history from audit log
+        function renderProfitChanges() {
+            const changesContainer = document.getElementById('profitChanges');
+            changesContainer.innerHTML = '';
+
+            if (!state.audit_log || state.audit_log.length === 0) {
+                return;
+            }
+
+            // Get relevant audit entries for sales
+            const relevantActions = ['Sale'];
+            const historyItems = [];
+
+            for (const log of state.audit_log) {
+                if (historyItems.length >= 5) break;
+                if (!relevantActions.includes(log.action)) continue;
+
+                // Extract profit from details
+                const match = log.details.match(/Profit:\s*AED\s*([\d,]+\.?\d*)/);
+                if (!match) continue;
+
+                const profit = parseFloat(match[1].replace(/,/g, ''));
+                const isPositive = profit >= 0;
+
+                historyItems.push({
+                    action: log.action,
+                    item: log.item,
+                    profit: profit,
+                    isPositive: isPositive,
+                    timestamp: log.timestamp
+                });
+            }
+
+            if (historyItems.length === 0) {
+                changesContainer.innerHTML = '<div class="text-muted small">No profit history available</div>';
+                return;
+            }
+
+            historyItems.forEach(item => {
+                const entry = document.createElement('div');
+                entry.className = 'networth-history-item';
+
+                const date = new Date(item.timestamp);
+                const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+                const timeStr = date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+                const changeSign = item.isPositive ? '+' : '-';
+                const changeClass = item.isPositive ? 'positive' : 'negative';
+                const changeArrow = item.isPositive ? '▲' : '▼';
+
+                entry.innerHTML = `
+                    <div class="networth-history-date">
+                        <i class="fas fa-clock me-1"></i>${dateStr}, ${timeStr}
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <span class="networth-history-value">${item.action}: ${item.item}</span>
+                        <span class="networth-history-change ${changeClass}">
+                            ${changeArrow} ${changeSign}AED ${Math.abs(item.profit).toLocaleString('en-AE', { minimumFractionDigits: 0 })}
+                        </span>
+                    </div>
+                `;
+
+                changesContainer.appendChild(entry);
+            });
         }
 
         function formatCurrency(amount) {
@@ -2338,6 +2454,25 @@
                     chevron.style.transform = 'rotate(0deg)';
                 }
             });
+            
+            // Profit card click to toggle history
+            let profitHistoryVisible = false;
+            document.getElementById('profitCardContainer').addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                const changesContainer = document.getElementById('profitChanges');
+                const chevron = this.querySelector('.category-chevron');
+                
+                profitHistoryVisible = !profitHistoryVisible;
+                
+                if (profitHistoryVisible) {
+                    changesContainer.style.display = 'block';
+                    chevron.style.transform = 'rotate(180deg)';
+                } else {
+                    changesContainer.style.display = 'none';
+                    chevron.style.transform = 'rotate(0deg)';
+                }
+            });
         });
 
         // Render category-specific history from audit log
@@ -2530,8 +2665,8 @@
                     liquidityEntry.total -= amount;
                     liquidityEntry.amount = liquidityEntry.total / liquidityEntry.qty;
                     
-                    // Log the deduction
-                    logAction('Expense Deduction', description, `Amount: ${formatCurrency(amount)}, Category: ${category}, Deducted from: ${liquidityEntry.description}`, {
+                    // Log the liquidity deduction (asset reduction)
+                    logAction('Liquidity Updated', liquidityEntry.description, `Amount: ${formatCurrency(amount)}, Expense: ${description}, Category: ${category}`, {
                         oldValue: oldTotal,
                         newValue: liquidityEntry.total,
                         netWorthChange: -amount,
@@ -2878,6 +3013,7 @@
             }
             
             // Add sale amount to receivable
+            const oldReceivableTotal = receivableItem.total;
             receivableItem.total += saleAmount;
             receivableItem.amount = receivableItem.total / receivableItem.qty;
             
@@ -2885,6 +3021,15 @@
             const inventoryCost = inventoryItem.amount;
             const totalInventoryCost = inventoryCost * saleQuantity;
             const profit = saleAmount - totalInventoryCost;
+            
+            // Log the receivable modification (increase in asset)
+            const receivableDescription = `Receivable: ${receivableItem.description}`;
+            logAction('Receivable Updated', receivableDescription, `Amount: ${formatCurrency(saleAmount)}, Sale: ${inventoryItem.description}`, {
+                oldValue: oldReceivableTotal,
+                newValue: receivableItem.total,
+                netWorthChange: saleAmount,
+                netWorthBefore: calculateTotalNetWorth() - saleAmount
+            });
             
             // Log the sale
             const saleDescription = `${inventoryItem.description} x${saleQuantity} (Profit: ${formatCurrency(profit)})`;
