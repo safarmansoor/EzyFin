@@ -17,8 +17,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 26808.53,
-      "total": 26808.53
+      "amount": 21193.23,
+      "total": 21193.23
     },
     {
       "id": "mna3ism2noh2pb6heor",
@@ -372,6 +372,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-15T16:53:09.353Z",
+      "action": "Edited",
+      "item": "CBD",
+      "details": "Amount: AED 26,808.53   AED 21,193.23; Total: AED 26,808.53   AED 21,193.23",
+      "netWorth": 214969.02000000002,
+      "oldValue": 26808.53,
+      "newValue": 21193.23,
+      "netWorthChange": -5615.299999999999,
+      "netWorthBefore": 220584.32
+    },
     {
       "timestamp": "2026-04-15T16:52:12.590Z",
       "action": "Added",
