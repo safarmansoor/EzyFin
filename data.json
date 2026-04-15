@@ -349,9 +349,29 @@
       "qty": 60,
       "amount": 27.25,
       "total": 1635
+    },
+    {
+      "id": "mo0af3lgfm3pjxvd0h",
+      "date": "2026-04-15",
+      "description": "Mucar BT200 Max",
+      "category": "Inventory",
+      "status": "pending",
+      "qty": 10,
+      "amount": 215,
+      "total": 2150
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-15T16:51:26.838Z",
+      "action": "Added",
+      "item": "Mucar BT200 Max",
+      "details": "Amount: AED 215.00, Category: Inventory",
+      "netWorth": 218111.80000000002,
+      "entryTotal": 2150,
+      "netWorthChange": 2150,
+      "netWorthBefore": 215961.80000000002
+    },
     {
       "timestamp": "2026-04-14T19:30:34.779Z",
       "action": "Deleted Expense",
