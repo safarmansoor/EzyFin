@@ -537,7 +537,7 @@
     {
       "timestamp": "2026-04-15T19:12:34.561Z",
       "action": "Sale",
-      "item": "test x1 (Profit: 100.00)",
+      "item": "test x1 (Profit: 0.00)",
       "details": "Amount: 200.00, Inventory: test",
       "netWorth": 215463.22,
       "entryTotal": 200,
