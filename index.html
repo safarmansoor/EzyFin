@@ -1048,8 +1048,8 @@
             totalProfit: 0
         };
 
-        // Inline Editing State Tracking
-        let inlineEditingIndex = -1;
+        // Inline Editing State Tracking - Store entry ID instead of index
+        let inlineEditingId = null;
 
         // Enhanced GitHub API Integration with Sync Queue and Retry Logic
         const githubAPI = {
@@ -1256,7 +1256,7 @@
             localStorage.setItem('wealth_snapshot_state', JSON.stringify(state));
             saveLocalBackup(); // Save local backup immediately
             updateSummaryCards();
-            inlineEditingIndex = -1;
+            inlineEditingId = null;
             renderLedger();
             renderAuditLog();
         }
@@ -1411,7 +1411,7 @@
             const receivable = calculateCategoryTotal('Receivable');
             const giveable = calculateCategoryTotal('Giveable');
             const profit = calculateTotalProfit();
-            const netWorth = liquidity + inventory + investment + receivable + giveable + profit;
+            const netWorth = liquidity + inventory + investment + receivable + giveable;
 
             document.getElementById('liquidityCard').textContent = formatCurrency(liquidity);
             document.getElementById('inventoryCard').textContent = formatCurrency(inventory);
@@ -1430,8 +1430,8 @@
 
         // Extract amount from audit log details string
         function extractAmountFromDetails(details) {
-            // Match "Amount: AED XX,XXX.XX" pattern
-            const match = details.match(/Amount:\s*AED\s*([\d,]+\.?\d*)/);
+            // Match "Amount: XX,XXX.XX" pattern (no AED prefix)
+            const match = details.match(/Amount:\s*([\d,]+\.?\d*)/);
             if (match) {
                 return parseFloat(match[1].replace(/,/g, ''));
             }
@@ -1571,9 +1571,8 @@
             if (state.audit_log) {
                 for (const log of state.audit_log) {
                     if (log.action === 'Sale') {
-                        // Extract profit from item - handle "Profit: AED X,XXX.XX" format
-                        // The formatCurrency function returns "AED X,XXX.XX" with a space
-                        const match = log.item.match(/Profit:\s*AED\s*([\d,\s.]+)/);
+                        // Extract profit from item - handle "Profit: XX,XXX.XX" format (no AED prefix)
+                        const match = log.item.match(/Profit:\s*([\d,\s.]+)/);
                         if (match) {
                             // Extract just the number part, removing spaces and commas
                             const numStr = match[1].replace(/[\s,]/g, '');
@@ -1602,8 +1601,8 @@
                 if (historyItems.length >= 5) break;
                 if (!relevantActions.includes(log.action)) continue;
 
-                // Extract profit from details
-                const match = log.details.match(/Profit:\s*AED\s*([\d,]+\.?\d*)/);
+                // Extract profit from details (no AED prefix)
+                const match = log.details.match(/Profit:\s*([\d,]+\.?\d*)/);
                 if (!match) continue;
 
                 const profit = parseFloat(match[1].replace(/,/g, ''));
@@ -1727,16 +1726,16 @@
                 return;
             }
 
-            // Map inline editing index to filtered array
+            // Map inline editing ID to filtered array
             let filteredEditingIndex = -1;
-            if (inlineEditingIndex !== -1) {
+            if (inlineEditingId) {
                 // Find the position of the editing item in filtered results
-                const editingItemId = state.ledger[inlineEditingIndex]?.id;
+                const editingItemId = inlineEditingId;
                 filteredEditingIndex = filteredLedger.findIndex(item => item.id === editingItemId);
                 
                 // If the item being edited is not in search results, cancel editing
                 if (filteredEditingIndex === -1) {
-                    inlineEditingIndex = -1;
+                    inlineEditingId = null;
                 }
             }
 
@@ -1835,12 +1834,12 @@
 
         // Inline Editing Functions
         function startInlineEdit(index) {
-            inlineEditingIndex = index;
+            inlineEditingId = state.ledger[index]?.id;
             renderLedger();
         }
 
         function cancelInlineEdit() {
-            inlineEditingIndex = -1;
+            inlineEditingId = null;
             renderLedger();
         }
 
@@ -1854,8 +1853,8 @@
             const amount = parseFloat(document.getElementById(`edit-amount-${index}`).value);
             const total = qty * amount;
 
-            // Get the original entry for comparison - use the inlineEditingIndex which is the correct original array index
-            const originalEntry = state.ledger[inlineEditingIndex];
+            // Get the original entry for comparison using the stored ID
+            const originalEntry = state.ledger.find(item => item.id === inlineEditingId);
             
             // Build detailed change log
             let changeDetails = [];
@@ -1900,16 +1899,19 @@
             const oldTotal = originalEntry.total;
             
             // Update the entry using the correct original array index
-            state.ledger[inlineEditingIndex] = { 
-                ...state.ledger[inlineEditingIndex], 
-                date, 
-                description, 
-                category, 
-                status,
-                qty, 
-                amount, 
-                total 
-            };
+            const entryIndex = state.ledger.findIndex(item => item.id === inlineEditingId);
+            if (entryIndex !== -1) {
+                state.ledger[entryIndex] = { 
+                    ...state.ledger[entryIndex], 
+                    date, 
+                    description, 
+                    category, 
+                    status,
+                    qty, 
+                    amount, 
+                    total 
+                };
+            }
 
             // Log the action with detailed changes and net worth change info
             if (hasChanges) {
@@ -2017,8 +2019,8 @@
             
             state.ledger.push(entry);
             
-            // Log with net worth change info
-            logAction('Added', entry.description, `Amount: ${formatCurrency(entry.amount)}, Category: ${entry.category}`, {
+            // Log with net worth change info - use raw numbers, not formatted currency
+            logAction('Added', entry.description, `Amount: ${entry.amount}, Category: ${entry.category}`, {
                 entryTotal: entry.total,
                 netWorthChange: entry.total,
                 netWorthBefore: netWorthBefore
@@ -2034,7 +2036,7 @@
             if (index !== -1) {
                 const oldEntry = { ...state.ledger[index] };
                 state.ledger[index] = updatedEntry;
-                logAction('Updated', updatedEntry.description, `Amount: ${formatCurrency(updatedEntry.amount)}, Category: ${updatedEntry.category}`);
+                logAction('Updated', updatedEntry.description, `Amount: ${updatedEntry.amount}, Category: ${updatedEntry.category}`);
                 saveState();
             }
         }
@@ -2045,7 +2047,7 @@
                 const deletedEntry = state.ledger[index];
                 if (window.confirm(`Are you sure you want to delete "${deletedEntry.description}"?`)) {
                     state.ledger.splice(index, 1);
-                    logAction('Deleted', deletedEntry.description, `Amount: ${formatCurrency(deletedEntry.amount)}, Category: ${deletedEntry.category}`);
+                    logAction('Deleted', deletedEntry.description, `Amount: ${deletedEntry.amount}, Category: ${deletedEntry.category}`);
                     saveState();
                 }
             }
@@ -2062,7 +2064,7 @@
                     state.ledger.splice(index, 1);
                     
                     // Log with net worth change info (deletion decreases net worth)
-                    logAction('Deleted', deletedEntry.description, `Amount: ${formatCurrency(deletedEntry.amount)}, Category: ${deletedEntry.category}`, {
+                    logAction('Deleted', deletedEntry.description, `Amount: ${deletedEntry.amount}, Category: ${deletedEntry.category}`, {
                         entryTotal: deletedEntry.total,
                         netWorthChange: -deletedEntry.total,
                         netWorthBefore: netWorthBefore
@@ -2691,7 +2693,7 @@
                     
                     // Deduct expense amount from liquidity
                     liquidityEntry.total -= amount;
-                    liquidityEntry.amount = liquidityEntry.total / liquidityEntry.qty;
+                    // For liquidity, amount stays at 1.00 per unit - don't modify it
                     
                     // Log the liquidity deduction (asset reduction)
                     logAction('Liquidity Updated', liquidityEntry.description, `Amount: ${formatCurrency(amount)}, Expense: ${description}, Category: ${category}`, {
@@ -2733,7 +2735,7 @@
                              
                              // Add back the expense amount to liquidity
                              liquidityEntry.total += deletedExpense.amount;
-                             liquidityEntry.amount = liquidityEntry.total / liquidityEntry.qty;
+                             // For liquidity, amount stays at 1.00 per unit - don't modify it
                              
                              // Log the reversal
                              logAction('Expense Reversal', deletedExpense.description, `Amount: ${formatCurrency(deletedExpense.amount)}, Category: ${deletedExpense.category}, Restored to: ${liquidityEntry.description}`, {
@@ -2835,128 +2837,8 @@
         }
         
         // Initialize expense tracking when page loads
-        document.addEventListener('DOMContentLoaded', function() {
-            // Load smart defaults
-            loadSmartDefaults();
-            
-            // Set today's date as default for expense form
-            document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
-            
-            // Populate liquidity dropdown on page load
-            populateLiquidityDropdown();
-            
-            // Set smart defaults on form load
-            if (smartDefaults.lastCategory) {
-                document.getElementById('expenseCategory').value = smartDefaults.lastCategory;
-            }
-            if (smartDefaults.lastLiquidityId) {
-                document.getElementById('expenseLiquidity').value = smartDefaults.lastLiquidityId;
-            }
-            
-            // Auto-focus amount field when expense tab is shown
-            document.getElementById('expense-tab').addEventListener('shown.bs.tab', function() {
-                setTimeout(() => {
-                    const amountInput = document.getElementById('expenseAmount');
-                    if (amountInput) {
-                        amountInput.focus();
-                    }
-                }, 100);
-            });
-            
-            // Quick Category Buttons Event Listeners
-            const categoryButtons = document.querySelectorAll('#categoryQuickButtons button');
-            categoryButtons.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const category = this.getAttribute('data-category');
-                    document.getElementById('expenseCategory').value = category;
-                    // Save smart default
-                    smartDefaults.lastCategory = category;
-                    saveSmartDefaults();
-                });
-            });
-            
-            // Clear Expense Form Button
-            document.getElementById('clearExpenseForm').addEventListener('click', function() {
-                document.getElementById('expenseForm').reset();
-                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('expenseAmount').focus();
-            });
-            
-            // Add event listener for expense form submission
-            document.getElementById('expenseForm').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const date = document.getElementById('expenseDate').value;
-                const category = document.getElementById('expenseCategory').value;
-                const amount = parseFloat(document.getElementById('expenseAmount').value);
-                const description = document.getElementById('expenseDescription').value;
-                const liquidityId = document.getElementById('expenseLiquidity').value;
-                
-                // Validation
-                if (!date) {
-                    showToast('Please select a date.', 'danger');
-                    return;
-                }
-                
-                if (!category) {
-                    showToast('Please select a category.', 'danger');
-                    return;
-                }
-                
-                if (!amount || amount <= 0) {
-                    showToast('Please enter a valid amount greater than 0.', 'danger');
-                    return;
-                }
-                
-                if (!description.trim()) {
-                    showToast('Please enter a description.', 'danger');
-                    return;
-                }
-                
-                if (!liquidityId) {
-                    showToast('Please select a liquidity account to deduct from.', 'danger');
-                    return;
-                }
-                
-                // Save smart defaults
-                smartDefaults.lastCategory = category;
-                smartDefaults.lastLiquidityId = liquidityId;
-                saveSmartDefaults();
-                
-                // Create expense object with liquidity
-                const expenseData = {
-                    date,
-                    category,
-                    amount,
-                    description,
-                    liquidityId
-                };
-                
-                // Add expense with liquidity deduction
-                addExpenseWithLiquidity(expenseData);
-                
-                // Reset form
-                document.getElementById('expenseForm').reset();
-                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
-                document.getElementById('expenseLiquidity').value = '';
-                
-                // Show success message
-                showToast('Expense added successfully and deducted from liquidity!', 'success');
-                
-                // Re-render recent expenses quick select
-                renderRecentExpensesQuickSelect();
-            });
-            
-            // Initialize expenses display
-            renderExpenses();
-            updateExpenseSummary();
-            
-            // Initialize recent expenses quick select
-            renderRecentExpensesQuickSelect();
-            
-            // Initialize sales tracking
-            initializeSalesTracking();
-        });
+        // This code is now merged into the first DOMContentLoaded event listener
+        // Kept for reference but the actual initialization happens in the first event listener
         
         // Render recent expenses as quick select buttons
         function renderRecentExpensesQuickSelect() {
