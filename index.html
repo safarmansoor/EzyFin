@@ -223,15 +223,23 @@
             color: white !important;
         }
 
-        /* Dashboard Summary Cards - Vertical Layout */
+        /* Dashboard Summary Cards Container - Horizontal Layout on Desktop */
+        .summary-cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
         .summary-card {
             display: flex;
             align-items: center;
             padding: 1rem 1.5rem;
-            margin-bottom: 0.75rem;
             border-radius: 0.5rem;
             border-left: 5px solid;
             transition: transform 0.2s, box-shadow 0.2s;
+            flex: 1 1 calc(33.333% - 1rem);
+            min-width: 250px;
         }
         
         .summary-card:hover {
@@ -354,6 +362,60 @@
             color: #28a745;
         }
 
+        /* Desktop Summary Cards - Horizontal Layout */
+        @media (min-width: 992px) {
+            .summary-card {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+                height: auto;
+                flex: 1 1 calc(25% - 1rem);
+            }
+            
+            .summary-card .card-content {
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .summary-card .card-content-left {
+                display: flex;
+                align-items: center;
+                flex-wrap: nowrap;
+                min-width: 0;
+                flex: 1;
+            }
+            
+            .summary-card .card-icon {
+                width: 32px;
+                height: 32px;
+                font-size: 0.9rem;
+                margin-right: 0.75rem;
+            }
+            
+            .summary-card .card-title {
+                font-size: 0.875rem;
+            }
+            
+            .summary-card .card-value {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Tablet Layout */
+        @media (min-width: 768px) and (max-width: 991px) {
+            .summary-card {
+                flex: 1 1 calc(50% - 1rem);
+            }
+        }
+        
+        /* Mobile Layout - Stack vertically */
+        @media (max-width: 767px) {
+            .summary-card {
+                flex: 1 1 100%;
+                margin-bottom: 0.5rem;
+            }
+        }
+        
         /* Net Worth History - Vertical List */
         .networth-history-list {
             max-height: 300px;
@@ -427,10 +489,11 @@
 
     <!-- Main Content -->
     <div class="container mt-4">
-        <!-- Summary Cards - Vertical Layout with Icons -->
+        <!-- Summary Cards - Horizontal Layout on Desktop -->
         <div class="row mb-4">
-            <div class="col-md-8 mx-auto">
-                <!-- Liquidity Card -->
+            <div class="col-12">
+                <div class="summary-cards-container">
+                    <!-- Liquidity Card -->
                 <div class="card summary-card liquidity shadow-sm" id="liquidityCardContainer" style="cursor: pointer;">
                     <div class="card-content">
                         <div class="card-content-left">
@@ -601,9 +664,9 @@
                             <div class="col-md-6">
                                 <h6 class="text-muted mb-1">Total Value</h6>
                                 <h4 class="text-success" id="totalValue">AED 0.00</h4>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+            </div>
+        </div>
                 </div>
             </div>
 
@@ -923,26 +986,6 @@
                 </div>
                 <div class="modal-body">
                     <form id="settingsForm">
-                        <!-- GitHub Gist Section -->
-                        <div class="mb-4">
-                            <h6 class="text-success">GitHub Gist (Recommended)</h6>
-                            <p class="text-muted small">Use GitHub Gist for instant data access without GitHub Pages rebuilds.</p>
-                            <div class="mb-3">
-                                <label for="gistUrl" class="form-label">Gist Raw URL</label>
-                                <input type="url" class="form-control" id="gistUrl" placeholder="https://gist.githubusercontent.com/username/gist-id/raw/data.json">
-                                <div class="form-text">Get this URL from your gist by clicking "Raw" button</div>
-                            </div>
-                            <div class="alert alert-info" role="alert">
-                                <h6 class="alert-heading">How to Set Up GitHub Gist:</h6>
-                                <ol class="mb-0">
-                                    <li>Go to <a href="https://gist.github.com" target="_blank">gist.github.com</a></li>
-                                    <li>Create a new gist with your data.json content</li>
-                                    <li>Click "Raw" button and copy the URL</li>
-                                    <li>Paste the URL above and save</li>
-                                </ol>
-                            </div>
-                        </div>
-                        
                         <!-- Legacy GitHub Settings Section -->
                         <div class="mb-4">
                             <h6 class="text-primary">Legacy GitHub Settings</h6>
@@ -969,10 +1012,9 @@
                         <div class="alert alert-warning" role="alert">
                             <h6 class="alert-heading">Important Notes:</h6>
                             <ul class="mb-0">
-                                <li><strong>Gist is recommended</strong> - No GitHub Pages rebuilds needed</li>
-                                <li>Gist data is read-only from the website</li>
-                                <li>To update data, edit your gist manually on GitHub</li>
-                                <li>GitHub settings are for legacy compatibility</li>
+                                <li>GitHub settings are for direct repository access</li>
+                                <li>Use Personal Access Token (PAT) for authentication</li>
+                                <li>Data is synced automatically after changes</li>
                             </ul>
                         </div>
                     </form>
@@ -1950,12 +1992,12 @@
             }
             
             if (originalEntry.amount !== amount) {
-                changeDetails.push(`Amount: ${formatCurrency(originalEntry.amount)} → ${formatCurrency(amount)}`);
+                changeDetails.push(`Amount: ${originalEntry.amount} → ${amount}`);
                 hasChanges = true;
             }
             
             if (originalEntry.total !== total) {
-                changeDetails.push(`Total: ${formatCurrency(originalEntry.total)} → ${formatCurrency(total)}`);
+                changeDetails.push(`Total: ${originalEntry.total} → ${total}`);
                 hasChanges = true;
             }
 
@@ -2355,13 +2397,11 @@
                 const username = document.getElementById('githubUsername').value;
                 const repo = document.getElementById('githubRepo').value;
                 const file = document.getElementById('githubFile').value;
-                const gistUrl = document.getElementById('gistUrl').value;
 
                 localStorage.setItem('github_token', token);
                 localStorage.setItem('github_username', username);
                 localStorage.setItem('github_repo', repo);
                 localStorage.setItem('github_file', file);
-                localStorage.setItem('gist_url', gistUrl);
 
                 bootstrap.Modal.getInstance(document.getElementById('settingsModal')).hide();
                 alert('Settings saved successfully!');
@@ -2728,7 +2768,7 @@
         // Expense Management Functions
         function addExpense(expense) {
             state.expenses.push(expense);
-            logAction('Added Expense', expense.description, `Amount: ${formatCurrency(expense.amount)}, Category: ${expense.category}`);
+            logAction('Added Expense', expense.description, `Amount: ${expense.amount}, Category: ${expense.category}`);
             saveState();
             renderExpenses();
             updateExpenseSummary();
@@ -2767,7 +2807,7 @@
                     // For liquidity, amount stays at 1.00 per unit - don't modify it
                     
                     // Log the liquidity deduction (asset reduction)
-                    logAction('Liquidity Updated', liquidityEntry.description, `Amount: ${formatCurrency(amount)}, Expense: ${description}, Category: ${category}`, {
+                    logAction('Liquidity Updated', liquidityEntry.description, `Amount: ${amount}, Expense: ${description}, Category: ${category}`, {
                         oldValue: oldTotal,
                         newValue: liquidityEntry.total,
                         netWorthChange: -amount,
@@ -2777,7 +2817,7 @@
             }
             
             // Log the expense
-            logAction('Added Expense', description, `Amount: ${formatCurrency(amount)}, Category: ${category}`, {
+            logAction('Added Expense', description, `Amount: ${amount}, Category: ${category}`, {
                 entryTotal: amount,
                 netWorthChange: -amount,
                 netWorthBefore: calculateTotalNetWorth() + amount
@@ -2809,7 +2849,7 @@
                              // For liquidity, amount stays at 1.00 per unit - don't modify it
                              
                              // Log the reversal
-                             logAction('Expense Reversal', deletedExpense.description, `Amount: ${formatCurrency(deletedExpense.amount)}, Category: ${deletedExpense.category}, Restored to: ${liquidityEntry.description}`, {
+                             logAction('Expense Reversal', deletedExpense.description, `Amount: ${deletedExpense.amount}, Category: ${deletedExpense.category}, Restored to: ${liquidityEntry.description}`, {
                                  oldValue: oldTotal,
                                  newValue: liquidityEntry.total,
                                  netWorthChange: deletedExpense.amount,
@@ -2820,7 +2860,7 @@
                      
                      state.expenses.splice(index, 1);
                      // Log the expense deletion with proper net worth change information
-                     logAction('Deleted Expense', deletedExpense.description, `Amount: ${formatCurrency(deletedExpense.amount)}, Category: ${deletedExpense.category}`, {
+                     logAction('Deleted Expense', deletedExpense.description, `Amount: ${deletedExpense.amount}, Category: ${deletedExpense.category}`, {
                          entryTotal: deletedExpense.amount,
                          netWorthChange: deletedExpense.amount,
                          netWorthBefore: calculateTotalNetWorth() - deletedExpense.amount
@@ -3356,7 +3396,7 @@
             
             // Log the receivable modification (increase in asset)
             const receivableDescription = `Receivable: ${receivableItem.description}`;
-            logAction('Receivable Updated', receivableDescription, `Amount: ${formatCurrency(saleAmount)}, Sale: ${inventoryItem.description}`, {
+            logAction('Receivable Updated', receivableDescription, `Amount: ${saleAmount}, Sale: ${inventoryItem.description}`, {
                 oldValue: oldReceivableTotal,
                 newValue: receivableItem.total,
                 netWorthChange: saleAmount,
@@ -3364,8 +3404,8 @@
             });
             
             // Log the sale
-            const saleDescription = `${inventoryItem.description} x${saleQuantity} (Profit: ${formatCurrency(profit)})`;
-            logAction('Sale', saleDescription, `Amount: ${formatCurrency(saleAmount)}, Inventory: ${inventoryItem.description}, Cost: ${formatCurrency(totalInventoryCost)}, Profit: ${formatCurrency(profit)}`, {
+            const saleDescription = `${inventoryItem.description} x${saleQuantity} (Profit: ${profit})`;
+            logAction('Sale', saleDescription, `Amount: ${saleAmount}, Inventory: ${inventoryItem.description}, Cost: ${totalInventoryCost}, Profit: ${profit}`, {
                 entryTotal: saleAmount,
                 netWorthChange: saleAmount,  
                 netWorthBefore: calculateTotalNetWorth() - saleAmount
