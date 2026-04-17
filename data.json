@@ -437,7 +437,7 @@
     {
       "timestamp": "2026-04-15T18:59:00.897Z",
       "action": "Sale",
-      "item": "MT3600BE GLINET x1 (Profit: AEDÂ 180.19)",
+      "item": "MT3600BE GLINET x1 (Profit: 180.19)",
       "details": "Amount: 678.72, Inventory: MT3600BE GLINET",
       "netWorth": 215263.22,
       "entryTotal": 678.72,
