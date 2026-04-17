@@ -386,7 +386,7 @@
       "timestamp": "2026-04-16T08:21:57.147Z",
       "action": "Added Expense",
       "item": "Baku",
-      "details": "Amount: AED 764.00, Category: Transportation",
+      "details": "Amount: 764.00, Category: Transportation",
       "netWorth": 214699.22,
       "entryTotal": 764,
       "netWorthChange": -764,
@@ -396,7 +396,7 @@
       "timestamp": "2026-04-16T08:21:57.147Z",
       "action": "Liquidity Updated",
       "item": "CBD",
-      "details": "Amount: AED 764.00, Expense: Baku, Category: Transportation",
+      "details": "Amount: 764.00, Expense: Baku, Category: Transportation",
       "netWorth": 214699.22,
       "oldValue": 21128.84,
       "newValue": 20364.84,
@@ -406,8 +406,8 @@
     {
       "timestamp": "2026-04-15T19:12:34.561Z",
       "action": "Sale",
-      "item": "test x1 (Profit: AED 100.00)",
-      "details": "Amount: AED 200.00, Inventory: test",
+      "item": "test x1 (Profit: 100.00)",
+      "details": "Amount: 200.00, Inventory: test",
       "netWorth": 215463.22,
       "entryTotal": 200,
       "netWorthChange": 200,
@@ -417,7 +417,7 @@
       "timestamp": "2026-04-15T19:12:34.561Z",
       "action": "Receivable Updated",
       "item": "Receivable: Amazon India",
-      "details": "Amount: AED 200.00, Sale: test",
+      "details": "Amount: 200.00, Sale: test",
       "netWorth": 215463.22,
       "oldValue": 498.94,
       "newValue": 698.94,
@@ -428,7 +428,7 @@
       "timestamp": "2026-04-15T19:12:11.200Z",
       "action": "Added",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Inventory",
+      "details": "Amount: 100.00, Category: Inventory",
       "netWorth": 215363.22,
       "entryTotal": 100,
       "netWorthChange": 100,
@@ -438,7 +438,7 @@
       "timestamp": "2026-04-15T18:59:00.897Z",
       "action": "Sale",
       "item": "MT3600BE GLINET x1 (Profit: AEDÂ 180.19)",
-      "details": "Amount: AED 678.72, Inventory: MT3600BE GLINET",
+      "details": "Amount: 678.72, Inventory: MT3600BE GLINET",
       "netWorth": 215263.22,
       "entryTotal": 678.72,
       "netWorthChange": 678.72,
@@ -448,7 +448,7 @@
       "timestamp": "2026-04-15T18:14:49.229Z",
       "action": "Added Expense",
       "item": "Saudi shipment",
-      "details": "Amount: AED 90.30, Category: Business",
+      "details": "Amount: 90.30, Category: Business",
       "netWorth": 215083.03,
       "entryTotal": 90.3,
       "netWorthChange": -90.3,
@@ -458,7 +458,7 @@
       "timestamp": "2026-04-15T18:14:49.229Z",
       "action": "Expense Deduction",
       "item": "Saudi shipment",
-      "details": "Amount: AED 90.30, Category: Business, Deducted from: CBD",
+      "details": "Amount: 90.30, Category: Business, Deducted from: CBD",
       "netWorth": 215083.03,
       "oldValue": 21219.14,
       "newValue": 21128.84,
@@ -469,7 +469,7 @@
       "timestamp": "2026-04-15T18:09:35.300Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 21,128.84   AED 21,219.14; Total: AED 21,128.84   AED 21,219.14",
+      "details": "Amount: 21,128.84   21,219.14; Total: 21,128.84   21,219.14",
       "netWorth": 215173.33000000002,
       "oldValue": 21128.84,
       "newValue": 21219.14,
@@ -480,7 +480,7 @@
       "timestamp": "2026-04-15T18:00:36.136Z",
       "action": "Edited",
       "item": "Amazon Saudi",
-      "details": "Amount: AED 824.31   AED 1,373.77; Total: AED 824.31   AED 1,373.77",
+      "details": "Amount: 824.31   1,373.77; Total: 824.31   1,373.77",
       "netWorth": 215083.03,
       "oldValue": 824.31,
       "newValue": 1373.77,
@@ -491,7 +491,7 @@
       "timestamp": "2026-04-15T18:00:13.066Z",
       "action": "Edited",
       "item": "MT3000 GLINET",
-      "details": "Quantity: 15   14; Total: AED 5,565.90   AED 5,194.84",
+      "details": "Quantity: 15   14; Total: 5,565.90   5,194.84",
       "netWorth": 214533.57,
       "oldValue": 5565.9,
       "newValue": 5194.84,
@@ -502,7 +502,7 @@
       "timestamp": "2026-04-15T17:47:32.150Z",
       "action": "Added Expense",
       "item": "Rice potato noodles ricepowder",
-      "details": "Amount: AED 64.39, Category: Food",
+      "details": "Amount: 64.39, Category: Food",
       "netWorth": 214904.63,
       "entryTotal": 64.39,
       "netWorthChange": -64.39,
@@ -512,7 +512,7 @@
       "timestamp": "2026-04-15T17:47:32.150Z",
       "action": "Expense Deduction",
       "item": "Rice potato noodles ricepowder",
-      "details": "Amount: AED 64.39, Category: Food, Deducted from: CBD",
+      "details": "Amount: 64.39, Category: Food, Deducted from: CBD",
       "netWorth": 214904.63,
       "oldValue": 21193.23,
       "newValue": 21128.84,
@@ -523,7 +523,7 @@
       "timestamp": "2026-04-15T16:53:09.353Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 26,808.53   AED 21,193.23; Total: AED 26,808.53   AED 21,193.23",
+      "details": "Amount: 26,808.53   21,193.23; Total: 26,808.53   21,193.23",
       "netWorth": 214969.02000000002,
       "oldValue": 26808.53,
       "newValue": 21193.23,
@@ -534,7 +534,7 @@
       "timestamp": "2026-04-15T16:52:12.590Z",
       "action": "Added",
       "item": "Xreal One",
-      "details": "Amount: AED 1,236.26, Category: Inventory",
+      "details": "Amount: 1,236.26, Category: Inventory",
       "netWorth": 220584.32,
       "entryTotal": 2472.52,
       "netWorthChange": 2472.52,
@@ -544,7 +544,7 @@
       "timestamp": "2026-04-15T16:51:26.838Z",
       "action": "Added",
       "item": "Mucar BT200 Max",
-      "details": "Amount: AED 215.00, Category: Inventory",
+      "details": "Amount: 215.00, Category: Inventory",
       "netWorth": 218111.80000000002,
       "entryTotal": 2150,
       "netWorthChange": 2150,
@@ -554,7 +554,7 @@
       "timestamp": "2026-04-14T19:30:34.779Z",
       "action": "Deleted Expense",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food",
+      "details": "Amount: 100.00, Category: Food",
       "netWorth": 215961.80000000002,
       "entryTotal": 100,
       "netWorthChange": 100,
@@ -564,7 +564,7 @@
       "timestamp": "2026-04-14T19:30:34.779Z",
       "action": "Expense Reversal",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food, Restored to: CBD",
+      "details": "Amount: 100.00, Category: Food, Restored to: CBD",
       "netWorth": 215961.80000000002,
       "oldValue": 26708.53,
       "newValue": 26808.53,
@@ -575,7 +575,7 @@
       "timestamp": "2026-04-14T19:29:47.115Z",
       "action": "Added Expense",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food",
+      "details": "Amount: 100.00, Category: Food",
       "netWorth": 215861.80000000002,
       "entryTotal": 100,
       "netWorthChange": -100,
@@ -585,7 +585,7 @@
       "timestamp": "2026-04-14T19:29:47.115Z",
       "action": "Expense Deduction",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food, Deducted from: CBD",
+      "details": "Amount: 100.00, Category: Food, Deducted from: CBD",
       "netWorth": 215861.80000000002,
       "oldValue": 26808.53,
       "newValue": 26708.53,
@@ -596,7 +596,7 @@
       "timestamp": "2026-04-14T19:29:26.543Z",
       "action": "Deleted Expense",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food",
+      "details": "Amount: 100.00, Category: Food",
       "netWorth": 215961.80000000002,
       "entryTotal": 100,
       "netWorthChange": 100,
@@ -606,7 +606,7 @@
       "timestamp": "2026-04-14T19:29:26.543Z",
       "action": "Expense Reversal",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food, Restored to: CBD",
+      "details": "Amount: 100.00, Category: Food, Restored to: CBD",
       "netWorth": 215961.80000000002,
       "oldValue": 26708.53,
       "newValue": 26808.53,
@@ -617,7 +617,7 @@
       "timestamp": "2026-04-14T19:19:27.212Z",
       "action": "Added Expense",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food",
+      "details": "Amount: 100.00, Category: Food",
       "netWorth": 215861.80000000002,
       "entryTotal": 100,
       "netWorthChange": -100,
@@ -627,7 +627,7 @@
       "timestamp": "2026-04-14T19:19:27.212Z",
       "action": "Expense Deduction",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food, Deducted from: CBD",
+      "details": "Amount: 100.00, Category: Food, Deducted from: CBD",
       "netWorth": 215861.80000000002,
       "oldValue": 26808.53,
       "newValue": 26708.53,
@@ -638,14 +638,14 @@
       "timestamp": "2026-04-14T19:19:00.714Z",
       "action": "Deleted Expense",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food",
+      "details": "Amount: 100.00, Category: Food",
       "netWorth": 215961.80000000002
     },
     {
       "timestamp": "2026-04-14T19:19:00.714Z",
       "action": "Expense Reversal",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food, Restored to: CBD",
+      "details": "Amount: 100.00, Category: Food, Restored to: CBD",
       "netWorth": 215961.80000000002,
       "oldValue": 26708.53,
       "newValue": 26808.53,
@@ -656,7 +656,7 @@
       "timestamp": "2026-04-14T19:17:53.004Z",
       "action": "Added Expense",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food",
+      "details": "Amount: 100.00, Category: Food",
       "netWorth": 215861.80000000002,
       "entryTotal": 100,
       "netWorthChange": -100,
@@ -666,7 +666,7 @@
       "timestamp": "2026-04-14T19:17:53.003Z",
       "action": "Expense Deduction",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food, Deducted from: CBD",
+      "details": "Amount: 100.00, Category: Food, Deducted from: CBD",
       "netWorth": 215861.80000000002,
       "oldValue": 26808.53,
       "newValue": 26708.53,
@@ -677,14 +677,14 @@
       "timestamp": "2026-04-14T19:09:09.439Z",
       "action": "Deleted Expense",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food",
+      "details": "Amount: 100.00, Category: Food",
       "netWorth": 215961.80000000002
     },
     {
       "timestamp": "2026-04-14T19:08:25.677Z",
       "action": "Added Expense",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food",
+      "details": "Amount: 100.00, Category: Food",
       "netWorth": 215961.80000000002,
       "entryTotal": 100,
       "netWorthChange": -100,
@@ -694,7 +694,7 @@
       "timestamp": "2026-04-14T19:08:25.677Z",
       "action": "Expense Deduction",
       "item": "test",
-      "details": "Amount: AED 100.00, Category: Food, Deducted from: CBD",
+      "details": "Amount: 100.00, Category: Food, Deducted from: CBD",
       "netWorth": 215961.80000000002,
       "oldValue": 26908.53,
       "newValue": 26808.53,
@@ -705,7 +705,7 @@
       "timestamp": "2026-04-14T08:00:51.707Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 20,908.53   AED 26,908.53; Total: AED 20,908.53   AED 26,908.53",
+      "details": "Amount: 20,908.53   26,908.53; Total: 20,908.53   26,908.53",
       "netWorth": 216061.80000000002,
       "oldValue": 20908.53,
       "newValue": 26908.53,
@@ -716,7 +716,7 @@
       "timestamp": "2026-04-14T03:52:50.672Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 15,971.35   AED 20,908.53; Total: AED 15,971.35   AED 20,908.53",
+      "details": "Amount: 15,971.35   20,908.53; Total: 15,971.35   20,908.53",
       "netWorth": 210061.80000000002,
       "oldValue": 15971.35,
       "newValue": 20908.53,
@@ -727,7 +727,7 @@
       "timestamp": "2026-04-14T03:52:27.716Z",
       "action": "Edited",
       "item": "Amazon Saudi",
-      "details": "Amount: AED 5,880.16   AED 824.31; Total: AED 5,880.16   AED 824.31",
+      "details": "Amount: 5,880.16   824.31; Total: 5,880.16   824.31",
       "netWorth": 205124.62000000002,
       "oldValue": 5880.16,
       "newValue": 824.31,
@@ -738,7 +738,7 @@
       "timestamp": "2026-04-14T03:51:32.874Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 8.43   AED 15,971.35; Total: AED 8.43   AED 15,971.35",
+      "details": "Amount: 8.43   15,971.35; Total: 8.43   15,971.35",
       "netWorth": 210180.47000000003,
       "oldValue": 8.43,
       "newValue": 15971.35,
@@ -749,7 +749,7 @@
       "timestamp": "2026-04-14T03:50:51.439Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 19,949.10   AED 4,032.54; Total: AED 19,949.10   AED 4,032.54",
+      "details": "Amount: 19,949.10   4,032.54; Total: 19,949.10   4,032.54",
       "netWorth": 194217.55000000002,
       "oldValue": 19949.1,
       "newValue": 4032.54,
@@ -760,7 +760,7 @@
       "timestamp": "2026-04-13T17:50:23.921Z",
       "action": "Edited",
       "item": "ADCB",
-      "details": "Amount: AED 11,584.44   AED 10,895.20; Total: AED 11,584.44   AED 10,895.20",
+      "details": "Amount: 11,584.44   10,895.20; Total: 11,584.44   10,895.20",
       "netWorth": 210134.11000000002,
       "oldValue": 11584.44,
       "newValue": 10895.2,
@@ -771,7 +771,7 @@
       "timestamp": "2026-04-13T17:49:57.456Z",
       "action": "Edited",
       "item": "ALFA AXML",
-      "details": "Status: active   pending; Quantity: 0   3; Amount: AED 213.00   AED 222.82; Total: AED 0.00   AED 668.46",
+      "details": "Status: active   pending; Quantity: 0   3; Amount: 213.00   222.82; Total: 0.00   668.46",
       "netWorth": 210823.35,
       "oldValue": 0,
       "newValue": 668.46,
@@ -782,7 +782,7 @@
       "timestamp": "2026-04-13T17:49:37.425Z",
       "action": "Edited",
       "item": "ALFA AXML",
-      "details": "Quantity: 1   0; Total: AED 213.00   AED 0.00",
+      "details": "Quantity: 1   0; Total: 213.00   0.00",
       "netWorth": 210154.88999999998,
       "oldValue": 213,
       "newValue": 0,
@@ -793,7 +793,7 @@
       "timestamp": "2026-04-13T04:27:21.908Z",
       "action": "Edited",
       "item": "ADCB",
-      "details": "Amount: AED 11,635.13   AED 11,584.44; Total: AED 11,635.13   AED 11,584.44",
+      "details": "Amount: 11,635.13   11,584.44; Total: 11,635.13   11,584.44",
       "netWorth": 210367.88999999998,
       "oldValue": 11635.13,
       "newValue": 11584.44,
@@ -804,7 +804,7 @@
       "timestamp": "2026-04-13T04:26:54.955Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 69.79   AED 8.43; Total: AED 69.79   AED 8.43",
+      "details": "Amount: 69.79   8.43; Total: 69.79   8.43",
       "netWorth": 210418.58,
       "oldValue": 69.79,
       "newValue": 8.43,
@@ -815,7 +815,7 @@
       "timestamp": "2026-04-13T04:26:16.487Z",
       "action": "Edited",
       "item": "Amazon Saudi",
-      "details": "Amount: AED 5,055.24   AED 5,880.16; Total: AED 5,055.24   AED 5,880.16",
+      "details": "Amount: 5,055.24   5,880.16; Total: 5,055.24   5,880.16",
       "netWorth": 210479.94000000003,
       "oldValue": 5055.24,
       "newValue": 5880.16,
@@ -826,7 +826,7 @@
       "timestamp": "2026-04-13T04:24:21.103Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 18,685.43   AED 19,949.10; Total: AED 18,685.43   AED 19,949.10",
+      "details": "Amount: 18,685.43   19,949.10; Total: 18,685.43   19,949.10",
       "netWorth": 209655.02000000002,
       "oldValue": 18685.43,
       "newValue": 19949.1,
@@ -837,7 +837,7 @@
       "timestamp": "2026-04-13T04:23:33.096Z",
       "action": "Edited",
       "item": "MT6000 GLINET",
-      "details": "Quantity: 5   3; Total: AED 2,937.85   AED 1,762.71",
+      "details": "Quantity: 5   3; Total: 2,937.85   1,762.71",
       "netWorth": 208391.35,
       "oldValue": 2937.8500000000004,
       "newValue": 1762.71,
@@ -870,7 +870,7 @@
       "timestamp": "2026-04-09T19:10:57.110Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 18,037.07   AED 18,685.43; Total: AED 18,037.07   AED 18,685.43",
+      "details": "Amount: 18,037.07   18,685.43; Total: 18,037.07   18,685.43",
       "netWorth": 209566.49,
       "oldValue": 18037.07,
       "newValue": 18685.43,
@@ -881,7 +881,7 @@
       "timestamp": "2026-04-09T19:08:42.813Z",
       "action": "Edited",
       "item": "Renu",
-      "details": "Amount: AED 13,617.00   AED 11,617.78; Total: AED 13,617.00   AED 11,617.78",
+      "details": "Amount: 13,617.00   11,617.78; Total: 13,617.00   11,617.78",
       "netWorth": 208918.13,
       "oldValue": 13617,
       "newValue": 11617.78,
@@ -892,7 +892,7 @@
       "timestamp": "2026-04-09T19:06:51.410Z",
       "action": "Edited",
       "item": "ADCB",
-      "details": "Amount: AED 14,130.00   AED 11,635.13; Total: AED 14,130.00   AED 11,635.13",
+      "details": "Amount: 14,130.00   11,635.13; Total: 14,130.00   11,635.13",
       "netWorth": 210917.35,
       "oldValue": 14130,
       "newValue": 11635.13,
@@ -903,7 +903,7 @@
       "timestamp": "2026-04-09T19:06:06.126Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 87.46   AED 69.79; Total: AED 87.46   AED 69.79",
+      "details": "Amount: 87.46   69.79; Total: 87.46   69.79",
       "netWorth": 213412.22000000003,
       "oldValue": 87.46,
       "newValue": 69.79,
@@ -914,7 +914,7 @@
       "timestamp": "2026-04-08T14:24:00.534Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 591.33   AED 87.46; Total: AED 591.33   AED 87.46",
+      "details": "Amount: 591.33   87.46; Total: 591.33   87.46",
       "netWorth": 213429.89,
       "oldValue": 591.33,
       "newValue": 87.46,
@@ -925,7 +925,7 @@
       "timestamp": "2026-04-08T14:23:13.747Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 590.33   AED 591.33; Total: AED 590.33   AED 591.33",
+      "details": "Amount: 590.33   591.33; Total: 590.33   591.33",
       "netWorth": 213933.76,
       "oldValue": 590.33,
       "newValue": 591.33,
@@ -936,7 +936,7 @@
       "timestamp": "2026-04-08T13:59:57.614Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 591.33   AED 590.33; Total: AED 591.33   AED 590.33",
+      "details": "Amount: 591.33   590.33; Total: 591.33   590.33",
       "netWorth": 213932.76,
       "oldValue": 591.33,
       "newValue": 590.33,
@@ -947,655 +947,655 @@
       "timestamp": "2026-04-08T12:06:46.562Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 16,601.48   AED 18,037.07; Total: AED 16,601.48   AED 18,037.07",
+      "details": "Amount: 16,601.48   18,037.07; Total: 16,601.48   18,037.07",
       "netWorth": 213933.76
     },
     {
       "timestamp": "2026-04-08T12:06:13.283Z",
       "action": "Edited",
       "item": "BE3600 GLINET",
-      "details": "Quantity: 3   2; Total: AED 2,154.33   AED 1,436.22",
+      "details": "Quantity: 3   2; Total: 2,154.33   1,436.22",
       "netWorth": 212498.17
     },
     {
       "timestamp": "2026-04-05T11:29:22.536Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Quantity: 25   23; Total: AED 2,775.00   AED 2,553.00",
+      "details": "Quantity: 25   23; Total: 2,775.00   2,553.00",
       "netWorth": 213216.28000000003
     },
     {
       "timestamp": "2026-04-05T11:29:06.104Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 16,128.33   AED 16,601.48; Total: AED 16,128.33   AED 16,601.48",
+      "details": "Amount: 16,128.33   16,601.48; Total: 16,128.33   16,601.48",
       "netWorth": 213438.28000000003
     },
     {
       "timestamp": "2026-04-04T22:59:59.135Z",
       "action": "Edited",
       "item": "Cash on India",
-      "details": "Amount: AED 18,820.00   AED 18,810.00; Total: AED 18,820.00   AED 18,810.00",
+      "details": "Amount: 18,820.00   18,810.00; Total: 18,820.00   18,810.00",
       "netWorth": 212965.13000000003
     },
     {
       "timestamp": "2026-04-04T22:59:40.310Z",
       "action": "Edited",
       "item": "Cash on India",
-      "details": "Amount: AED 18,810.00   AED 18,820.00; Total: AED 18,810.00   AED 18,820.00",
+      "details": "Amount: 18,810.00   18,820.00; Total: 18,810.00   18,820.00",
       "netWorth": 212975.13000000003
     },
     {
       "timestamp": "2026-04-04T20:00:46.399Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 15,588.42   AED 16,128.33; Total: AED 15,588.42   AED 16,128.33"
+      "details": "Amount: 15,588.42   16,128.33; Total: 15,588.42   16,128.33"
     },
     {
       "timestamp": "2026-04-04T19:58:40.920Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Quantity: 38   25; Total: AED 4,218.00   AED 2,775.00"
+      "details": "Quantity: 38   25; Total: 4,218.00   2,775.00"
     },
     {
       "timestamp": "2026-04-03T14:22:26.424Z",
       "action": "Deleted",
       "item": "Amir",
-      "details": "Amount: AED 100.00, Category: Receivable"
+      "details": "Amount: 100.00, Category: Receivable"
     },
     {
       "timestamp": "2026-04-03T14:21:33.234Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 14,657.44   AED 15,588.42; Total: AED 14,657.44   AED 15,588.42"
+      "details": "Amount: 14,657.44   15,588.42; Total: 14,657.44   15,588.42"
     },
     {
       "timestamp": "2026-04-02T04:57:56.047Z",
       "action": "Added",
       "item": "Boruit v10",
-      "details": "Amount: AED 27.25, Category: Inventory"
+      "details": "Amount: 27.25, Category: Inventory"
     },
     {
       "timestamp": "2026-04-02T04:56:45.952Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 2,325.74   AED 591.33; Total: AED 2,325.74   AED 591.33"
+      "details": "Amount: 2,325.74   591.33; Total: 2,325.74   591.33"
     },
     {
       "timestamp": "2026-04-01T12:18:13.855Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 13,450.57   AED 14,657.44; Total: AED 13,450.57   AED 14,657.44"
+      "details": "Amount: 13,450.57   14,657.44; Total: 13,450.57   14,657.44"
     },
     {
       "timestamp": "2026-04-01T12:16:59.649Z",
       "action": "Edited",
       "item": "MT3600BE GLINET",
-      "details": "Quantity: 2   0; Total: AED 1,160.00   AED 0.00"
+      "details": "Quantity: 2   0; Total: 1,160.00   0.00"
     },
     {
       "timestamp": "2026-04-01T06:34:34.840Z",
       "action": "Edited",
       "item": "Xreal 1S",
-      "details": "Quantity: 1   3; Total: AED 1,595.00   AED 4,785.00"
+      "details": "Quantity: 1   3; Total: 1,595.00   4,785.00"
     },
     {
       "timestamp": "2026-04-01T06:34:16.581Z",
       "action": "Added",
       "item": "Xreal 1S",
-      "details": "Amount: AED 1,595.00, Category: Inventory"
+      "details": "Amount: 1,595.00, Category: Inventory"
     },
     {
       "timestamp": "2026-04-01T06:33:45.851Z",
       "action": "Added",
       "item": "Xreal One Pro - M",
-      "details": "Amount: AED 2,064.00, Category: Inventory"
+      "details": "Amount: 2,064.00, Category: Inventory"
     },
     {
       "timestamp": "2026-04-01T06:33:22.495Z",
       "action": "Edited",
       "item": "Xreal One Pro - L",
-      "details": "Status: active   pending; Quantity: 0   2; Total: AED 0.00   AED 4,128.00"
+      "details": "Status: active   pending; Quantity: 0   2; Total: 0.00   4,128.00"
     },
     {
       "timestamp": "2026-04-01T06:21:19.521Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 15,437.75   AED 2,325.74; Total: AED 15,437.75   AED 2,325.74"
+      "details": "Amount: 15,437.75   2,325.74; Total: 15,437.75   2,325.74"
     },
     {
       "timestamp": "2026-03-31T14:33:19.889Z",
       "action": "Edited",
       "item": "ADCB",
-      "details": "Amount: AED 20,630.69   AED 14,130.00; Total: AED 20,630.69   AED 14,130.00"
+      "details": "Amount: 20,630.69   14,130.00; Total: 20,630.69   14,130.00"
     },
     {
       "timestamp": "2026-03-31T14:32:59.456Z",
       "action": "Edited",
       "item": "Renu",
-      "details": "Amount: AED 20,117.00   AED 13,617.00; Total: AED 20,117.00   AED 13,617.00"
+      "details": "Amount: 20,117.00   13,617.00; Total: 20,117.00   13,617.00"
     },
     {
       "timestamp": "2026-03-31T12:35:54.964Z",
       "action": "Added",
       "item": "Manbaone",
-      "details": "Amount: AED 111.35, Category: Inventory"
+      "details": "Amount: 111.35, Category: Inventory"
     },
     {
       "timestamp": "2026-03-31T12:34:08.468Z",
       "action": "Edited",
       "item": "Xreal One Pro - L",
-      "details": "Quantity: 1   0; Total: AED 2,064.00   AED 0.00"
+      "details": "Quantity: 1   0; Total: 2,064.00   0.00"
     },
     {
       "timestamp": "2026-03-31T12:33:55.957Z",
       "action": "Edited",
       "item": "Amazon Saudi",
-      "details": "Amount: AED 2,385.20   AED 5,055.24; Total: AED 2,385.20   AED 5,055.24"
+      "details": "Amount: 2,385.20   5,055.24; Total: 2,385.20   5,055.24"
     },
     {
       "timestamp": "2026-03-31T12:32:01.143Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 21,191.83   AED 13,450.57; Total: AED 21,191.83   AED 13,450.57"
+      "details": "Amount: 21,191.83   13,450.57; Total: 21,191.83   13,450.57"
     },
     {
       "timestamp": "2026-03-31T11:51:42.750Z",
       "action": "Added",
       "item": "MT6000 GLINET",
-      "details": "Amount: AED 587.57, Category: Inventory"
+      "details": "Amount: 587.57, Category: Inventory"
     },
     {
       "timestamp": "2026-03-31T11:50:49.882Z",
       "action": "Added",
       "item": "MT3600BE GLINET",
-      "details": "Amount: AED 498.53, Category: Inventory"
+      "details": "Amount: 498.53, Category: Inventory"
     },
     {
       "timestamp": "2026-03-31T11:34:24.735Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 20,603.07   AED 15,437.75; Total: AED 20,603.07   AED 15,437.75"
+      "details": "Amount: 20,603.07   15,437.75; Total: 20,603.07   15,437.75"
     },
     {
       "timestamp": "2026-03-31T06:30:27.995Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 19,706.66   AED 20,603.07; Total: AED 19,706.66   AED 20,603.07"
+      "details": "Amount: 19,706.66   20,603.07; Total: 19,706.66   20,603.07"
     },
     {
       "timestamp": "2026-03-30T11:11:31.258Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 19,506.66   AED 19,706.66; Total: AED 19,506.66   AED 19,706.66"
+      "details": "Amount: 19,506.66   19,706.66; Total: 19,506.66   19,706.66"
     },
     {
       "timestamp": "2026-03-30T11:11:16.675Z",
       "action": "Edited",
       "item": "Amir",
-      "details": "Amount: AED 300.00   AED 100.00; Total: AED 300.00   AED 100.00"
+      "details": "Amount: 300.00   100.00; Total: 300.00   100.00"
     },
     {
       "timestamp": "2026-03-29T22:16:35.636Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AED 19,613.63   AED 19,506.66; Total: AED 19,613.63   AED 19,506.66"
+      "details": "Amount: 19,613.63   19,506.66; Total: 19,613.63   19,506.66"
     },
     {
       "timestamp": "2026-03-29T14:51:48.781Z",
       "action": "Edited",
       "item": "MT3600BE GLINET",
-      "details": "Amount: AED 871.85   AED 580.00; Total: AED 1,743.70   AED 1,160.00"
+      "details": "Amount: 871.85   580.00; Total: 1,743.70   1,160.00"
     },
     {
       "timestamp": "2026-03-29T14:00:07.150Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AED 20,058.50   AED 21,191.83; Total: AED 20,058.50   AED 21,191.83"
+      "details": "Amount: 20,058.50   21,191.83; Total: 20,058.50   21,191.83"
     },
     {
       "timestamp": "2026-03-29T13:59:43.051Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Quantity: 39   38; Total: AED 4,329.00   AED 4,218.00"
+      "details": "Quantity: 39   38; Total: 4,329.00   4,218.00"
     },
     {
       "timestamp": "2026-03-29T13:57:05.574Z",
       "action": "Edited",
       "item": "MT6000 GLINET",
-      "details": "Quantity: 1   0; Total: AED 669.74   AED 0.00"
+      "details": "Quantity: 1   0; Total: 669.74   0.00"
     },
     {
       "timestamp": "2026-03-28T15:47:24.968Z",
       "action": "Edited",
       "item": "MT6000 GLINET",
-      "details": "Quantity: 2   1; Total: AED 1,339.48   AED 669.74"
+      "details": "Quantity: 2   1; Total: 1,339.48   669.74"
     },
     {
       "timestamp": "2026-03-28T15:47:14.816Z",
       "action": "Edited",
       "item": "MT6000 GLINET",
-      "details": "Quantity: 1   2; Total: AED 669.74   AED 1,339.48"
+      "details": "Quantity: 1   2; Total: 669.74   1,339.48"
     },
     {
       "timestamp": "2026-03-28T15:46:50.301Z",
       "action": "Edited",
       "item": "MT6000 GLINET",
-      "details": "Description: \"Manbaone\"   \"MT6000 GLINET\"; Quantity: 40   1; Amount: AED 111.00   AED 669.74; Total: AED 4,440.00   AED 669.74"
+      "details": "Description: \"Manbaone\"   \"MT6000 GLINET\"; Quantity: 40   1; Amount: 111.00   669.74; Total: 4,440.00   669.74"
     },
     {
       "timestamp": "2026-03-28T15:45:18.039Z",
       "action": "Edited",
       "item": "Cash on India",
-      "details": "Description: \"MT6000 GLINET\"   \"Cash on India\"; Category: Inventory   Liquidity; Amount: AED 669.74   AED 18,810.00; Total: AED 669.74   AED 18,810.00"
+      "details": "Description: \"MT6000 GLINET\"   \"Cash on India\"; Category: Inventory   Liquidity; Amount: 669.74   18,810.00; Total: 669.74   18,810.00"
     },
     {
       "timestamp": "2026-03-28T15:41:56.694Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Description: \"Cash on India\"   \"Manbaone\"; Category: Liquidity   Inventory; Quantity: 1   40; Amount: AED 18,810.00   AED 111.00; Total: AED 18,810.00   AED 4,440.00"
+      "details": "Description: \"Cash on India\"   \"Manbaone\"; Category: Liquidity   Inventory; Quantity: 1   40; Amount: 18,810.00   111.00; Total: 18,810.00   4,440.00"
     },
     {
       "timestamp": "2026-03-28T15:23:11.618Z",
       "action": "Added",
       "item": "ADCB",
-      "details": "Amount: AED 20,630.69, Category: Liquidity"
+      "details": "Amount: 20,630.69, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-28T15:21:34.860Z",
       "action": "Added",
       "item": "Manbaone",
-      "details": "Amount: AED 111.00, Category: Inventory"
+      "details": "Amount: 111.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T15:21:08.695Z",
       "action": "Deleted",
       "item": "MT6000 GLINET",
-      "details": "Amount: AED 669.74, Category: Inventory"
+      "details": "Amount: 669.74, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T15:21:05.651Z",
       "action": "Deleted",
       "item": "MT6000 GLINET",
-      "details": "Amount: AED 669.74, Category: Inventory"
+      "details": "Amount: 669.74, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T15:19:01.330Z",
       "action": "Edited",
       "item": "MT6000 GLINET",
-      "details": "Description: \"ADCB\"   \"MT6000 GLINET\"; Category: Liquidity   Inventory; Quantity: 1   2; Amount: AED 20,630.69   AED 669.74; Total: AED 20,630.69   AED 1,339.48"
+      "details": "Description: \"ADCB\"   \"MT6000 GLINET\"; Category: Liquidity   Inventory; Quantity: 1   2; Amount: 20,630.69   669.74; Total: 20,630.69   1,339.48"
     },
     {
       "timestamp": "2026-03-28T15:13:04.559Z",
       "action": "Edited",
       "item": "MT6000 GLINET",
-      "details": "Description: \"Manbaone\"   \"MT6000 GLINET\"; Quantity: 39   1; Amount: AED 111.00   AED 669.74; Total: AED 4,329.00   AED 669.74"
+      "details": "Description: \"Manbaone\"   \"MT6000 GLINET\"; Quantity: 39   1; Amount: 111.00   669.74; Total: 4,329.00   669.74"
     },
     {
       "timestamp": "2026-03-28T15:09:41.980Z",
       "action": "Deleted",
       "item": "hh",
-      "details": "Amount: AED 105.00, Category: Investment"
+      "details": "Amount: 105.00, Category: Investment"
     },
     {
       "timestamp": "2026-03-28T15:08:56.225Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Quantity: 38   39; Total: AED 4,218.00   AED 4,329.00"
+      "details": "Quantity: 38   39; Total: 4,218.00   4,329.00"
     },
     {
       "timestamp": "2026-03-28T14:45:26.720Z",
       "action": "Edited",
       "item": "hh",
-      "details": "Category: Inventory   Investment; Quantity: 1   4; Amount: AED 100.00   AED 105.00; Total: AED 100.00   AED 420.00"
+      "details": "Category: Inventory   Investment; Quantity: 1   4; Amount: 100.00   105.00; Total: 100.00   420.00"
     },
     {
       "timestamp": "2026-03-28T14:43:47.650Z",
       "action": "Added",
       "item": "hh",
-      "details": "Amount: AED 100.00, Category: Inventory"
+      "details": "Amount: 100.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T14:32:29.648Z",
       "action": "Deleted",
       "item": "hh",
-      "details": "Amount: AED 90.00, Category: Inventory"
+      "details": "Amount: 90.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T14:32:22.859Z",
       "action": "Added",
       "item": "hh",
-      "details": "Amount: AED 90.00, Category: Inventory"
+      "details": "Amount: 90.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T14:31:49.726Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Quantity: 40   38; Total: AED 4,440.00   AED 4,218.00"
+      "details": "Quantity: 40   38; Total: 4,440.00   4,218.00"
     },
     {
       "timestamp": "2026-03-28T12:55:35.946Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Amount: AED 111.00, Category: Inventory, Status: active"
+      "details": "Amount: 111.00, Category: Inventory, Status: active"
     },
     {
       "timestamp": "2026-03-28T12:12:10.260Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Amount: AED 111.00, Category: Inventory, Status: active"
+      "details": "Amount: 111.00, Category: Inventory, Status: active"
     },
     {
       "timestamp": "2026-03-28T12:11:06.659Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Amount: AED 111.00, Category: Inventory, Status: active"
+      "details": "Amount: 111.00, Category: Inventory, Status: active"
     },
     {
       "timestamp": "2026-03-28T11:04:46.476Z",
       "action": "Added",
       "item": "Cash on Hand",
-      "details": "Amount: AED 35,290.00, Category: Liquidity"
+      "details": "Amount: 35,290.00, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-28T11:02:27.021Z",
       "action": "Deleted",
       "item": "Manbaone",
-      "details": "Amount: AED 111.00, Category: Inventory"
+      "details": "Amount: 111.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T11:01:59.217Z",
       "action": "Edited",
       "item": "Manbaone",
-      "details": "Amount: AED 111.00, Category: Inventory, Status: active"
+      "details": "Amount: 111.00, Category: Inventory, Status: active"
     },
     {
       "timestamp": "2026-03-28T10:37:38.560Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AEDÃÂ 20,058.50, Category: Receivable, Status: pending"
+      "details": "Amount: 20,058.50, Category: Receivable, Status: pending"
     },
     {
       "timestamp": "2026-03-28T09:19:59.349Z",
       "action": "Edited",
       "item": "CBD",
-      "details": "Amount: AEDÃÂ 19,613.63, Category: Liquidity, Status: active"
+      "details": "Amount: 19,613.63, Category: Liquidity, Status: active"
     },
     {
       "timestamp": "2026-03-28T09:19:17.974Z",
       "action": "Edited",
       "item": "Cash on Hand",
-      "details": "Amount: AEDÃÂ 35,290.00, Category: Liquidity, Status: active"
+      "details": "Amount: 35,290.00, Category: Liquidity, Status: active"
     },
     {
       "timestamp": "2026-03-28T09:17:08.540Z",
       "action": "Added",
       "item": "Renu",
-      "details": "Amount: AEDÃÂ 20,117.00, Category: Giveable"
+      "details": "Amount: 20,117.00, Category: Giveable"
     },
     {
       "timestamp": "2026-03-28T09:16:39.507Z",
       "action": "Added",
       "item": "Xcube",
-      "details": "Amount: AEDÃÂ 1,587.00, Category: Investment"
+      "details": "Amount: 1,587.00, Category: Investment"
     },
     {
       "timestamp": "2026-03-28T09:15:13.310Z",
       "action": "Added",
       "item": "Fixed Deposit - ADCB",
-      "details": "Amount: AEDÃÂ 10,319.44, Category: Investment"
+      "details": "Amount: 10,319.44, Category: Investment"
     },
     {
       "timestamp": "2026-03-28T09:14:54.177Z",
       "action": "Added",
       "item": "Prypco",
-      "details": "Amount: AEDÃÂ 8,557.00, Category: Investment"
+      "details": "Amount: 8,557.00, Category: Investment"
     },
     {
       "timestamp": "2026-03-28T09:14:27.119Z",
       "action": "Added",
       "item": "Silver",
-      "details": "Amount: AEDÃÂ 3,202.76, Category: Investment"
+      "details": "Amount: 3,202.76, Category: Investment"
     },
     {
       "timestamp": "2026-03-28T09:13:56.816Z",
       "action": "Added",
       "item": "Total Gold in CBD (1.99 XAU) includes Noaf's & Renu's",
-      "details": "Amount: AEDÃÂ 31,043.94, Category: Investment"
+      "details": "Amount: 31,043.94, Category: Investment"
     },
     {
       "timestamp": "2026-03-28T09:12:09.498Z",
       "action": "Edited",
       "item": "PS4 Controller Stand - Dead",
-      "details": "Amount: AEDÃÂ 20.88, Category: Inventory, Status: active"
+      "details": "Amount: 20.88, Category: Inventory, Status: active"
     },
     {
       "timestamp": "2026-03-28T09:11:50.432Z",
       "action": "Edited",
       "item": "PS4 Controller Stand - Dead",
-      "details": "Amount: AEDÃÂ 20.88, Category: Inventory, Status: active"
+      "details": "Amount: 20.88, Category: Inventory, Status: active"
     },
     {
       "timestamp": "2026-03-28T09:08:43.227Z",
       "action": "Edited",
       "item": "Voplls Mini - Dead",
-      "details": "Amount: AEDÃÂ 190.00, Category: Inventory, Status: active"
+      "details": "Amount: 190.00, Category: Inventory, Status: active"
     },
     {
       "timestamp": "2026-03-28T09:08:34.271Z",
       "action": "Added",
       "item": "Voplls Mini - Dead",
-      "details": "Amount: AEDÃÂ 190.00, Category: Inventory"
+      "details": "Amount: 190.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:08:21.826Z",
       "action": "Added",
       "item": "Pressure Washer - Dead",
-      "details": "Amount: AEDÃÂ 65.00, Category: Inventory"
+      "details": "Amount: 65.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:08:07.492Z",
       "action": "Added",
       "item": "PS4 Controller Stand - Dead",
-      "details": "Amount: AEDÃÂ 20.88, Category: Inventory"
+      "details": "Amount: 20.88, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:06:43.301Z",
       "action": "Added",
       "item": "PSP Go Screen - FBA",
-      "details": "Amount: AEDÃÂ 23.00, Category: Inventory"
+      "details": "Amount: 23.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:06:20.701Z",
       "action": "Added",
       "item": "Aurzen",
-      "details": "Amount: AEDÃÂ 950.00, Category: Inventory"
+      "details": "Amount: 950.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:06:09.340Z",
       "action": "Added",
       "item": "ALFA AXML",
-      "details": "Amount: AEDÃÂ 213.00, Category: Inventory"
+      "details": "Amount: 213.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:05:51.539Z",
       "action": "Added",
       "item": "MT6000 GLINET",
-      "details": "Amount: AEDÃÂ 669.74, Category: Inventory"
+      "details": "Amount: 669.74, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:05:31.267Z",
       "action": "Edited",
       "item": "MT3000 GLINET",
-      "details": "Amount: AEDÃÂ 371.06, Category: Inventory, Status: active"
+      "details": "Amount: 371.06, Category: Inventory, Status: active"
     },
     {
       "timestamp": "2026-03-28T09:05:25.410Z",
       "action": "Added",
       "item": "MT3600BE GLINET",
-      "details": "Amount: AEDÃÂ 871.85, Category: Inventory"
+      "details": "Amount: 871.85, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:05:05.340Z",
       "action": "Added",
       "item": "MT3000 GLINET",
-      "details": "Amount: AEDÃÂ 371.06, Category: Inventory"
+      "details": "Amount: 371.06, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:04:46.913Z",
       "action": "Added",
       "item": "BE3600 GLINET",
-      "details": "Amount: AEDÃÂ 718.11, Category: Inventory"
+      "details": "Amount: 718.11, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:04:07.638Z",
       "action": "Added",
       "item": "Xreal 1S - Dead",
-      "details": "Amount: AEDÃÂ 1,563.34, Category: Inventory"
+      "details": "Amount: 1,563.34, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:01:55.745Z",
       "action": "Added",
       "item": "Xreal One Pro - Dead",
-      "details": "Amount: AEDÃÂ 2,064.00, Category: Inventory"
+      "details": "Amount: 2,064.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:00:51.634Z",
       "action": "Edited",
       "item": "Xreal One Pro - L",
-      "details": "Amount: AEDÃÂ 2,064.00, Category: Inventory, Status: active"
+      "details": "Amount: 2,064.00, Category: Inventory, Status: active"
     },
     {
       "timestamp": "2026-03-28T09:00:38.630Z",
       "action": "Added",
       "item": "Manbaone",
-      "details": "Amount: AEDÃÂ 111.00, Category: Inventory"
+      "details": "Amount: 111.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T09:00:16.528Z",
       "action": "Added",
       "item": "Xreal One - L",
-      "details": "Amount: AEDÃÂ 2,064.00, Category: Inventory"
+      "details": "Amount: 2,064.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T08:58:08.622Z",
       "action": "Added",
       "item": "Amir",
-      "details": "Amount: AEDÃÂ 300.00, Category: Receivable"
+      "details": "Amount: 300.00, Category: Receivable"
     },
     {
       "timestamp": "2026-03-28T08:57:57.612Z",
       "action": "Edited",
       "item": "Amazon India",
-      "details": "Amount: AEDÃÂ 498.94, Category: Receivable, Status: pending"
+      "details": "Amount: 498.94, Category: Receivable, Status: pending"
     },
     {
       "timestamp": "2026-03-28T08:57:52.532Z",
       "action": "Added",
       "item": "Amazon India",
-      "details": "Amount: AEDÃÂ 498.94, Category: Receivable"
+      "details": "Amount: 498.94, Category: Receivable"
     },
     {
       "timestamp": "2026-03-28T08:57:37.902Z",
       "action": "Added",
       "item": "Amazon Saudi",
-      "details": "Amount: AEDÃÂ 2,385.20, Category: Receivable"
+      "details": "Amount: 2,385.20, Category: Receivable"
     },
     {
       "timestamp": "2026-03-28T08:57:25.667Z",
       "action": "Edited",
       "item": "Amazon UAE",
-      "details": "Amount: AEDÃÂ 17,720.35, Category: Receivable, Status: pending"
+      "details": "Amount: 17,720.35, Category: Receivable, Status: pending"
     },
     {
       "timestamp": "2026-03-28T08:57:15.557Z",
       "action": "Added",
       "item": "Amazon UAE",
-      "details": "Amount: AEDÃÂ 17,720.35, Category: Receivable"
+      "details": "Amount: 17,720.35, Category: Receivable"
     },
     {
       "timestamp": "2026-03-28T08:56:54.723Z",
       "action": "Added",
       "item": "USD",
-      "details": "Amount: AEDÃÂ 426.00, Category: Liquidity"
+      "details": "Amount: 426.00, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-28T08:56:43.279Z",
       "action": "Added",
       "item": "Cash on India",
-      "details": "Amount: AEDÃÂ 18,810.00, Category: Liquidity"
+      "details": "Amount: 18,810.00, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-28T08:56:21.339Z",
       "action": "Added",
       "item": "Gold 10g",
-      "details": "Amount: AEDÃÂ 5,510.00, Category: Investment"
+      "details": "Amount: 5,510.00, Category: Investment"
     },
     {
       "timestamp": "2026-03-28T08:55:59.366Z",
       "action": "Added",
       "item": "CBD",
-      "details": "Amount: AEDÃÂ 18,983.90, Category: Liquidity"
+      "details": "Amount: 18,983.90, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-28T08:55:46.484Z",
       "action": "Added",
       "item": "ADCB",
-      "details": "Amount: AEDÃÂ 20,630.69, Category: Liquidity"
+      "details": "Amount: 20,630.69, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-28T08:55:23.009Z",
       "action": "Added",
       "item": "Cash on Hand",
-      "details": "Amount: AEDÃÂ 41,429.72, Category: Liquidity"
+      "details": "Amount: 41,429.72, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-28T07:24:17.973Z",
       "action": "Deleted",
       "item": "Charitable donations",
-      "details": "Amount: AEDÃÂ 1,000.00, Category: Giveable"
+      "details": "Amount: 1,000.00, Category: Giveable"
     },
     {
       "timestamp": "2026-03-28T07:24:16.520Z",
       "action": "Deleted",
       "item": "Client receivables",
-      "details": "Amount: AEDÃÂ 2,500.00, Category: Receivable"
+      "details": "Amount: 2,500.00, Category: Receivable"
     },
     {
       "timestamp": "2026-03-28T07:24:14.557Z",
       "action": "Deleted",
       "item": "Stock investments",
-      "details": "Amount: AEDÃÂ 3,000.00, Category: Investment"
+      "details": "Amount: 3,000.00, Category: Investment"
     },
     {
       "timestamp": "2026-03-28T07:24:13.009Z",
       "action": "Deleted",
       "item": "Laptop inventory",
-      "details": "Amount: AEDÃÂ 1,200.00, Category: Inventory"
+      "details": "Amount: 1,200.00, Category: Inventory"
     },
     {
       "timestamp": "2026-03-28T07:24:11.756Z",
       "action": "Deleted",
       "item": "Cash on hand",
-      "details": "Amount: AEDÃÂ 3,000.00, Category: Liquidity"
+      "details": "Amount: 3,000.00, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-27T21:30:00.795Z",
       "action": "Edited",
       "item": "Cash on hand",
-      "details": "Amount: AEDÃÂ 3,000.00, Category: Liquidity, Status: active"
+      "details": "Amount: 3,000.00, Category: Liquidity, Status: active"
     },
     {
       "timestamp": "2026-03-27T21:29:51.094Z",
       "action": "Edited",
       "item": "Cash on hand",
-      "details": "Amount: AEDÃÂ 3,000.00, Category: Liquidity, Status: pending"
+      "details": "Amount: 3,000.00, Category: Liquidity, Status: pending"
     },
     {
       "timestamp": "2026-03-27T19:34:13.168Z",
       "action": "Updated",
       "item": "Cash on hand",
-      "details": "Amount: AEDÃÂ 3,000.00, Category: Liquidity"
+      "details": "Amount: 3,000.00, Category: Liquidity"
     },
     {
       "timestamp": "2026-03-27T18:24:09.105Z",
