@@ -365,7 +365,7 @@
       "date": "2026-04-15",
       "description": "Xreal One",
       "category": "Inventory",
-      "status": "pending",
+      "status": "active",
       "qty": 2,
       "amount": 1236.26,
       "total": 2472.52
@@ -382,6 +382,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-17T16:15:29.538Z",
+      "action": "Edited",
+      "item": "Xreal One",
+      "details": "Status: pending   active",
+      "netWorth": 214699.22,
+      "oldValue": 2472.52,
+      "newValue": 2472.52,
+      "netWorthChange": 0,
+      "netWorthBefore": 214699.22
+    },
     {
       "timestamp": "2026-04-17T16:15:22.249Z",
       "action": "Edited",
