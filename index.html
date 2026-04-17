@@ -1571,10 +1571,13 @@
             if (state.audit_log) {
                 for (const log of state.audit_log) {
                     if (log.action === 'Sale') {
-                        // Extract profit from item (the profit is stored in the item field)
-                        const match = log.item.match(/Profit:\s*AED\s*([\d,]+\.?\d*)/);
+                        // Extract profit from item - handle "Profit: AED X,XXX.XX" format
+                        // The formatCurrency function returns "AED X,XXX.XX" with a space
+                        const match = log.item.match(/Profit:\s*AED\s*([\d,\s.]+)/);
                         if (match) {
-                            totalProfit += parseFloat(match[1].replace(/,/g, ''));
+                            // Extract just the number part, removing spaces and commas
+                            const numStr = match[1].replace(/[\s,]/g, '');
+                            totalProfit += parseFloat(numStr);
                         }
                     }
                 }
