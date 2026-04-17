@@ -317,8 +317,8 @@
       "category": "Inventory",
       "status": "active",
       "qty": 80,
-      "amount": 111.35,
-      "total": 8908
+      "amount": 132,
+      "total": 10560
     },
     {
       "id": "mnfo6ttmpa5mnyn7th",
@@ -382,6 +382,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-17T16:23:26.985Z",
+      "action": "Edited",
+      "item": "Manbaone",
+      "details": "Amount: AED 111.35   AED 132.00; Total: AED 8,908.00   AED 10,560.00",
+      "netWorth": 216351.22,
+      "oldValue": 8908,
+      "newValue": 10560,
+      "netWorthChange": 1652,
+      "netWorthBefore": 214699.22
+    },
     {
       "timestamp": "2026-04-17T16:15:35.408Z",
       "action": "Edited",
