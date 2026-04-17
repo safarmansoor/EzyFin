@@ -315,7 +315,7 @@
       "date": "2026-03-31",
       "description": "Manbaone",
       "category": "Inventory",
-      "status": "pending",
+      "status": "active",
       "qty": 80,
       "amount": 111.35,
       "total": 8908
@@ -382,6 +382,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-17T16:15:12.638Z",
+      "action": "Edited",
+      "item": "Manbaone",
+      "details": "Status: pending   active",
+      "netWorth": 214699.22,
+      "oldValue": 8908,
+      "newValue": 8908,
+      "netWorthChange": 0,
+      "netWorthBefore": 214699.22
+    },
     {
       "timestamp": "2026-04-17T16:14:55.647Z",
       "action": "Edited",
