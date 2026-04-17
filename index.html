@@ -742,8 +742,22 @@
                         <div class="row mb-4">
                             <div class="col-md-12">
                                 <form id="expenseForm">
+                                    <!-- Quick Category Buttons -->
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Quick Categories</label>
+                                        <div class="d-flex flex-wrap gap-2" id="categoryQuickButtons">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-category="Food">Food</button>
+                                            <button type="button" class="btn btn-sm btn-outline-success" data-category="Business">Business</button>
+                                            <button type="button" class="btn btn-sm btn-outline-info" data-category="Transportation">Transport</button>
+                                            <button type="button" class="btn btn-sm btn-outline-warning" data-category="Entertainment">Entertainment</button>
+                                            <button type="button" class="btn btn-sm btn-outline-danger" data-category="Shopping">Shopping</button>
+                                            <button type="button" class="btn btn-sm btn-outline-primary" data-category="Utilities">Utilities</button>
+                                            <button type="button" class="btn btn-sm btn-outline-dark" data-category="Healthcare">Healthcare</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary" data-category="Other">Other</button>
+                                        </div>
+                                    </div>
                                     <div class="row">
-                                        <div class="col-md-3 mb-3">
+                                        <div class="col-md-2 mb-3">
                                             <label for="expenseDate" class="form-label">Date</label>
                                             <input type="date" class="form-control" id="expenseDate" required>
                                         </div>
@@ -761,7 +775,7 @@
                                                 <option value="Other">Other</option>
                                             </select>
                                         </div>
-                                        <div class="col-md-3 mb-3">
+                                        <div class="col-md-2 mb-3">
                                             <label for="expenseAmount" class="form-label">Amount (AED)</label>
                                             <input type="number" class="form-control" id="expenseAmount" step="0.01" min="0" placeholder="0.00" required>
                                         </div>
@@ -769,18 +783,29 @@
                                             <label for="expenseDescription" class="form-label">Description</label>
                                             <input type="text" class="form-control" id="expenseDescription" placeholder="Enter description" required>
                                         </div>
-                                        <div class="col-md-3 mb-3">
-                                            <label for="expenseLiquidity" class="form-label">Deduct from Liquidity</label>
+                                        <div class="col-md-2 mb-3">
+                                            <label for="expenseLiquidity" class="form-label">Deduct from</label>
                                             <select class="form-select" id="expenseLiquidity" required>
-                                                <option value="">Select Liquidity Account</option>
+                                                <option value="">Select Account</option>
                                                 <!-- Liquidity options will be populated dynamically -->
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-end">
+                                    <div class="d-flex justify-content-end gap-2">
+                                        <button type="button" class="btn btn-outline-secondary" id="clearExpenseForm">Clear</button>
                                         <button type="submit" class="btn btn-primary">Add Expense</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Expenses Quick Select -->
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <h6 class="text-muted small">Quick Add - Recent Expenses</h6>
+                                <div id="recentExpensesQuickSelect" class="d-flex flex-wrap gap-2">
+                                    <!-- Recent expenses will be listed here as quick-select buttons -->
+                                </div>
                             </div>
                         </div>
                         
@@ -2787,13 +2812,72 @@
             updateSummaryCards();
         }
 
+        // Smart Defaults - Remember last used values
+        let smartDefaults = {
+            lastCategory: '',
+            lastLiquidityId: ''
+        };
+        
+        // Load smart defaults from localStorage
+        function loadSmartDefaults() {
+            const saved = localStorage.getItem('ezyfin_smart_defaults');
+            if (saved) {
+                smartDefaults = JSON.parse(saved);
+            }
+        }
+        
+        // Save smart defaults to localStorage
+        function saveSmartDefaults() {
+            localStorage.setItem('ezyfin_smart_defaults', JSON.stringify(smartDefaults));
+        }
+        
         // Initialize expense tracking when page loads
         document.addEventListener('DOMContentLoaded', function() {
+            // Load smart defaults
+            loadSmartDefaults();
+            
             // Set today's date as default for expense form
             document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
             
             // Populate liquidity dropdown on page load
             populateLiquidityDropdown();
+            
+            // Set smart defaults on form load
+            if (smartDefaults.lastCategory) {
+                document.getElementById('expenseCategory').value = smartDefaults.lastCategory;
+            }
+            if (smartDefaults.lastLiquidityId) {
+                document.getElementById('expenseLiquidity').value = smartDefaults.lastLiquidityId;
+            }
+            
+            // Auto-focus amount field when expense tab is shown
+            document.getElementById('expense-tab').addEventListener('shown.bs.tab', function() {
+                setTimeout(() => {
+                    const amountInput = document.getElementById('expenseAmount');
+                    if (amountInput) {
+                        amountInput.focus();
+                    }
+                }, 100);
+            });
+            
+            // Quick Category Buttons Event Listeners
+            const categoryButtons = document.querySelectorAll('#categoryQuickButtons button');
+            categoryButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    document.getElementById('expenseCategory').value = category;
+                    // Save smart default
+                    smartDefaults.lastCategory = category;
+                    saveSmartDefaults();
+                });
+            });
+            
+            // Clear Expense Form Button
+            document.getElementById('clearExpenseForm').addEventListener('click', function() {
+                document.getElementById('expenseForm').reset();
+                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('expenseAmount').focus();
+            });
             
             // Add event listener for expense form submission
             document.getElementById('expenseForm').addEventListener('submit', function(e) {
@@ -2831,6 +2915,11 @@
                     return;
                 }
                 
+                // Save smart defaults
+                smartDefaults.lastCategory = category;
+                smartDefaults.lastLiquidityId = liquidityId;
+                saveSmartDefaults();
+                
                 // Create expense object with liquidity
                 const expenseData = {
                     date,
@@ -2850,15 +2939,75 @@
                 
                 // Show success message
                 showToast('Expense added successfully and deducted from liquidity!', 'success');
+                
+                // Re-render recent expenses quick select
+                renderRecentExpensesQuickSelect();
             });
             
             // Initialize expenses display
             renderExpenses();
             updateExpenseSummary();
             
+            // Initialize recent expenses quick select
+            renderRecentExpensesQuickSelect();
+            
             // Initialize sales tracking
             initializeSalesTracking();
         });
+        
+        // Render recent expenses as quick select buttons
+        function renderRecentExpensesQuickSelect() {
+            const container = document.getElementById('recentExpensesQuickSelect');
+            if (!container) return;
+            
+            if (state.expenses.length === 0) {
+                container.innerHTML = '<span class="text-muted small">No recent expenses</span>';
+                return;
+            }
+            
+            // Sort expenses by date (newest first) and get last 5
+            const sortedExpenses = [...state.expenses].sort((a, b) => new Date(b.date) - new Date(a.date));
+            const recentExpenses = sortedExpenses.slice(0, 5);
+            
+            if (recentExpenses.length === 0) {
+                container.innerHTML = '<span class="text-muted small">No recent expenses</span>';
+                return;
+            }
+            
+            container.innerHTML = recentExpenses.map(expense => `
+                <button type="button" class="btn btn-sm btn-outline-primary" onclick="quickAddExpense('${expense.id}')">
+                    <i class="fas fa-clone me-1"></i> ${expense.description} - ${formatCurrency(expense.amount)}
+                </button>
+            `).join('');
+        }
+        
+        // Quick add expense from recent expenses
+        window.quickAddExpense = function(expenseId) {
+            const expense = state.expenses.find(e => e.id === expenseId);
+            if (!expense) return;
+            
+            // Pre-fill form with expense data
+            document.getElementById('expenseDate').value = expense.date;
+            document.getElementById('expenseCategory').value = expense.category;
+            document.getElementById('expenseAmount').value = expense.amount;
+            document.getElementById('expenseDescription').value = expense.description;
+            document.getElementById('expenseLiquidity').value = expense.liquidityId || '';
+            
+            // Save smart defaults
+            smartDefaults.lastCategory = expense.category;
+            if (expense.liquidityId) {
+                smartDefaults.lastLiquidityId = expense.liquidityId;
+            }
+            saveSmartDefaults();
+            
+            // Auto-focus amount field
+            setTimeout(() => {
+                document.getElementById('expenseAmount').focus();
+            }, 100);
+            
+            // Show toast
+            showToast('Expense data pre-filled. Adjust and submit.', 'success');
+        };
         
         // Sales Tracking Functions
         function initializeSalesTracking() {
