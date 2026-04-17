@@ -701,6 +701,29 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <!-- Sales History -->
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <h6>Sales History</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-sm">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Item</th>
+                                                <th>Quantity</th>
+                                                <th>Sale Amount</th>
+                                                <th>Profit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="salesHistoryTableBody">
+                                            <!-- Sales history rows will be populated here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1259,6 +1282,7 @@
             inlineEditingId = null;
             renderLedger();
             renderAuditLog();
+            renderSalesHistory();
         }
         
         async function syncToGitHubIfNeeded() {
@@ -1571,12 +1595,15 @@
             if (state.audit_log) {
                 for (const log of state.audit_log) {
                     if (log.action === 'Sale') {
-                        // Extract profit from item - handle "Profit: XX,XXX.XX" format (no AED prefix)
-                        const match = log.item.match(/Profit:\s*([\d,\s.]+)/);
+                        // Extract profit from item - handle "(Profit: XX,XXX.XX)" format
+                        const match = log.item.match(/\(Profit:\s*([\d,\s.]+)\)/);
                         if (match) {
                             // Extract just the number part, removing spaces and commas
                             const numStr = match[1].replace(/[\s,]/g, '');
-                            totalProfit += parseFloat(numStr);
+                            const profit = parseFloat(numStr);
+                            if (!isNaN(profit)) {
+                                totalProfit += profit;
+                            }
                         }
                     }
                 }
@@ -2261,6 +2288,13 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize app
             loadState();
+            
+            // Initialize expense tracking - render expenses on page load
+            renderExpenses();
+            renderRecentExpensesQuickSelect();
+            
+            // Initialize sales tracking
+            initializeSalesTracking();
 
             // Load saved settings on page load
             function loadSavedSettings() {
@@ -2902,6 +2936,9 @@
             // Populate inventory and receivable dropdowns
             populateSalesDropdowns();
             
+            // Render sales history
+            renderSalesHistory();
+            
             // Add event listener for sales form submission
             document.getElementById('salesForm').addEventListener('submit', function(e) {
                 e.preventDefault();
@@ -3134,6 +3171,48 @@
                     <td><span class="badge ${item.status === 'active' ? 'bg-success' : 'bg-warning'}">${item.status}</span></td>
                 `;
                 tbody.appendChild(row);
+            });
+        }
+        
+        // Render sales history from audit log
+        function renderSalesHistory() {
+            const tbody = document.getElementById('salesHistoryTableBody');
+            if (!tbody) return;
+            
+            tbody.innerHTML = '';
+            
+            // Get sales from audit log
+            const salesLogs = state.audit_log.filter(log => log.action === 'Sale');
+            
+            if (salesLogs.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No sales recorded yet</td></tr>';
+                return;
+            }
+            
+            salesLogs.forEach(log => {
+                // Parse the item field to extract quantity and profit
+                // Format: "Item Name x1 (Profit: 100.00)"
+                const itemMatch = log.item.match(/^(.+?)\s+x(\d+)\s+\(Profit:\s*([\d.]+)\)$/);
+                
+                if (itemMatch) {
+                    const itemName = itemMatch[1];
+                    const quantity = itemMatch[2];
+                    const profit = parseFloat(itemMatch[3]);
+                    
+                    // Extract sale amount from details
+                    const detailsMatch = log.details.match(/Amount:\s*([\d.]+)/);
+                    const saleAmount = detailsMatch ? parseFloat(detailsMatch[1]) : 0;
+                    
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${new Date(log.timestamp).toLocaleDateString()}</td>
+                        <td>${itemName}</td>
+                        <td>${quantity}</td>
+                        <td>${formatCurrency(saleAmount)}</td>
+                        <td class="${profit >= 0 ? 'text-success' : 'text-danger'}">${formatCurrency(profit)}</td>
+                    `;
+                    tbody.appendChild(row);
+                }
             });
         }
     </script>
