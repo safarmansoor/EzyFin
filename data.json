@@ -57,8 +57,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 5389.26,
-      "total": 5389.26
+      "amount": 7521.99,
+      "total": 7521.99
     },
     {
       "id": "mna3kfou52enjeclsth",
@@ -336,9 +336,9 @@
       "description": "Xreal 1S",
       "category": "Inventory",
       "status": "active",
-      "qty": 3,
+      "qty": 2,
       "amount": 1615,
-      "total": 4845
+      "total": 3230
     },
     {
       "id": "mnh07fwu8mguxkh7q3t",
@@ -382,6 +382,38 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-18T15:51:16.915Z",
+      "action": "Sale",
+      "item": "Xreal 1S x1 (Profit: 517.73)",
+      "details": "Amount: 2132.73, Inventory: Xreal 1S, Cost: 1615, Profit: 517.73",
+      "netWorth": 214385.03000000003,
+      "entryTotal": 2132.73,
+      "netWorthChange": 2132.73,
+      "netWorthBefore": 212252.30000000002
+    },
+    {
+      "timestamp": "2026-04-18T15:51:16.915Z",
+      "action": "Receivable Updated",
+      "item": "Receivable: Amazon UAE",
+      "details": "Amount: 2132.73, Sale: Xreal 1S",
+      "netWorth": 214385.03000000003,
+      "oldValue": 5389.26,
+      "newValue": 7521.99,
+      "netWorthChange": 2132.73,
+      "netWorthBefore": 212252.30000000002
+    },
+    {
+      "timestamp": "2026-04-18T15:51:16.915Z",
+      "action": "Inventory Updated",
+      "item": "Inventory: Xreal 1S",
+      "details": "Quantity: 1 deducted (from 3 to 2), Sale: Xreal 1S",
+      "netWorth": 212252.30000000002,
+      "oldValue": 4845,
+      "newValue": 3230,
+      "netWorthChange": -1615,
+      "netWorthBefore": 213867.30000000002
+    },
     {
       "timestamp": "2026-04-18T15:49:21.509Z",
       "action": "Edited",
