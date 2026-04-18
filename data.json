@@ -337,8 +337,8 @@
       "category": "Inventory",
       "status": "active",
       "qty": 3,
-      "amount": 1595,
-      "total": 4785
+      "amount": 1615,
+      "total": 4845
     },
     {
       "id": "mnh07fwu8mguxkh7q3t",
@@ -382,6 +382,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-18T15:49:21.509Z",
+      "action": "Edited",
+      "item": "Xreal 1S",
+      "details": "Amount: 1595   1615; Total: 4785   4845",
+      "netWorth": 213867.30000000002,
+      "oldValue": 4785,
+      "newValue": 4845,
+      "netWorthChange": 60,
+      "netWorthBefore": 213807.30000000002
+    },
     {
       "timestamp": "2026-04-17T17:07:08.050Z",
       "action": "Sale",
