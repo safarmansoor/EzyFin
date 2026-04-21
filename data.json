@@ -7,8 +7,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 18100,
-      "total": 18100
+      "amount": 18800,
+      "total": 18800
     },
     {
       "id": "mna3ibnqvge0c4zl59q",
@@ -382,6 +382,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-21T14:42:16.681Z",
+      "action": "Edited",
+      "item": "Cash on India",
+      "details": "Amount: 18100   18800; Total: 18100   18800",
+      "netWorth": 214573.09,
+      "oldValue": 18100,
+      "newValue": 18800,
+      "netWorthChange": 700,
+      "netWorthBefore": 213873.09
+    },
     {
       "timestamp": "2026-04-21T14:41:45.685Z",
       "action": "Edited",
