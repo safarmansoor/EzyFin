@@ -379,9 +379,29 @@
       "qty": 0,
       "amount": 100,
       "total": 0
+    },
+    {
+      "id": "mo8qi6lyf7m1hvq0lze",
+      "date": "2026-04-21",
+      "description": "Xreal one india",
+      "category": "Inventory",
+      "status": "pending",
+      "qty": 2,
+      "amount": 2472.52,
+      "total": 4945.04
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-21T14:43:53.974Z",
+      "action": "Added",
+      "item": "Xreal one india",
+      "details": "Amount: 2472.52, Category: Inventory",
+      "netWorth": 218516.54,
+      "entryTotal": 4945.04,
+      "netWorthChange": 4945.04,
+      "netWorthBefore": 213571.5
+    },
     {
       "timestamp": "2026-04-21T14:42:33.937Z",
       "action": "Edited",
