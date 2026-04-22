@@ -389,9 +389,29 @@
       "qty": 2,
       "amount": 2472.52,
       "total": 4945.04
+    },
+    {
+      "id": "moa2msel7fi2hiu81nt",
+      "date": "2026-04-22",
+      "description": "Karthik",
+      "category": "Giveable",
+      "status": "active",
+      "qty": 1,
+      "amount": 1200,
+      "total": 1200
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-22T13:11:10.413Z",
+      "action": "Added",
+      "item": "Karthik",
+      "details": "Amount: 1200, Category: Giveable",
+      "netWorth": 225026.54,
+      "entryTotal": 1200,
+      "netWorthChange": 1200,
+      "netWorthBefore": 223826.54
+    },
     {
       "timestamp": "2026-04-22T13:10:25.101Z",
       "action": "Edited",
