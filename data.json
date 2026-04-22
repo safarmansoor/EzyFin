@@ -57,8 +57,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 9125.539999999999,
-      "total": 9125.539999999999
+      "amount": 9788.509999999998,
+      "total": 9788.509999999998
     },
     {
       "id": "mna3kfou52enjeclsth",
@@ -296,9 +296,9 @@
       "description": "MT3600BE GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 3,
+      "qty": 2,
       "amount": 503.49,
-      "total": 1510.47
+      "total": 1006.98
     },
     {
       "id": "mnek3uzhmwlhjsmnk1k",
@@ -402,6 +402,38 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-22T13:26:41.250Z",
+      "action": "Sale",
+      "item": "MT3600BE GLINET x1 (Profit: 159.48000000000002)",
+      "details": "Amount: 662.97, Inventory: MT3600BE GLINET, Cost: 503.49, Profit: 159.48000000000002",
+      "netWorth": 225146.02,
+      "entryTotal": 662.97,
+      "netWorthChange": 159.48000000000002,
+      "netWorthBefore": 224986.54
+    },
+    {
+      "timestamp": "2026-04-22T13:26:41.250Z",
+      "action": "Receivable Updated",
+      "item": "Receivable: Amazon UAE",
+      "details": "Amount: 662.97, Sale: MT3600BE GLINET",
+      "netWorth": 225146.02,
+      "oldValue": 9125.539999999999,
+      "newValue": 9788.509999999998,
+      "netWorthChange": 662.97,
+      "netWorthBefore": 224483.05000000002
+    },
+    {
+      "timestamp": "2026-04-22T13:26:41.250Z",
+      "action": "Inventory Updated",
+      "item": "Inventory: MT3600BE GLINET",
+      "details": "Quantity: 1 deducted (from 3 to 2), Sale: MT3600BE GLINET",
+      "netWorth": 224483.05,
+      "oldValue": 1510.47,
+      "newValue": 1006.98,
+      "netWorthChange": -503.49,
+      "netWorthBefore": 224986.54
+    },
     {
       "timestamp": "2026-04-22T13:24:44.120Z",
       "action": "Added Expense",
