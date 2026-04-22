@@ -2372,6 +2372,79 @@
             renderExpenses();
             renderRecentExpensesQuickSelect();
             
+            // Set today's date for expense form
+            document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
+            
+            // Populate liquidity dropdown for expense form
+            populateLiquidityDropdown();
+            
+            // Add click event listeners for quick category buttons
+            const categoryButtons = document.querySelectorAll('#categoryQuickButtons button[data-category]');
+            categoryButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const category = this.getAttribute('data-category');
+                    document.getElementById('expenseCategory').value = category;
+                    // Update smart defaults
+                    smartDefaults.lastCategory = category;
+                    saveSmartDefaults();
+                    // Focus on amount field
+                    document.getElementById('expenseAmount').focus();
+                });
+            });
+            
+            // Add expense form submit handler
+            document.getElementById('expenseForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const date = document.getElementById('expenseDate').value;
+                const category = document.getElementById('expenseCategory').value;
+                const amount = parseFloat(document.getElementById('expenseAmount').value);
+                const description = document.getElementById('expenseDescription').value;
+                const liquidityId = document.getElementById('expenseLiquidity').value;
+                
+                // Validation
+                if (!date) {
+                    showToast('Please select a date.', 'danger');
+                    document.getElementById('expenseDate').focus();
+                    return;
+                }
+                
+                if (!category) {
+                    showToast('Please select a category.', 'danger');
+                    document.getElementById('expenseCategory').focus();
+                    return;
+                }
+                
+                if (!amount || amount <= 0) {
+                    showToast('Please enter a valid amount greater than 0.', 'danger');
+                    document.getElementById('expenseAmount').focus();
+                    return;
+                }
+                
+                if (!description.trim()) {
+                    showToast('Please enter a description.', 'danger');
+                    document.getElementById('expenseDescription').focus();
+                    return;
+                }
+                
+                // Add expense with liquidity deduction
+                addExpenseWithLiquidity({
+                    date,
+                    category,
+                    amount,
+                    description,
+                    liquidityId
+                });
+                
+                // Reset form
+                document.getElementById('expenseForm').reset();
+                document.getElementById('expenseDate').value = new Date().toISOString().split('T')[0];
+                document.getElementById('expenseDescription').focus();
+                
+                // Re-populate liquidity dropdown
+                populateLiquidityDropdown();
+            });
+            
             // Initialize sales tracking
             initializeSalesTracking();
 
