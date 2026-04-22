@@ -267,8 +267,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 35290,
-      "total": 35290
+      "amount": 40600,
+      "total": 40600
     },
     {
       "id": "mnaha74ccx1usmnway",
@@ -392,6 +392,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-22T13:10:25.101Z",
+      "action": "Edited",
+      "item": "Cash on Hand",
+      "details": "Amount: 35290   40600; Total: 35290   40600",
+      "netWorth": 223826.54,
+      "oldValue": 35290,
+      "newValue": 40600,
+      "netWorthChange": 5310,
+      "netWorthBefore": 218516.54
+    },
     {
       "timestamp": "2026-04-21T14:43:53.974Z",
       "action": "Added",
