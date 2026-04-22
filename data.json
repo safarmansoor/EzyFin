@@ -18,7 +18,7 @@
       "status": "active",
       "qty": 1,
       "amount": 16623,
-      "total": 16623
+      "total": 16583
     },
     {
       "id": "mna3ism2noh2pb6heor",
@@ -402,6 +402,27 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-22T13:24:44.120Z",
+      "action": "Added Expense",
+      "item": "Ritaj - karthik and me",
+      "details": "Amount: 40, Category: Food",
+      "netWorth": 224986.54,
+      "entryTotal": 40,
+      "netWorthChange": -40,
+      "netWorthBefore": 225026.54
+    },
+    {
+      "timestamp": "2026-04-22T13:24:44.120Z",
+      "action": "Liquidity Updated",
+      "item": "CBD",
+      "details": "Amount: 40, Expense: Ritaj - karthik and me, Category: Food",
+      "netWorth": 224986.54,
+      "oldValue": 16623,
+      "newValue": 16583,
+      "netWorthChange": -40,
+      "netWorthBefore": 225026.54
+    },
     {
       "timestamp": "2026-04-22T13:11:10.413Z",
       "action": "Added",
@@ -2099,6 +2120,14 @@
       "category": "Transportation",
       "amount": 764,
       "description": "Baku",
+      "liquidityId": "mna3ibnqvge0c4zl59q"
+    },
+    {
+      "id": "moa3489kqm8t0nm0q5",
+      "date": "2026-04-22",
+      "category": "Food",
+      "amount": 40,
+      "description": "Ritaj - karthik and me",
       "liquidityId": "mna3ibnqvge0c4zl59q"
     }
   ]
