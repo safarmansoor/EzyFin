@@ -67,8 +67,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 2961.98,
-      "total": 2961.98
+      "amount": 3696.17,
+      "total": 3696.17
     },
     {
       "id": "mna3kqz8dy8wk39l665",
@@ -116,9 +116,9 @@
       "description": "BE3600 GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 2,
+      "qty": 1,
       "amount": 718.11,
-      "total": 1436.22
+      "total": 718.11
     },
     {
       "id": "mna3u0xollx0x6dr6v",
@@ -402,6 +402,38 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-23T08:14:37.316Z",
+      "action": "Sale",
+      "item": "BE3600 GLINET x1 (Profit: 16.08000000000004)",
+      "details": "Amount: 734.19, Inventory: BE3600 GLINET, Cost: 718.11, Profit: 16.08000000000004",
+      "netWorth": 225250.76,
+      "entryTotal": 734.19,
+      "netWorthChange": 16.08000000000004,
+      "netWorthBefore": 225234.68
+    },
+    {
+      "timestamp": "2026-04-23T08:14:37.316Z",
+      "action": "Receivable Updated",
+      "item": "Receivable: Amazon Saudi",
+      "details": "Amount: 734.19, Sale: BE3600 GLINET",
+      "netWorth": 225250.76,
+      "oldValue": 2961.98,
+      "newValue": 3696.17,
+      "netWorthChange": 734.19,
+      "netWorthBefore": 224516.57
+    },
+    {
+      "timestamp": "2026-04-23T08:14:37.315Z",
+      "action": "Inventory Updated",
+      "item": "Inventory: BE3600 GLINET",
+      "details": "Quantity: 1 deducted (from 2 to 1), Sale: BE3600 GLINET",
+      "netWorth": 224516.57,
+      "oldValue": 1436.22,
+      "newValue": 718.11,
+      "netWorthChange": -718.11,
+      "netWorthBefore": 225234.68
+    },
     {
       "timestamp": "2026-04-22T13:28:33.612Z",
       "action": "Sale",
