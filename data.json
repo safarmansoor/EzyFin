@@ -57,8 +57,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 10009.169999999998,
-      "total": 10009.169999999998
+      "amount": 10229.169999999998,
+      "total": 10229.169999999998
     },
     {
       "id": "mna3kfou52enjeclsth",
@@ -316,9 +316,9 @@
       "description": "Manbaone",
       "category": "Inventory",
       "status": "active",
-      "qty": 79,
+      "qty": 78,
       "amount": 132,
-      "total": 10428
+      "total": 10296
     },
     {
       "id": "mnfo6ttmpa5mnyn7th",
@@ -402,6 +402,38 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-24T05:20:19.548Z",
+      "action": "Sale",
+      "item": "Manbaone x1 (Profit: 88)",
+      "details": "Amount: 220, Inventory: Manbaone, Cost: 132, Profit: 88",
+      "netWorth": 225338.76,
+      "entryTotal": 220,
+      "netWorthChange": 88,
+      "netWorthBefore": 225250.76
+    },
+    {
+      "timestamp": "2026-04-24T05:20:19.548Z",
+      "action": "Receivable Updated",
+      "item": "Receivable: Amazon UAE",
+      "details": "Amount: 220, Sale: Manbaone",
+      "netWorth": 225338.76,
+      "oldValue": 10009.169999999998,
+      "newValue": 10229.169999999998,
+      "netWorthChange": 220,
+      "netWorthBefore": 225118.76
+    },
+    {
+      "timestamp": "2026-04-24T05:20:19.548Z",
+      "action": "Inventory Updated",
+      "item": "Inventory: Manbaone",
+      "details": "Quantity: 1 deducted (from 79 to 78), Sale: Manbaone",
+      "netWorth": 225118.76,
+      "oldValue": 10428,
+      "newValue": 10296,
+      "netWorthChange": -132,
+      "netWorthBefore": 225250.76
+    },
     {
       "timestamp": "2026-04-23T08:14:37.316Z",
       "action": "Sale",
