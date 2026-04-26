@@ -36,9 +36,9 @@
       "description": "MT6000 GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 0,
+      "qty": 1,
       "amount": 669.74,
-      "total": 0
+      "total": 669.74
     },
     {
       "id": "mna3jidfuvk5ay4auzp",
@@ -402,6 +402,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-26T07:54:20.760Z",
+      "action": "Edited",
+      "item": "MT6000 GLINET",
+      "details": "Quantity: 0   1; Total: 0   669.74",
+      "netWorth": 226831.71,
+      "oldValue": 0,
+      "newValue": 669.74,
+      "netWorthChange": 669.74,
+      "netWorthBefore": 226161.97
+    },
     {
       "timestamp": "2026-04-25T12:49:26.386Z",
       "action": "Sale",
