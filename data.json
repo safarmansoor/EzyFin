@@ -57,8 +57,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 16200.569999999996,
-      "total": 16200.569999999996
+      "amount": 16670.569999999996,
+      "total": 16670.569999999996
     },
     {
       "id": "mna3kfou52enjeclsth",
@@ -126,9 +126,9 @@
       "description": "MT3000 GLINET",
       "category": "Inventory",
       "status": "active",
-      "qty": 10,
+      "qty": 9,
       "amount": 371.06,
-      "total": 3710.6
+      "total": 3339.54
     },
     {
       "id": "mna3ugf612rhx9su11bq",
@@ -402,6 +402,38 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-26T12:41:26.958Z",
+      "action": "Sale",
+      "item": "MT3000 GLINET x1 (Profit: 98.94)",
+      "details": "Amount: 470, Inventory: MT3000 GLINET, Cost: 371.06, Profit: 98.94",
+      "netWorth": 227577.86000000002,
+      "entryTotal": 470,
+      "netWorthChange": 98.94,
+      "netWorthBefore": 227478.92
+    },
+    {
+      "timestamp": "2026-04-26T12:41:26.958Z",
+      "action": "Receivable Updated",
+      "item": "Receivable: Amazon UAE",
+      "details": "Amount: 470, Sale: MT3000 GLINET",
+      "netWorth": 227577.86000000002,
+      "oldValue": 16200.569999999996,
+      "newValue": 16670.569999999996,
+      "netWorthChange": 470,
+      "netWorthBefore": 227107.86000000002
+    },
+    {
+      "timestamp": "2026-04-26T12:41:26.958Z",
+      "action": "Inventory Updated",
+      "item": "Inventory: MT3000 GLINET",
+      "details": "Quantity: 1 deducted (from 10 to 9), Sale: MT3000 GLINET",
+      "netWorth": 227107.86000000002,
+      "oldValue": 3710.6,
+      "newValue": 3339.54,
+      "netWorthChange": -371.06,
+      "netWorthBefore": 227478.92
+    },
     {
       "timestamp": "2026-04-26T12:40:46.975Z",
       "action": "Sale",
