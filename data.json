@@ -287,8 +287,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 10895.2,
-      "total": 10895.2
+      "amount": 8092.43,
+      "total": 8092.43
     },
     {
       "id": "mnek2q6xas55cjvdvwn",
@@ -402,6 +402,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-27T11:01:59.228Z",
+      "action": "Edited",
+      "item": "ADCB",
+      "details": "Amount: 10895.2   8092.43; Total: 10895.2   8092.43",
+      "netWorth": 210630.87,
+      "oldValue": 10895.2,
+      "newValue": 8092.43,
+      "netWorthChange": -2802.7700000000004,
+      "netWorthBefore": 213433.63999999998
+    },
     {
       "timestamp": "2026-04-27T11:01:33.571Z",
       "action": "Edited",
