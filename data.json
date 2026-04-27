@@ -17,8 +17,8 @@
       "category": "Liquidity",
       "status": "active",
       "qty": 1,
-      "amount": 16623,
-      "total": 16583
+      "amount": 2438.78,
+      "total": 2438.78
     },
     {
       "id": "mna3ism2noh2pb6heor",
@@ -402,6 +402,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-27T11:01:33.571Z",
+      "action": "Edited",
+      "item": "CBD",
+      "details": "Amount: 16623   2438.78; Total: 16583   2438.78",
+      "netWorth": 213433.63999999998,
+      "oldValue": 16583,
+      "newValue": 2438.78,
+      "netWorthChange": -14144.22,
+      "netWorthBefore": 227577.86
+    },
     {
       "timestamp": "2026-04-26T12:41:26.958Z",
       "action": "Sale",
