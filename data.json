@@ -405,13 +405,24 @@
       "date": "2026-04-27",
       "description": "Xreal 1S",
       "category": "Inventory",
-      "status": "active",
+      "status": "pending",
       "qty": 3,
       "amount": 1538.35,
       "total": 4615.049999999999
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-27T11:05:22.403Z",
+      "action": "Edited",
+      "item": "Xreal 1S",
+      "details": "Status: active   pending",
+      "netWorth": 215245.91999999998,
+      "oldValue": 4615.049999999999,
+      "newValue": 4615.049999999999,
+      "netWorthChange": 0,
+      "netWorthBefore": 215245.91999999998
+    },
     {
       "timestamp": "2026-04-27T11:04:28.737Z",
       "action": "Added",
