@@ -268,7 +268,7 @@
       "status": "active",
       "qty": 1,
       "amount": 40600,
-      "total": 40600
+      "total": 40483
     },
     {
       "id": "mnaha74ccx1usmnway",
@@ -412,6 +412,27 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-27T13:59:28.403Z",
+      "action": "Added Expense",
+      "item": "Asema supermarket",
+      "details": "Amount: 117, Category: Food",
+      "netWorth": 215128.91999999998,
+      "entryTotal": 117,
+      "netWorthChange": -117,
+      "netWorthBefore": 215245.91999999998
+    },
+    {
+      "timestamp": "2026-04-27T13:59:28.403Z",
+      "action": "Liquidity Updated",
+      "item": "Cash on Hand",
+      "details": "Amount: 117, Expense: Asema supermarket, Category: Food",
+      "netWorth": 215128.91999999998,
+      "oldValue": 40600,
+      "newValue": 40483,
+      "netWorthChange": -117,
+      "netWorthBefore": 215245.91999999998
+    },
     {
       "timestamp": "2026-04-27T11:05:22.403Z",
       "action": "Edited",
@@ -2545,6 +2566,14 @@
       "amount": 40,
       "description": "Ritaj - karthik and me",
       "liquidityId": "mna3ibnqvge0c4zl59q"
+    },
+    {
+      "id": "moh9k5ubn35ut8w1qw",
+      "date": "2026-04-27",
+      "category": "Food",
+      "amount": 117,
+      "description": "Asema supermarket",
+      "liquidityId": "mna83xxo7q9zpri7xv2"
     }
   ]
 }
