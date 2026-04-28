@@ -77,8 +77,8 @@
       "category": "Receivable",
       "status": "pending",
       "qty": 1,
-      "amount": 698.94,
-      "total": 698.94
+      "amount": 277.72,
+      "total": 277.72
     },
     {
       "id": "mna3nu33icdfjhe3tgc",
@@ -412,6 +412,17 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-28T14:13:05.371Z",
+      "action": "Edited",
+      "item": "Amazon India",
+      "details": "Amount: 698.94   277.72; Total: 698.94   277.72",
+      "netWorth": 210734.84,
+      "oldValue": 698.94,
+      "newValue": 277.72,
+      "netWorthChange": -421.22,
+      "netWorthBefore": 211156.06
+    },
     {
       "timestamp": "2026-04-28T14:12:54.475Z",
       "action": "Edited",
