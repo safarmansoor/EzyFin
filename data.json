@@ -18,7 +18,7 @@
       "status": "active",
       "qty": 1,
       "amount": 14394.77,
-      "total": 14394.77
+      "total": 14388.77
     },
     {
       "id": "mna3ism2noh2pb6heor",
@@ -412,6 +412,27 @@
     }
   ],
   "audit_log": [
+    {
+      "timestamp": "2026-04-28T14:14:29.278Z",
+      "action": "Added Expense",
+      "item": "Shawarma miznas",
+      "details": "Amount: 6, Category: Food",
+      "netWorth": 222684.83000000002,
+      "entryTotal": 6,
+      "netWorthChange": -6,
+      "netWorthBefore": 222690.83000000002
+    },
+    {
+      "timestamp": "2026-04-28T14:14:29.278Z",
+      "action": "Liquidity Updated",
+      "item": "CBD",
+      "details": "Amount: 6, Expense: Shawarma miznas, Category: Food",
+      "netWorth": 222684.83000000002,
+      "oldValue": 14394.77,
+      "newValue": 14388.77,
+      "netWorthChange": -6,
+      "netWorthBefore": 222690.83000000002
+    },
     {
       "timestamp": "2026-04-28T14:13:48.928Z",
       "action": "Edited",
@@ -2618,6 +2639,14 @@
       "amount": 117,
       "description": "Asema supermarket",
       "liquidityId": "mna83xxo7q9zpri7xv2"
+    },
+    {
+      "id": "moipjbmlaxo1co7l77n",
+      "date": "2026-04-27",
+      "category": "Food",
+      "amount": 6,
+      "description": "Shawarma miznas",
+      "liquidityId": "mna3ibnqvge0c4zl59q"
     }
   ]
 }
